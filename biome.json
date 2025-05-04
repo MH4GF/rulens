@@ -8,6 +8,9 @@
     "rules": {
       "nursery": {
         "useExplicitType": "error"
+      },
+      "complexity": {
+        "useLiteralKeys": "off"
       }
     }
   }
