@@ -67,15 +67,15 @@
 - [x] Biome実行ロジック実装
 - [x] Biome出力結果のパース・整形
 - [x] Biome設定をMarkdown形式に変換
-- [ ] Biomeルール説明のクローリング機能実装
-  - [ ] `scripts/`ディレクトリの作成（開発用スクリプト用）
-  - [ ] クローラースクリプトの作成（`scripts/crawl-biome-rules.ts`）
-  - [ ] Node.js fetch + HTMLパーサーによるクローリング実装
-  - [ ] ルールID（カテゴリー/ルール名）からURLへの変換ロジック実装
-  - [ ] 公式サイトからルール説明の抽出ロジック実装
-  - [ ] 抽出データを`src/data/biome-rules.json`として保存する機能実装
-  - [ ] package.jsonにスクリプト追加（`"crawl": "tsx scripts/crawl-biome-rules.ts"`）
-  - [ ] マークダウン出力時にルール説明を統合する機能実装
+- [x] Biomeルール説明のクローリング機能実装
+  - [x] `scripts/`ディレクトリの作成（開発用スクリプト用）
+  - [x] クローラースクリプトの作成（`scripts/crawl-biome-rules.ts`）
+  - [x] Node.js fetch + HTMLパーサーによるクローリング実装
+  - [x] ルールID（カテゴリー/ルール名）からURLへの変換ロジック実装
+  - [x] 公式サイトからルール説明の抽出ロジック実装
+  - [x] 抽出データを`src/data/biome-rules.json`として保存する機能実装
+  - [x] package.jsonにスクリプト追加（`"crawl": "tsx scripts/crawl-biome-rules.ts"`）
+  - [x] マークダウン出力時にルール説明を統合する機能実装
 
 ## ESLint対応
 
@@ -87,7 +87,7 @@
 
 - [x] Markdown生成エンジン実装
 - [x] Biomeルール出力テンプレート作成
-- [ ] ESLintルール出力テンプレート作成
+- [x] ESLintルール出力テンプレート作成
 - [x] ファイル出力機能実装
 - [ ] 共通中間表現を使ったマークダウン生成機能への改修
   - [ ] 共通の型定義ファイル作成（`src/types/rulens.ts`）
