@@ -10,28 +10,28 @@
   - [x] @mh4gf/configs, @mh4gf/eslint-config
   - [x] @biomejs/biome
   - [x] syncpack
-  - [ ] eslint, @mh4gf/eslint-config
-  - [ ] knip
-- [ ] プロジェクト依存関係インストール
-  - [ ] commander: CLIコマンド設計
-  - [ ] execa: 外部コマンド実行
-  - [ ] picocolors: ターミナル出力のカラー
-  - [ ] valibot: バリデーション
+  - [x] eslint, @mh4gf/eslint-config
+  - [x] knip
+- [x] プロジェクト依存関係インストール
+  - [x] commander: CLIコマンド設計
+  - [x] execa: 外部コマンド実行
+  - [x] picocolors: ターミナル出力のカラー
+  - [x] valibot: バリデーション
 - [ ] CLI設定（bin指定など）
 
 ### TypeScript設定
-- [ ] @mh4gf/configsのインストール
-- [ ] tsconfig.jsonの作成とベース設定の継承
-- [ ] プロジェクト固有のtsconfig設定（パス、出力先等）
+- [x] @mh4gf/configsのインストール
+- [x] tsconfig.jsonの作成とベース設定の継承
+- [x] プロジェクト固有のtsconfig設定（パス、出力先等）
 
 ### リンター・フォーマッター設定
-- [ ] Biome設定
-  - [ ] biome.jsonの作成と@mh4gf/configsの設定の継承
-  - [ ] プロジェクト固有のBiome設定
-- [ ] ESLint設定
-  - [ ] @mh4gf/eslint-configのインストール
-  - [ ] .eslintrc.js/.eslintrc.jsonの作成と設定の継承
-  - [ ] プロジェクト固有のESLint設定
+- [x] Biome設定
+  - [x] biome.jsonの作成と@mh4gf/configsの設定の継承
+  - [x] プロジェクト固有のBiome設定
+- [x] ESLint設定
+  - [x] @mh4gf/eslint-configのインストール
+  - [x] .eslintrc.js/.eslintrc.jsonの作成と設定の継承
+  - [x] プロジェクト固有のESLint設定
 
 ### ビルド・テスト環境設定
 - [ ] tsup設定
