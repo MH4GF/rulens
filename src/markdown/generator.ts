@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises'
 import type { BiomeRageResult } from '../tools/biome-runner.ts'
 import type { ESLintConfigResult } from '../tools/eslint-runner.ts'
+import { biomeRulesToMarkdown } from './biome-to-markdown.ts'
 
 interface MarkdownGeneratorOptions {
   biomeResult: BiomeRageResult
@@ -16,8 +17,7 @@ export async function generateMarkdown(options: MarkdownGeneratorOptions): Promi
 
   // Add Biome section if available
   if (biomeResult) {
-    markdown += '## Biome rules\n\n'
-    // TODO: Format biome results
+    markdown += biomeRulesToMarkdown(biomeResult)
   }
 
   // Add ESLint section if available
