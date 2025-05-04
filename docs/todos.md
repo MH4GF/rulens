@@ -9,7 +9,7 @@
   - [x] typescript, tsup, vitest
   - [x] @mh4gf/configs, @mh4gf/eslint-config
   - [x] @biomejs/biome
-  - [ ] syncpack
+  - [x] syncpack
   - [ ] eslint, @mh4gf/eslint-config
   - [ ] knip
 - [ ] プロジェクト依存関係インストール
