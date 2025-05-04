@@ -24,10 +24,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Exports**: Prefer named exports over default exports
 - **Testing**: Use Vitest, aim for 80%+ test coverage
 - **Lint Rules**: Always follow @docs/lint-rules.md as coding guideline
+- **Type Safety**: Avoid eslint-disable directives and type assertions (as keyword), use valibot for runtime type validation
+- **External Data**: Handle all external data (JSON, API responses) as untrusted and validate with valibot
+- **Logging**: Use the Logger class instead of console.log/error for consistent logging
 
 ## Testing Strategy
 
 - **Real Environment Testing**: Avoid using mocks. Test with real dependencies whenever possible to ensure tests validate actual behavior.
+- **Avoid Mocking Libraries**: Never use `vi.mock` or `vi.spyOn` - prioritize real implementation testing.
+- **Integration Testing**: Prioritize integration tests that exercise the full code path rather than isolated unit tests.
+- **Test Quality Priorities**: Focus on "correctly executing functionality" and "bug detection" rather than just "tests passing".
 - **TDD Approach**: Follow test-driven development when appropriate:
   - Write failing tests first with `it.skip` to clearly define expected behavior
   - Implement code to make tests pass
