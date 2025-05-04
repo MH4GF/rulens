@@ -23,6 +23,7 @@
     "@biomejs/biome": "1.9.4",
     "@mh4gf/configs": "0.4.6",
     "@mh4gf/eslint-config": "0.6.9",
+    "@tsconfig/strictest": "2.0.5",
     "@types/node": "22.15.3",
     "@vitest/coverage-v8": "3.1.2",
     "eslint": "9.26.0",
