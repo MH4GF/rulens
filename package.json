@@ -26,15 +26,18 @@
     "@tsconfig/strictest": "2.0.5",
     "@types/node": "22.15.3",
     "@vitest/coverage-v8": "3.1.2",
+    "cheerio": "1.0.0",
     "eslint": "9.26.0",
     "knip": "5.53.0",
     "syncpack": "13.0.4",
     "tsup": "8.4.0",
+    "tsx": "4.19.4",
     "typescript": "5.8.3",
     "vitest": "3.1.2"
   },
   "scripts": {
     "build": "tsup",
+    "crawl": "tsx scripts/crawl-biome-rules.ts",
     "dev": "tsup --watch",
     "fmt": "pnpm run fmt:syncpack-fix && pnpm run fmt:syncpack-format && pnpm run fmt:biome",
     "fmt:biome": "biome check --write --unsafe . --log-level=warn",

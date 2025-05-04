@@ -26,7 +26,7 @@ describe('biome-to-markdown', () => {
       expect(categorized).toEqual({
         style: ['useTemplate', 'noImplicitBoolean'],
         suspicious: ['noCatchAssign', 'noExplicitAny'],
-        a11y: ['noAutofocus', 'useAltText'],
+        accessibility: ['noAutofocus', 'useAltText'],
       })
     })
 
@@ -37,7 +37,7 @@ describe('biome-to-markdown', () => {
   })
 
   describe('biomeCategoryToMarkdown', () => {
-    it('should convert category and rules to markdown section', () => {
+    it('should convert category and rules to markdown section with descriptions if available', () => {
       // Arrange
       const category = 'style'
       const rules = ['useTemplate', 'noImplicitBoolean', 'useBlockStatements']
@@ -49,9 +49,9 @@ describe('biome-to-markdown', () => {
       expect(markdown).toMatchInlineSnapshot(`
         "### style
 
-        - \`useTemplate\`
-        - \`noImplicitBoolean\`
-        - \`useBlockStatements\`
+        - [\`noImplicitBoolean\`](https://biomejs.dev/linter/rules/no-implicit-boolean): Disallow implicit true values on JSX boolean attributes
+        - [\`useBlockStatements\`](https://biomejs.dev/linter/rules/use-block-statements): Requires following curly brace conventions.
+        - [\`useTemplate\`](https://biomejs.dev/linter/rules/use-template): Prefer template literals over string concatenation.
         "
       `)
     })
@@ -67,7 +67,7 @@ describe('biome-to-markdown', () => {
   })
 
   describe('biomeRulesToMarkdown', () => {
-    it('should convert biome rules to full markdown document', () => {
+    it('should convert biome rules to full markdown document with descriptions if available', () => {
       // Arrange
       const biomeResult: BiomeRageResult = {
         raw: 'some raw output',
@@ -88,20 +88,20 @@ describe('biome-to-markdown', () => {
       expect(markdown).toMatchInlineSnapshot(`
         "## Biome Rules
 
-        ### a11y
+        ### accessibility
 
-        - \`noAutofocus\`
-        - \`useAltText\`
+        - [\`noAutofocus\`](https://biomejs.dev/linter/rules/no-autofocus): Enforce that autoFocus prop is not used on elements.
+        - [\`useAltText\`](https://biomejs.dev/linter/rules/use-alt-text): Enforce that all elements that require alternative text have meaningful information to relay back to the end user.
 
         ### style
 
-        - \`useTemplate\`
-        - \`noImplicitBoolean\`
+        - [\`noImplicitBoolean\`](https://biomejs.dev/linter/rules/no-implicit-boolean): Disallow implicit true values on JSX boolean attributes
+        - [\`useTemplate\`](https://biomejs.dev/linter/rules/use-template): Prefer template literals over string concatenation.
 
         ### suspicious
 
-        - \`noCatchAssign\`
-        - \`noExplicitAny\`
+        - [\`noCatchAssign\`](https://biomejs.dev/linter/rules/no-catch-assign): Disallow reassigning exceptions in catch clauses.
+        - [\`noExplicitAny\`](https://biomejs.dev/linter/rules/no-explicit-any): Disallow the any type usage.
         "
       `)
     })

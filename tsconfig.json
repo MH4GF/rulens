@@ -6,11 +6,12 @@
     "moduleResolution": "NodeNext",
     "module": "NodeNext",
     "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
     "noEmit": true,
     "paths": {
       "@/*": ["src/*"]
     }
   },
-  "include": ["src/**/*", "vitest.config.ts", "tsconfig.json", "tsup.config.ts"],
+  "include": ["src/**/*", "scripts/**/*", "vitest.config.ts", "tsconfig.json", "tsup.config.ts"],
   "exclude": ["node_modules", "dist"]
 }

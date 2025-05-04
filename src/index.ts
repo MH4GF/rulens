@@ -18,7 +18,7 @@ program
   .description('Generate Markdown documentation from linting configurations')
   .option('--biome-args <args>', 'Additional arguments to pass to biome rage')
   .option('--eslint-args <args>', 'Additional arguments to pass to eslint --print-config')
-  .option('--output <file>', 'Output file path', 'rulens-rules.md')
+  .option('--output <file>', 'Output file path', 'docs/lint-rules.md')
   .action(async (options: { biomeArgs?: string; eslintArgs?: string; output: string }) => {
     try {
       // Use schema to reference it and avoid unused import warning

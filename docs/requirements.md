@@ -25,9 +25,9 @@
 
 ### 5.1 コマンド設計
 
-| コマンド            | 概要                                             |
-| ------------------- | ------------------------------------------------ |
-| `rulens generate`   | カレントディレクトリの設定を解析し Markdown 出力 |
+| コマンド          | 概要                                             |
+| ----------------- | ------------------------------------------------ |
+| `rulens generate` | カレントディレクトリの設定を解析し Markdown 出力 |
 
 ### 5.2 入出力仕様
 
@@ -35,7 +35,7 @@
 
   - `--biome-args "<args>"`：`biome rage` にそのまま渡す追加オプション
   - `--eslint-args "<args>"`：`eslint --print-config` にそのまま渡す追加オプション
-  - `--output <file.md>`（デフォルト `rulens-rules.md`）
+  - `--output <file.md>`（デフォルト `docs/lint-rules.md`）
 
 - **バイナリ解決ロジック**
 
@@ -48,15 +48,17 @@
   - セクション内に実行コマンド例（コードブロック）と結果 JSON コードブロックを併記
   - 各ルールに説明文を追加して表示
 
-### 5.3 Biomeルール説明のクローリング
+### 5.3 Biome ルール説明のクローリング
 
 - **クローリング機能**
-  - Biome公式ドキュメント（https://biomejs.dev/linter/rules/）から各ルールの説明文を取得
+
+  - Biome 公式ドキュメント（https://biomejs.dev/linter/rules/）から各ルールの説明文を取得
   - 各ルールの簡潔な説明文のみを抽出（詳細な使用例は含まない）
-  - クローリング結果は静的なJSONファイルとしてリポジトリに保存
-  - 開発時ツールとして使用し、生成したJSONファイルをコード内でインポートして使用
+  - クローリング結果は静的な JSON ファイルとしてリポジトリに保存
+  - 開発時ツールとして使用し、生成した JSON ファイルをコード内でインポートして使用
 
 - **ルール説明のデータ構造**
+
   ```typescript
   // src/data/biome-rules.json の形式
   interface BiomeRuleDescription {
@@ -68,16 +70,18 @@
   ```
 
 - **ルール説明の表示形式**
+
   ```markdown
   ### カテゴリー名
-  
+
   - `ルール名`: 説明文
   ```
-  
+
   例:
+
   ```markdown
   ### suspicious
-  
+
   - `noCatchAssign`: Disallows reassigning exceptions in catch clauses.
   - `noDebugger`: Disallows using the debugger statement.
   ```
@@ -151,12 +155,12 @@ rulens/
 │ ├── markdown/
 │ │ ├── generator.ts # Markdown 生成ロジック
 │ │ ├── generator.test.ts
-│ │ ├── biome-to-markdown.ts # Biome結果のMarkdown変換
+│ │ ├── biome-to-markdown.ts # Biome 結果の Markdown 変換
 │ │ ├── biome-to-markdown.test.ts
-│ │ ├── eslint-to-markdown.ts # ESLint結果のMarkdown変換
+│ │ ├── eslint-to-markdown.ts # ESLint 結果の Markdown 変換
 │ │ └── eslint-to-markdown.test.ts
 │ ├── data/
-│ │ └── biome-rules.json # クローリングしたBiomeルール説明データ
+│ │ └── biome-rules.json # クローリングした Biome ルール説明データ
 │ └── utils/
 │ ├── bin-resolver.ts # バイナリ解決ユーティリティ
 │ ├── bin-resolver.test.ts
