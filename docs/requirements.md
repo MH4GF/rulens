@@ -49,20 +49,12 @@
 
 #### Markdown フォーマット例
 
-````markdown
+```markdown
 # Rulens Lint Rules Dump
 
-## 1. Biome 設定
+## Biome rules
 
-```bash
-biome rage --formatter --no-color
-```
-````
-
-```json
-{
-  /* --formatter 結果の JSON */
-}
+## ESLint rules
 ```
 
 ## 2. ESLint 設定
