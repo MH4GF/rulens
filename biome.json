@@ -3,5 +3,12 @@
   "extends": [
     "./node_modules/@mh4gf/configs/biome/index.jsonc",
     "./node_modules/@mh4gf/configs/biome/nodejs.jsonc"
-  ]
+  ],
+  "linter": {
+    "rules": {
+      "nursery": {
+        "useExplicitType": "error"
+      }
+    }
+  }
 }
