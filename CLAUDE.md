@@ -24,3 +24,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Exports**: Prefer named exports over default exports
 - **Testing**: Use Vitest, aim for 80%+ test coverage
 - **Lint Rules**: Always follow @docs/lint-rules.md as coding guideline
+
+## Knip Handling
+
+- **Unused Exports**: Run `pnpm fmt:knip` to automatically remove export keywords from unused types
+- **Manual Review**: Always manually review knip suggestions - automatic fixes might not catch all cases
+- **Type References**: To keep a type export that knip flags as unused, either:
+  - Create a deliberate reference to it in your code
+  - Use type-only imports where appropriate
+  - Add it to knip's ignore configuration if it's intentionally exported for external use
+- **After Fixes**: Always run `pnpm lint` and `pnpm build` after applying knip fixes to ensure nothing broke
+- **Common Pattern**: For placeholder implementations, use void references or dummy usage to prevent knip warnings
