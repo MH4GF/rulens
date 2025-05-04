@@ -51,6 +51,8 @@
 - [x] サブディレクトリ作成（commands/, tools/, markdown/, utils/）
 - [ ] 新規ディレクトリ作成
   - [ ] src/data/ ディレクトリの作成（ルール説明JSONデータ用）
+  - [ ] src/types/ ディレクトリの作成（共通型定義用）
+  - [ ] src/parsers/ ディレクトリの作成（各linter用パーサー）
   - [ ] ルートに scripts/ ディレクトリの作成（開発用スクリプト用）
 - [ ] README.mdの初期版作成
 
@@ -87,10 +89,17 @@
 - [x] Biomeルール出力テンプレート作成
 - [ ] ESLintルール出力テンプレート作成
 - [x] ファイル出力機能実装
+- [ ] 共通中間表現を使ったマークダウン生成機能への改修
+  - [ ] 共通の型定義ファイル作成（`src/types/rulens.ts`）
+  - [ ] Biome用パーサーの実装（`src/parsers/biome-parser.ts`）
+  - [ ] ESLint用パーサーの実装（`src/parsers/eslint-parser.ts`）
+  - [ ] 中間表現からマークダウンを生成する共通関数の実装（`src/markdown/lint-to-markdown.ts`）
+  - [ ] メインジェネレーターの更新（パーサーと中間表現を使用）
+  - [ ] 各ツール固有の実装とのインターフェース調整
 - [ ] ルール説明を含むマークダウン形式への拡張
-  - [ ] BiomeToMarkdown関数の拡張（ルール説明を含める）
-  - [ ] データ構造の拡張（BiomeRuleDescriptionインターフェース）
-  - [ ] 出力例の更新とテスト
+  - [ ] Biomeルール説明のJSONデータをパーサーで活用
+  - [ ] マークダウン出力にルール説明と URL を含める
+  - [ ] テストの更新
 
 ## テスト・デプロイ
 

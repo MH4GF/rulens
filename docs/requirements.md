@@ -65,6 +65,7 @@
     // キー: "カテゴリー/ルール名" (例: "suspicious/noCatchAssign")
     [ruleId: string]: {
       description: string; // ルールの説明文
+      url?: string; // ドキュメントURL
     };
   }
   ```
@@ -85,6 +86,55 @@
   - `noCatchAssign`: Disallows reassigning exceptions in catch clauses.
   - `noDebugger`: Disallows using the debugger statement.
   ```
+
+### 5.4 共通中間表現の設計
+
+- **中間表現の型定義**
+
+  ```typescript
+  // src/types/rulens.ts
+  
+  /**
+   * 個別のルール情報を表す型
+   */
+  export interface RulensRule {
+    id: string // 完全なルールID (例: "suspicious/noCatchAssign")
+    name: string // ルール名のみ (例: "noCatchAssign")
+    description: string // 説明文
+    url?: string // ドキュメントURL (任意)
+  }
+  
+  /**
+   * カテゴリー内のルール集合を表す型
+   */
+  export interface RulensCategory {
+    name: string // カテゴリー名 (例: "suspicious")
+    description?: string // カテゴリーの説明 (任意)
+    rules: RulensRule[] // このカテゴリーに属するルール
+  }
+  
+  /**
+   * Lintツール全体の設定を表す型
+   */
+  export interface RulensLinter {
+    name: string // Linterの名前 (例: "Biome", "ESLint")
+    categories: RulensCategory[] // カテゴリーのリスト
+  }
+  ```
+
+- **アーキテクチャ設計**
+
+  1. **パーサー**: 各ツール固有の出力を共通の中間表現に変換
+     ```
+     BiomeRageResult/ESLintConfigResult → RulensLinter
+     ```
+
+  2. **マークダウンジェネレーター**: 中間表現から統一された形式のマークダウンを生成
+     ```
+     RulensLinter → Markdown
+     ```
+
+  3. **拡張性**: 新しいLintツールに対応する場合、固有のパーサーを実装するだけで、マークダウン生成部分は共通利用
 
 #### Markdown フォーマット例
 
@@ -134,13 +184,14 @@ eslint --print-config src/index.js --color
 ## 10. ディレクトリ構成
 
 ```
-
 rulens/
 ├── package.json
 ├── tsconfig.json
 ├── tsup.config.ts # tsup 設定ファイル
 ├── .gitignore
 ├── README.md
+├── scripts/
+│ └── crawl-biome-rules.ts # Biomeルール説明クローリングスクリプト
 ├── src/
 │ ├── index.ts # CLI エントリポイント（commander.js 初期化）
 │ ├── index.test.ts # テストファイル（隣置き）
@@ -152,13 +203,18 @@ rulens/
 │ │ ├── biome-runner.test.ts
 │ │ ├── eslint-runner.ts # ESLint 実行ロジック
 │ │ └── eslint-runner.test.ts
+│ ├── parsers/
+│ │ ├── biome-parser.ts # Biome結果を中間表現に変換
+│ │ ├── biome-parser.test.ts
+│ │ ├── eslint-parser.ts # ESLint結果を中間表現に変換
+│ │ └── eslint-parser.test.ts
 │ ├── markdown/
 │ │ ├── generator.ts # Markdown 生成ロジック
 │ │ ├── generator.test.ts
-│ │ ├── biome-to-markdown.ts # Biome 結果の Markdown 変換
-│ │ ├── biome-to-markdown.test.ts
-│ │ ├── eslint-to-markdown.ts # ESLint 結果の Markdown 変換
-│ │ └── eslint-to-markdown.test.ts
+│ │ ├── lint-to-markdown.ts # 中間表現からマークダウン生成
+│ │ └── lint-to-markdown.test.ts
+│ ├── types/
+│ │ └── rulens.ts # 共通中間表現の型定義
 │ ├── data/
 │ │ └── biome-rules.json # クローリングした Biome ルール説明データ
 │ └── utils/
@@ -169,7 +225,6 @@ rulens/
 │ ├── logger.ts # ロギングユーティリティ
 │ └── logger.test.ts
 └── dist/ # tsup ビルド成果物
-
 ```
 
 ```
