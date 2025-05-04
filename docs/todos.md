@@ -2,13 +2,51 @@
 
 ## プロジェクト基盤構築
 
-- [ ] プロジェクト初期化（package.json）
-- [ ] tsconfig.json設定（[@mh4gf/configs](https://www.npmjs.com/package/@mh4gf/configs) を使用）
-- [ ] Biome設定（[@mh4gf/configs](https://www.npmjs.com/package/@mh4gf/configs) を使用）
-- [ ] ESLint設定（[@mh4gf/eslint-config](https://www.npmjs.com/package/@mh4gf/eslint-config) を使用）
-- [ ] TypeScript, tsupのセットアップ
-- [ ] Vitestテスト環境のセットアップ
-- [ ] ディレクトリ構造の作成
+### プロジェクト初期化
+- [x] package.json基本設定（名前、バージョン、ライセンス、Node.js 20+エンジン要件）
+- [x] package.jsonスクリプト設定（build, dev, test, lint, format, typecheck）
+- [x] 開発依存関係インストール
+  - [x] typescript, tsup, vitest
+  - [x] @mh4gf/configs, @mh4gf/eslint-config
+  - [x] @biomejs/biome
+  - [ ] syncpack
+  - [ ] eslint, @mh4gf/eslint-config
+  - [ ] knip
+- [ ] プロジェクト依存関係インストール
+  - [ ] commander: CLIコマンド設計
+  - [ ] execa: 外部コマンド実行
+  - [ ] picocolors: ターミナル出力のカラー
+  - [ ] zod: バリデーション
+- [ ] CLI設定（bin指定など）
+
+### TypeScript設定
+- [ ] @mh4gf/configsのインストール
+- [ ] tsconfig.jsonの作成とベース設定の継承
+- [ ] プロジェクト固有のtsconfig設定（パス、出力先等）
+
+### リンター・フォーマッター設定
+- [ ] Biome設定
+  - [ ] biome.jsonの作成と@mh4gf/configsの設定の継承
+  - [ ] プロジェクト固有のBiome設定
+- [ ] ESLint設定
+  - [ ] @mh4gf/eslint-configのインストール
+  - [ ] .eslintrc.js/.eslintrc.jsonの作成と設定の継承
+  - [ ] プロジェクト固有のESLint設定
+
+### ビルド・テスト環境設定
+- [ ] tsup設定
+  - [ ] tsup.config.tsファイルの作成
+  - [ ] エントリーポイントとビルド設定
+  - [ ] バンドルとデクラレーションファイルの設定
+- [ ] Vitestテスト環境
+  - [ ] vitest.config.tsの作成
+  - [ ] テストディレクトリ構造とサンプルテストの作成
+  - [ ] カバレッジ設定（80%以上）
+
+### ディレクトリ構造整備
+- [ ] src/ディレクトリと基本ファイル構造作成
+- [ ] サブディレクトリ作成（commands/, tools/, markdown/, utils/）
+- [ ] README.mdの初期版作成
 
 ## コア機能実装
 
