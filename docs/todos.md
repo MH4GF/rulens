@@ -16,7 +16,7 @@
   - [ ] commander: CLIコマンド設計
   - [ ] execa: 外部コマンド実行
   - [ ] picocolors: ターミナル出力のカラー
-  - [ ] zod: バリデーション
+  - [ ] valibot: バリデーション
 - [ ] CLI設定（bin指定など）
 
 ### TypeScript設定
