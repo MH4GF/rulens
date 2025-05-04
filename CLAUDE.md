@@ -2,6 +2,14 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Documentation
+
+**IMPORTANT**: Always read all documentation in the `docs/` directory at the start of each session. This includes:
+- `docs/lint-rules.md`
+- `docs/requirements.md`
+- `docs/todos.md`
+- Any additional files in the `docs/` directory
+
 ## Commands
 
 - Build: `pnpm build` - Build the project using tsup
