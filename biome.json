@@ -1,4 +1,7 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "extends": ["./node_modules/@mh4gf/configs/biome/index.jsonc"]
+  "extends": [
+    "./node_modules/@mh4gf/configs/biome/index.jsonc",
+    "./node_modules/@mh4gf/configs/biome/nodejs.jsonc"
+  ]
 }
