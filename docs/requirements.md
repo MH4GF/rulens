@@ -46,6 +46,41 @@
 
   - 各ルールセットをセクション分けして Markdown 整形
   - セクション内に実行コマンド例（コードブロック）と結果 JSON コードブロックを併記
+  - 各ルールに説明文を追加して表示
+
+### 5.3 Biomeルール説明のクローリング
+
+- **クローリング機能**
+  - Biome公式ドキュメント（https://biomejs.dev/linter/rules/）から各ルールの説明文を取得
+  - 各ルールの簡潔な説明文のみを抽出（詳細な使用例は含まない）
+  - クローリング結果は静的なJSONファイルとしてリポジトリに保存
+  - 開発時ツールとして使用し、生成したJSONファイルをコード内でインポートして使用
+
+- **ルール説明のデータ構造**
+  ```typescript
+  // src/data/biome-rules.json の形式
+  interface BiomeRuleDescription {
+    // キー: "カテゴリー/ルール名" (例: "suspicious/noCatchAssign")
+    [ruleId: string]: {
+      description: string; // ルールの説明文
+    };
+  }
+  ```
+
+- **ルール説明の表示形式**
+  ```markdown
+  ### カテゴリー名
+  
+  - `ルール名`: 説明文
+  ```
+  
+  例:
+  ```markdown
+  ### suspicious
+  
+  - `noCatchAssign`: Disallows reassigning exceptions in catch clauses.
+  - `noDebugger`: Disallows using the debugger statement.
+  ```
 
 #### Markdown フォーマット例
 
@@ -115,7 +150,13 @@ rulens/
 │ │ └── eslint-runner.test.ts
 │ ├── markdown/
 │ │ ├── generator.ts # Markdown 生成ロジック
-│ │ └── generator.test.ts
+│ │ ├── generator.test.ts
+│ │ ├── biome-to-markdown.ts # Biome結果のMarkdown変換
+│ │ ├── biome-to-markdown.test.ts
+│ │ ├── eslint-to-markdown.ts # ESLint結果のMarkdown変換
+│ │ └── eslint-to-markdown.test.ts
+│ ├── data/
+│ │ └── biome-rules.json # クローリングしたBiomeルール説明データ
 │ └── utils/
 │ ├── bin-resolver.ts # バイナリ解決ユーティリティ
 │ ├── bin-resolver.test.ts
