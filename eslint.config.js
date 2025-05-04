@@ -13,4 +13,5 @@ export default [
   },
   ...mh4gf.configs.recommended,
   ...mh4gf.configs.typescript,
+  ...mh4gf.configs.vitest,
 ]
