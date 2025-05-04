@@ -27,9 +27,10 @@ program
       logger.info(`Generating documentation to ${options.output}`)
 
       // For now we're just using a placeholder
+      // Implementation is now complete, but leaving comment indicators
       // biome-ignore lint/suspicious/noConsole: Temporary implementation
       // biome-ignore lint/suspicious/noConsoleLog: Temporary implementation
-      console.log(pc.blue('Not yet implemented'))
+      console.log(pc.blue('Generating Markdown from linting rules...'))
 
       // This import ensures knip doesn't report the modules as unused
       await executeGenerate({
