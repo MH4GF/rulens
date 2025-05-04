@@ -25,6 +25,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Testing**: Use Vitest, aim for 80%+ test coverage
 - **Lint Rules**: Always follow @docs/lint-rules.md as coding guideline
 
+## Testing Strategy
+
+- **Real Environment Testing**: Avoid using mocks. Test with real dependencies whenever possible to ensure tests validate actual behavior.
+- **TDD Approach**: Follow test-driven development when appropriate:
+  - Write failing tests first with `it.skip` to clearly define expected behavior
+  - Implement code to make tests pass
+  - Refactor and optimize
+  - Remove `skip` as tests start passing
+- **Concrete Assertions**: Use specific value assertions instead of general type checks
+  - Prefer `expect(result).toContain("specific/value")` over just checking array length or type
+  - Use `.toMatchSnapshot()` for testing large outputs like command results
+- **Test Edge Cases**: Always include tests for error conditions and edge cases
+- **Independent Tests**: Ensure each test runs independently and doesn't depend on other tests
+
 ## Knip Handling
 
 - **Unused Exports**: Run `pnpm fmt:knip` to automatically remove export keywords from unused types

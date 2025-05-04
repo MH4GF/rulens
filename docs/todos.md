@@ -17,7 +17,7 @@
   - [x] execa: 外部コマンド実行
   - [x] picocolors: ターミナル出力のカラー
   - [x] valibot: バリデーション
-- [ ] CLI設定（bin指定など）
+- [x] CLI設定（bin指定など）
 
 ### TypeScript設定
 - [x] @mh4gf/configsのインストール
@@ -32,32 +32,35 @@
   - [x] @mh4gf/eslint-configのインストール
   - [x] .eslintrc.js/.eslintrc.jsonの作成と設定の継承
   - [x] プロジェクト固有のESLint設定
+- [x] Knip設定
+  - [x] knipの設定と使用方法のドキュメント化（CLAUDE.md）
+  - [x] unused exportsなどの修正手順確立
 
 ### ビルド・テスト環境設定
-- [ ] tsup設定
-  - [ ] tsup.config.tsファイルの作成
-  - [ ] エントリーポイントとビルド設定
-  - [ ] バンドルとデクラレーションファイルの設定
+- [x] tsup設定
+  - [x] tsup.config.tsファイルの作成
+  - [x] エントリーポイントとビルド設定
+  - [x] バンドルとデクラレーションファイルの設定
 - [ ] Vitestテスト環境
   - [ ] vitest.config.tsの作成
   - [ ] テストディレクトリ構造とサンプルテストの作成
   - [ ] カバレッジ設定（80%以上）
 
 ### ディレクトリ構造整備
-- [ ] src/ディレクトリと基本ファイル構造作成
-- [ ] サブディレクトリ作成（commands/, tools/, markdown/, utils/）
+- [x] src/ディレクトリと基本ファイル構造作成
+- [x] サブディレクトリ作成（commands/, tools/, markdown/, utils/）
 - [ ] README.mdの初期版作成
 
 ## コア機能実装
 
-- [ ] CLI基盤実装（commander.js）
-- [ ] バイナリ解決ロジック実装（ローカル/グローバル）
-- [ ] ユーティリティ（logger, executor）実装
+- [x] CLI基盤実装（commander.js）
+- [x] バイナリ解決ロジック実装（ローカル/グローバル）
+- [x] ユーティリティ（logger, executor）実装
 
 ## Biome対応（優先実装）
 
-- [ ] Biome実行ロジック実装
-- [ ] Biome出力結果のパース・整形
+- [x] Biome実行ロジック実装
+- [x] Biome出力結果のパース・整形
 - [ ] Biome設定をMarkdown形式に変換
 
 ## ESLint対応
