@@ -17,12 +17,8 @@ const CATEGORY_DESCRIPTIONS: Record<string, string> = {
   style: 'Rules in this category enforce consistent code style and patterns.',
   suspicious: 'Rules in this category identify potentially problematic code patterns.',
 
-  // ESLintカテゴリ
-  '@typescript-eslint':
-    'Rules in this category enforce TypeScript-specific best practices and type safety.',
-  'ESLint Core': 'Core ESLint rules that apply to JavaScript code.',
-  'unused-imports': 'Rules that prevent unused imports and variables from cluttering your code.',
-  vitest: 'Rules that ensure effective testing practices when using Vitest.',
+  // 他のカテゴリはここに追加
+  // 注: ESLintのカテゴリ説明はparser側から直接取得するようになりました
 }
 
 /**

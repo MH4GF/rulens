@@ -38,7 +38,9 @@ When uncertain about specific rules, refer to the rule documentation links provi
 
 ---
 
-## Biome Rules
+## 🔧 Biome Rules
+
+Biome enforces modern JavaScript/TypeScript best practices with a focus on correctness, maintainability, and performance.
 
 ### accessibility
 
@@ -81,6 +83,7 @@ Rules in this category ensure that code is accessible to all users, including th
 | [`useValidAriaValues`](https://biomejs.dev/linter/rules/use-valid-aria-values) | Enforce that ARIA state and property values are valid. |
 | [`useValidLang`](https://biomejs.dev/linter/rules/use-valid-lang) | Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country. |
 
+---
 
 ### complexity
 
@@ -120,6 +123,7 @@ Rules in this category help maintain code that is easy to understand, modify, an
 | [`useSimpleNumberKeys`](https://biomejs.dev/linter/rules/use-simple-number-keys) | Disallow number literal object member names which are not base10 or uses underscore as separator |
 | [`useSimplifiedLogicExpression`](https://biomejs.dev/linter/rules/use-simplified-logic-expression) | Discard redundant terms from logical expressions. |
 
+---
 
 ### correctness
 
@@ -180,6 +184,7 @@ Rules in this category identify code that is likely to be incorrect or lead to b
 | [`useValidForDirection`](https://biomejs.dev/linter/rules/use-valid-for-direction) | Enforce “for” loop update clause moving the counter in the right direction. |
 | [`useYield`](https://biomejs.dev/linter/rules/use-yield) | Require generator functions to contain yield. |
 
+---
 
 ### nursery
 
@@ -189,6 +194,7 @@ Newer rules that are still being refined based on community feedback.
 | ---- | ----------- |
 | [`useExplicitType`](https://biomejs.dev/linter/rules/use-explicit-type) | Require explicit return types on functions and class methods. |
 
+---
 
 ### performance
 
@@ -202,6 +208,7 @@ Rules in this category help improve application and runtime performance.
 | [`noReExportAll`](https://biomejs.dev/linter/rules/no-re-export-all) | Avoid re-export all. |
 | [`useTopLevelRegex`](https://biomejs.dev/linter/rules/use-top-level-regex) | Require regex literals to be declared at the top level. |
 
+---
 
 ### security
 
@@ -213,6 +220,7 @@ Rules in this category identify security vulnerabilities that could be exploited
 | [`noDangerouslySetInnerHtmlWithChildren`](https://biomejs.dev/linter/rules/no-dangerously-set-inner-html-with-children) | Report when a DOM element or a component uses both children and dangerouslySetInnerHTML prop. |
 | [`noGlobalEval`](https://biomejs.dev/linter/rules/no-global-eval) | Disallow the use of global eval(). |
 
+---
 
 ### style
 
@@ -269,6 +277,7 @@ Rules in this category enforce consistent code style and patterns.
 | [`useThrowOnlyError`](https://biomejs.dev/linter/rules/use-throw-only-error) | Disallow throwing non-Error values. |
 | [`useWhile`](https://biomejs.dev/linter/rules/use-while) | Enforce the use of while loops instead of for loops when the initializer and update expressions are not needed. |
 
+---
 
 ### suspicious
 
@@ -345,7 +354,9 @@ Rules in this category identify potentially problematic code patterns.
 | [`useValidTypeof`](https://biomejs.dev/linter/rules/use-valid-typeof) | This rule verifies the result of typeof $expr unary expressions is being compared to valid values, either string literals containing valid type names or other typeof expressions |
 
 
-## ESLint Rules
+## 🔧 ESLint Rules
+
+ESLint provides static analysis focused on identifying potential errors and enforcing coding standards.
 
 ### @typescript-eslint
 
@@ -409,6 +420,7 @@ Rules in this category enforce TypeScript-specific best practices and type safet
 | [`unbound-method`](https://typescript-eslint.io/rules/unbound-method) | Enforce unbound methods are called with their expected scope (error) |
 | [`unified-signatures`](https://typescript-eslint.io/rules/unified-signatures) | Disallow two overloads that could be unified into one with a union or an optional/rest parameter (error) |
 
+---
 
 ### ESLint Core
 
@@ -490,6 +502,7 @@ Core ESLint rules that apply to JavaScript code.
 | `use-isnan` | ESLint rule: use-isnan (error) |
 | `valid-typeof` | ESLint rule: valid-typeof (error) |
 
+---
 
 ### unused-imports
 
@@ -500,6 +513,7 @@ Rules that prevent unused imports and variables from cluttering your code.
 | [`no-unused-imports`](https://github.com/sweepline/eslint-plugin-unused-imports/blob/master/docs/rules/no-unused-imports.md) | Disallow unused variables (error) |
 | [`no-unused-vars`](https://github.com/sweepline/eslint-plugin-unused-imports/blob/master/docs/rules/no-unused-vars.md) | Disallow unused variables (warn, with options) |
 
+---
 
 ### vitest
 

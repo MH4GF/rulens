@@ -1,5 +1,8 @@
 import type { ESLintConfigResult } from '../tools/eslint-runner.ts'
 import type { RulensCategory, RulensLinter, RulensRule } from '../types/rulens.ts'
+import { Logger } from '../utils/logger.ts'
+
+const logger = new Logger()
 
 /**
  * ESLintの実行結果を共通中間表現に変換する
@@ -17,49 +20,90 @@ export function parseESLintRules(eslintResult: ESLintConfigResult): RulensLinter
   // ルールごとにカテゴリ分類
   const categorizedRules = categorizeESLintRules(rules)
 
-  // カテゴリをアルファベット順にソート
-  const categories = Object.keys(categorizedRules)
-    .sort()
-    .map((categoryName): RulensCategory => {
-      const rulesInCategory = categorizedRules[categoryName]
-      // Check if rulesInCategory is defined
-      if (!rulesInCategory) {
-        return {
-          name: categoryName,
-          rules: [],
-        }
-      }
+  /**
+   * カテゴリごとにルールを変換
+   */
+  function createRulensRule(
+    ruleName: string,
+    ruleConfig: unknown,
+    categoryName: string,
+  ): RulensRule {
+    const { severity, options } = parseRuleConfig(ruleConfig)
 
-      const categoryRules = Object.entries(rulesInCategory).map(
-        ([ruleName, ruleConfig]): RulensRule => {
-          const { severity, options } = parseRuleConfig(ruleConfig)
+    // ESLintではruleNameは 'no-console' のような形式で、
+    // プラグインの場合は '@typescript-eslint/no-explicit-any' のような形式
+    const fullRuleId = categoryName === 'ESLint Core' ? ruleName : `${categoryName}/${ruleName}`
 
-          // ESLintではruleNameは 'no-console' のような形式で、
-          // プラグインの場合は '@typescript-eslint/no-explicit-any' のような形式
-          const fullRuleId =
-            categoryName === 'ESLint Core' ? ruleName : `${categoryName}/${ruleName}`
+    // ルールメタデータから説明とURLを取得
+    const ruleMeta = rulesMeta[fullRuleId]
+    const description = ruleMeta?.description || `ESLint rule: ${ruleName}`
+    const url = ruleMeta?.url
 
-          // ルールメタデータから説明とURLを取得
-          const ruleMeta = rulesMeta[fullRuleId]
-          const description = ruleMeta?.description || `ESLint rule: ${ruleName}`
-          const url = ruleMeta?.url
+    return {
+      id: fullRuleId,
+      name: ruleName,
+      description,
+      url: url || '',
+      severity: severity || 'unknown', // Ensure severity is never undefined
+      ...(options ? { options } : {}),
+    }
+  }
 
-          return {
-            id: fullRuleId,
-            name: ruleName,
-            description,
-            url: url || '',
-            severity: severity || 'unknown', // Ensure severity is never undefined
-            ...(options ? { options } : {}),
-          }
-        },
-      )
+  /**
+   * カテゴリの説明を取得
+   */
+  function getCategoryDescription(categoryName: string): string | undefined {
+    // pluginsMetadataから説明を取得
+    if (eslintResult.pluginsMetadata?.[categoryName]) {
+      return eslintResult.pluginsMetadata[categoryName].description
+    }
 
+    // プラグインメタデータが見つからなかった場合のフォールバック説明
+    // よく使われるESLintプラグインの説明
+    const fallbackDescriptions: Record<string, string> = {
+      '@typescript-eslint':
+        'Rules in this category enforce TypeScript-specific best practices and type safety.',
+      'ESLint Core': 'Core ESLint rules that apply to JavaScript code.',
+      'unused-imports':
+        'Rules that prevent unused imports and variables from cluttering your code.',
+      vitest: 'Rules that ensure effective testing practices when using Vitest.',
+    }
+
+    return fallbackDescriptions[categoryName]
+  }
+
+  /**
+   * カテゴリごとにRulensCategoryを生成
+   */
+  function createRulensCategory(categoryName: string): RulensCategory {
+    const rulesInCategory = categorizedRules[categoryName]
+    // Check if rulesInCategory is defined
+    if (!rulesInCategory) {
       return {
         name: categoryName,
-        rules: categoryRules,
+        rules: [],
       }
-    })
+    }
+
+    // カテゴリのルールを変換
+    const categoryRules = Object.entries(rulesInCategory).map(
+      ([ruleName, ruleConfig]): RulensRule => createRulensRule(ruleName, ruleConfig, categoryName),
+    )
+
+    // カテゴリに説明を取得
+    const description = getCategoryDescription(categoryName)
+
+    logger.debug(`Category: ${categoryName}, Description: ${description || 'none'}`)
+
+    return {
+      name: categoryName,
+      ...(description ? { description } : {}),
+      rules: categoryRules,
+    }
+  }
+
+  // カテゴリをアルファベット順にソート
+  const categories = Object.keys(categorizedRules).sort().map(createRulensCategory)
 
   return {
     name: 'ESLint',

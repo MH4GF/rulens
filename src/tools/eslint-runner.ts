@@ -45,6 +45,7 @@ export interface ESLintConfigResult {
   raw: string
   rules: Record<string, unknown>
   rulesMeta: Record<string, ESLintRuleMeta>
+  pluginsMetadata?: Record<string, { name: string; description?: string }>
 }
 
 // bundle-requireの結果のバリデーションスキーマ
@@ -107,12 +108,13 @@ export async function runESLintConfig(
 
     try {
       // ルールとメタデータを抽出
-      const { rules, rulesMeta } = extractRulesAndMeta(config)
+      const { rules, rulesMeta, pluginsMetadata } = extractRulesAndMeta(config)
 
       return {
         raw: safeStringify(config), // 循環参照に対応した文字列化
         rules,
         rulesMeta,
+        pluginsMetadata,
       }
     } catch (extractError) {
       logger.error(
@@ -124,6 +126,7 @@ export async function runESLintConfig(
         raw: safeStringify(config),
         rules: {},
         rulesMeta: {},
+        pluginsMetadata: {},
       }
     }
   } catch (error) {
@@ -159,33 +162,151 @@ function extractPluginsFromObject(
 }
 
 /**
+ * 配列形式の設定からルールやプラグインを処理する
+ */
+function processArrayConfig(
+  configArray: unknown[],
+  rules: Record<string, unknown>,
+  rulesMeta: Record<string, ESLintRuleMeta>,
+  pluginsMetadata: Record<string, { name: string; description?: string }>,
+): void {
+  for (const item of configArray) {
+    if (item && typeof item === 'object') {
+      const configItem = item as Record<string, unknown>
+      processConfigItem(configItem, rules, rulesMeta, pluginsMetadata)
+    }
+  }
+}
+
+/**
+ * 単一の設定オブジェクトを処理する
+ */
+function processConfigItem(
+  configItem: Record<string, unknown>,
+  rules: Record<string, unknown>,
+  rulesMeta: Record<string, ESLintRuleMeta>,
+  pluginsMetadata: Record<string, { name: string; description?: string }>,
+): void {
+  // プラグイン名と説明を抽出
+  if (
+    'plugins' in configItem &&
+    configItem['plugins'] &&
+    typeof configItem['plugins'] === 'object'
+  ) {
+    extractPluginsMetadata(configItem['plugins'] as Record<string, unknown>, pluginsMetadata)
+  }
+
+  // ルールとプラグインを処理
+  extractRulesFromObject(configItem, rules)
+  extractPluginsFromObject(configItem, rulesMeta)
+}
+
+/**
  * 設定からルールとメタデータを抽出する
  */
 export function extractRulesAndMeta(config: unknown): {
   rules: Record<string, unknown>
   rulesMeta: Record<string, ESLintRuleMeta>
+  pluginsMetadata: Record<string, { name: string; description?: string }>
 } {
   const rules: Record<string, unknown> = {}
   const rulesMeta: Record<string, ESLintRuleMeta> = {}
+  // カテゴリ（プラグイン）のメタデータを格納
+  const pluginsMetadata: Record<string, { name: string; description?: string }> = {
+    // デフォルトのESLint Coreのカテゴリ説明
+    'ESLint Core': {
+      name: 'ESLint Core',
+      description: 'Core ESLint rules that apply to JavaScript code.',
+    },
+  }
+
+  // デバッグ出力（開発時のみ）
+  logger.debug(`Extracting rules and metadata from ESLint config: ${typeof config}`)
 
   // 配列形式の設定を処理
   if (Array.isArray(config)) {
-    for (const item of config) {
-      if (item && typeof item === 'object') {
-        // 直接定義されたルールとプラグインを処理
-        const configItem = item as Record<string, unknown>
-        extractRulesFromObject(configItem, rules)
-        extractPluginsFromObject(configItem, rulesMeta)
-      }
-    }
+    processArrayConfig(config, rules, rulesMeta, pluginsMetadata)
   } else if (config && typeof config === 'object') {
     // オブジェクト形式の設定を処理
-    const configObject = config as Record<string, unknown>
-    extractRulesFromObject(configObject, rules)
-    extractPluginsFromObject(configObject, rulesMeta)
+    processConfigItem(config as Record<string, unknown>, rules, rulesMeta, pluginsMetadata)
   }
 
-  return { rules, rulesMeta }
+  // デバッグ：見つかったプラグインメタデータを出力
+  logger.debug(`Found plugin metadata: ${JSON.stringify(pluginsMetadata, null, 2)}`)
+
+  return { rules, rulesMeta, pluginsMetadata }
+}
+
+/**
+ * プラグインの説明をオブジェクトから抽出
+ */
+function extractPluginDescription(pluginObj: Record<string, unknown>): string | undefined {
+  // 最初に meta?.description を試す
+  if ('meta' in pluginObj && pluginObj['meta'] && typeof pluginObj['meta'] === 'object') {
+    const meta = pluginObj['meta'] as Record<string, unknown>
+    if ('description' in meta && typeof meta['description'] === 'string') {
+      return meta['description']
+    }
+  }
+
+  return undefined
+}
+
+/**
+ * プラグイン名に基づくフォールバック説明を提供
+ */
+function getFallbackDescription(pluginName: string): string {
+  // よく使われるESLintプラグインの説明
+  const knownDescriptions: { [key: string]: string } = {
+    '@typescript-eslint':
+      'Rules in this category enforce TypeScript-specific best practices and type safety.',
+    'unused-imports': 'Rules that prevent unused imports and variables from cluttering your code.',
+    vitest: 'Rules that ensure effective testing practices when using Vitest.',
+  }
+
+  // 既知のプラグインの説明があればそれを返す、そうでなければ汎用的な説明を生成
+  return knownDescriptions[pluginName] || `Rules provided from the ${pluginName} plugin.`
+}
+
+/**
+ * 単一プラグインのメタデータを抽出する
+ */
+function extractSinglePluginMetadata(
+  pluginName: string,
+  plugin: unknown,
+  pluginsMetadata: Record<string, { name: string; description?: string }>,
+): void {
+  if (!plugin || typeof plugin !== 'object') {
+    return
+  }
+
+  const pluginObj = plugin as Record<string, unknown>
+
+  // 初期メタデータを設定
+  pluginsMetadata[pluginName] = {
+    name: pluginName,
+  }
+
+  // 説明を取得する順序:
+  // 1. プラグインオブジェクトから直接抽出
+  // 2. フォールバック説明を使用
+  const extractedDescription = extractPluginDescription(pluginObj)
+
+  // プラグインから説明が取得できる場合はそれを使用、そうでなければフォールバック
+  pluginsMetadata[pluginName].description =
+    extractedDescription || getFallbackDescription(pluginName)
+}
+
+/**
+ * プラグインのメタデータを抽出する
+ */
+function extractPluginsMetadata(
+  plugins: Record<string, unknown>,
+  pluginsMetadata: Record<string, { name: string; description?: string }>,
+): void {
+  for (const [pluginName, plugin] of Object.entries(plugins)) {
+    extractSinglePluginMetadata(pluginName, plugin, pluginsMetadata)
+  }
 }
 
 /**
@@ -276,8 +397,8 @@ function processNestedConfigs(
     }
 
     // plugins内のルールを再帰的に処理
-    if ('plugins' in config && config.plugins && typeof config.plugins === 'object') {
-      extractPluginMetadata(config.plugins as Record<string, unknown>, rulesMeta, depth)
+    if ('plugins' in config && config['plugins'] && typeof config['plugins'] === 'object') {
+      extractPluginMetadata(config['plugins'] as Record<string, unknown>, rulesMeta, depth)
     }
   }
 }
