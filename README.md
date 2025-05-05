@@ -1,48 +1,36 @@
 # Rulens
 
+[![npm version](https://img.shields.io/npm/v/rulens.svg)](https://www.npmjs.com/package/rulens)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js Version](https://img.shields.io/node/v/rulens.svg)](https://nodejs.org)
+
 Rulens is a CLI tool that extracts and formats linting rules into Markdown documentation. It analyzes your project's Biome and ESLint configurations and generates comprehensive documentation of all active linting rules with descriptions.
 
-## Features
+## Why Rulens?
+
+- **AI-Ready Code Generation**: Help AI coding assistants understand your project's coding standards before generating code
+- **Consistent Code Quality**: Eliminate the cycle of writing code → running linters → fixing errors by teaching the standards upfront
+- **Automatic Documentation**: Keep your linting documentation perfectly in sync with your actual configuration
+
+## Core Features
 
 - Automatically documents linting rules from your project configuration
 - Supports both Biome and ESLint
 - Includes detailed descriptions for each rule with links to official documentation
 - Organizes rules by category for easy reference
 - Provides consistent Markdown formatting suitable for documentation and AI input
-- Additional tools can be supported based on user demand
 
-## Installation
+## Quick Start
 
-```bash
-# Using npm
-npm install rulens
-
-# Using pnpm
-pnpm add rulens
-
-# Using yarn
-yarn add rulens
-```
-
-## Usage
+Run this command in your project root to generate the documentation:
 
 ```bash
-# Basic usage - generates Markdown at docs/lint-rules.md
 npx rulens generate
-
-# Custom output path
-npx rulens generate --output custom-path.md
-
-# Custom ESLint config path
-npx rulens generate --eslint-config custom-eslint.config.js
-
-# Pass additional arguments to biome
-npx rulens generate --biome-args "--somearg value"
 ```
 
-## Sample Output
+That's it! You'll find a `docs/lint-rules.md` file containing your linting in an AI-friendly format.
 
-Rulens generates Markdown documentation that looks like this:
+Example output structure:
 
 ```markdown
 # Rulens Lint Rules Dump
@@ -58,9 +46,72 @@ Rulens generates Markdown documentation that looks like this:
 
 ### @typescript-eslint
 
-- `await-thenable`: ESLint rule: await-thenable (error, with options)
-- `ban-ts-comment`: ESLint rule: ban-ts-comment (error, with options)
+- [`await-thenable`](https://typescript-eslint.io/rules/await-thenable): Disallow awaiting a value that is not a Thenable (error)
+- [`ban-ts-comment`](https://typescript-eslint.io/rules/ban-ts-comment): Disallow `@ts-<directive>` comments or require descriptions after directives (error, with options)
 ```
+
+You can view an example in the [docs/lint-rules.md](docs/lint-rules.md) file of this rulens repository.
+
+## Usage
+
+### Installation
+
+```bash
+# Using npm
+npm install -D rulens
+
+# Using pnpm
+pnpm add -D rulens
+
+# Using yarn
+yarn add -D rulens
+```
+
+### Basic Usage
+
+```bash
+# Basic usage - generates Markdown at docs/lint-rules.md
+rulens generate
+
+# Custom output path
+rulens generate --output custom-path.md
+
+# Custom ESLint config path
+rulens generate --eslint-config custom-eslint.config.js
+
+# Pass additional arguments to biome
+rulens generate --biome-args "--somearg value"
+```
+
+### AI Integration
+
+Add this prompt directive to your AI coding assistant instructions for immediate awareness of your coding standards:
+
+```
+IMPORTANT: Read coding guidelines in docs/lint-rules.md before beginning code work
+```
+
+This simple instruction helps AI tools like GitHub Copilot, Cursor, Claude, and other assistants to follow your project's linting standards from the start.
+
+## Command Options Reference
+
+| Option                   | Description                                | Default              |
+| ------------------------ | ------------------------------------------ | -------------------- |
+| `--biome-args <args>`    | Additional arguments to pass to biome rage | -                    |
+| `--eslint-config <path>` | Path to ESLint config file                 | `eslint.config.js`   |
+| `--output <file>`        | Output file path                           | `docs/lint-rules.md` |
+| `--help`                 | Display help information                   | -                    |
+| `--version`              | Display version number                     | -                    |
+
+## Prerequisites
+
+Rulens works with existing linting configurations in your project:
+
+- **Node.js**: Version 20.0.0 or higher is required
+- **Biome**: If you want to extract Biome rules, Biome should be installed in your project
+- **ESLint**: If you want to extract ESLint rules, ESLint should be installed in your project
+
+Rulens will automatically detect and use the appropriate linting tools from your project's `node_modules/.bin` directory. If not found, it will attempt to use globally installed versions.
 
 ## CI/CD Integration
 
@@ -78,10 +129,10 @@ name: Update Lint Rules Documentation
 on:
   push:
     paths:
-      - '.eslintrc.js'
-      - 'eslint.config.js' 
-      - 'biome.json'
-      - 'package.json'
+      - ".eslintrc.js"
+      - "eslint.config.js"
+      - "biome.json"
+      - "package.json"
 
 jobs:
   update-docs:
@@ -90,7 +141,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
       - run: npm install
       - name: Generate lint rules documentation
         run: npx rulens generate
@@ -107,10 +158,6 @@ jobs:
           git commit -m "docs: update lint rules documentation"
           git push
 ```
-
-## Requirements
-
-- Node.js >= 20.0.0
 
 ## Development
 
@@ -133,6 +180,13 @@ pnpm fmt
 # Lint code
 pnpm lint
 ```
+
+## Roadmap
+
+- Support for additional linting tools (Prettier, Stylelint, etc.)
+- Improved output formatting optimized for AI comprehension
+- ESLint rule description crawling for more consistent documentation
+- Custom templates for different documentation formats
 
 ## License
 

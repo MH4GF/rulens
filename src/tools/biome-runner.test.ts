@@ -11,8 +11,14 @@ describe('biome-runner', () => {
     it('should resolve biome binary and return the expected result structure', async () => {
       const result = await runBiomeRage()
 
-      // 期待される結果構造を確認
-      expect(result.raw).toMatchSnapshot()
+      // スナップショットテストではなく、必要な構造のみをテスト
+      // 環境依存の値がスナップショットテストの失敗を引き起こすため
+      expect(result.raw).toContain('CLI:')
+      expect(result.raw).toContain('Version:')
+      expect(result.raw).toContain('Platform:')
+      expect(result.raw).toContain('Biome Configuration:')
+      expect(result.raw).toContain('Linter:')
+      expect(result.raw).toContain('Enabled rules:')
 
       // ルールリストは配列で、最低限これらのルールを含むことを検証
       expect(Array.isArray(result.rules)).toBe(true)

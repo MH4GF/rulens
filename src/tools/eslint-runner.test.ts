@@ -14,13 +14,28 @@ describe('eslint-runner', () => {
       // 実際に設定を読み込む
       const result = await runESLintConfig({ configPath })
 
-      // 期待される結果構造を確認
+      // 期待される結果構造を確認（スナップショットを使わずに具体的な検証を行う）
       expect(result).toHaveProperty('raw')
       expect(result).toHaveProperty('rules')
       expect(result).toHaveProperty('rulesMeta')
 
       // このプロジェクトのESLint設定にルールが含まれていることを確認
       expect(Object.keys(result.rules).length).toBeGreaterThan(0)
+
+      // 注意: rawConfigの構造はプロジェクトによって異なるため、簡易的なチェックに変更
+      // JSONデータの代わりにrawが文字列であることを確認
+      expect(typeof result.raw).toBe('string')
+      expect(result.raw).toContain('"rules"')
+
+      // ルールの構造のみを確認
+      const rules = result.rules
+      expect(Object.keys(rules).length).toBeGreaterThan(0)
+
+      // 少なくともいくつかのESLintの標準ルールが存在することを確認
+      // プロジェクトに必ず含まれる可能性が高いものを選択
+      const commonRules = ['no-empty', 'no-unused-vars', 'no-console', 'no-debugger']
+      const hasAtLeastOneCommonRule = commonRules.some((rule) => rule in rules)
+      expect(hasAtLeastOneCommonRule).toBe(true)
 
       // メタデータが正しく抽出されていることを確認
       expect(Object.keys(result.rulesMeta).length).toBeGreaterThan(0)
