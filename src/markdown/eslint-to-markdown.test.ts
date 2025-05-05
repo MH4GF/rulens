@@ -104,6 +104,7 @@ describe('eslint-to-markdown', () => {
           '@typescript-eslint/no-explicit-any': 'error',
           'react/prop-types': 'off',
         },
+        rulesMeta: {},
       }
 
       // Act
@@ -122,7 +123,7 @@ describe('eslint-to-markdown', () => {
     })
 
     it('should handle empty rules object', () => {
-      const markdown = eslintRulesToMarkdown({ raw: '', rules: {} })
+      const markdown = eslintRulesToMarkdown({ raw: '', rules: {}, rulesMeta: {} })
       expect(markdown).toEqual(`## ESLint Rules
 
 No rules enabled.

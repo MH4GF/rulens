@@ -2,14 +2,22 @@
   "name": "rulens",
   "version": "0.1.0",
   "description": "CLI to extract and format linting rules into Markdown for documentation and AI agents",
-  "keywords": ["biome", "documentation", "eslint", "linting", "markdown"],
+  "keywords": [
+    "biome",
+    "documentation",
+    "eslint",
+    "linting",
+    "markdown"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/MH4GF/rulens"
   },
   "license": "MIT",
   "author": "MH4GF",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "engines": {
     "node": ">=20.0.0"
   },
@@ -23,6 +31,7 @@
     "rulens": "./dist/index.js"
   },
   "dependencies": {
+    "bundle-require": "5.1.0",
     "commander": "13.1.0",
     "execa": "9.5.2",
     "picocolors": "1.1.1",

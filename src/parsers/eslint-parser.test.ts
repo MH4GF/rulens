@@ -13,6 +13,7 @@ describe('parseESLintRules', () => {
       'react/prop-types': 'off',
       'unused-imports/no-unused-imports': 'warn',
     },
+    rulesMeta: {},
   })
 
   it('should parse ESLint rules with correct basic structure', () => {
@@ -125,6 +126,7 @@ describe('parseESLintRules', () => {
     const mockESLintResult: ESLintConfigResult = {
       raw: 'Empty config output',
       rules: {},
+      rulesMeta: {},
     }
 
     // Act
@@ -143,6 +145,7 @@ describe('parseESLintRules', () => {
       rules: {
         'no-console': 'error',
       },
+      rulesMeta: {},
     }
 
     // Act
@@ -176,6 +179,7 @@ describe('parseESLintRules', () => {
         'rule-b': 1, // 'warn'
         'rule-c': 2, // 'error'
       },
+      rulesMeta: {},
     }
 
     // Act
@@ -217,6 +221,7 @@ describe('parseESLintRules', () => {
       rules: {
         'complex-rule': ['error', { setting1: true }, { setting2: 'value' }],
       },
+      rulesMeta: {},
     }
 
     // Act

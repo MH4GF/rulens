@@ -5,7 +5,7 @@ import type { RulensCategory, RulensLinter, RulensRule } from '../types/rulens.t
  * ESLintの実行結果を共通中間表現に変換する
  */
 export function parseESLintRules(eslintResult: ESLintConfigResult): RulensLinter {
-  const { rules } = eslintResult
+  const { rules, rulesMeta } = eslintResult
 
   if (!rules || Object.keys(rules).length === 0) {
     return {
@@ -39,10 +39,16 @@ export function parseESLintRules(eslintResult: ESLintConfigResult): RulensLinter
           const fullRuleId =
             categoryName === 'ESLint Core' ? ruleName : `${categoryName}/${ruleName}`
 
+          // ルールメタデータから説明とURLを取得
+          const ruleMeta = rulesMeta[fullRuleId]
+          const description = ruleMeta?.description || `ESLint rule: ${ruleName}`
+          const url = ruleMeta?.url
+
           return {
             id: fullRuleId,
             name: ruleName,
-            description: `ESLint rule: ${ruleName}`, // 将来的にはESLintルール説明のJSONデータから取得
+            description,
+            url: url || '',
             severity: severity || 'unknown', // Ensure severity is never undefined
             ...(options ? { options } : {}),
           }

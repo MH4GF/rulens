@@ -1,36 +1,46 @@
 import { generateMarkdown } from '../markdown/generator.ts'
 import { runBiomeRage } from '../tools/biome-runner.ts'
 import { runESLintConfig } from '../tools/eslint-runner.ts'
-import { resolveBinary } from '../utils/bin-resolver.ts'
-import { executeCommand } from '../utils/executor.ts'
+import { Logger } from '../utils/logger.ts'
 import type { GenerateOptions } from '../utils/validators.ts'
 
+// ロガーのインスタンスを作成
+const logger = new Logger()
+
 export async function executeGenerate(options: GenerateOptions): Promise<void> {
-  // Note: This is just a stub implementation that uses all the modules
-  // to prevent Knip from marking them as unused
+  logger.info('Executing generate command...')
 
-  // Use resolveBinary to ensure it's not reported as unused
-  await resolveBinary('biome')
-  await resolveBinary('eslint')
+  try {
+    // Biome設定の取得
+    logger.info('Fetching Biome configuration...')
+    const biomeResult = await runBiomeRage({ additionalArgs: options.biomeArgs })
+    logger.info(`Found ${Object.keys(biomeResult.rules).length} Biome rules`)
 
-  // Placeholder command execution
-  await executeCommand({
-    command: 'echo',
-    args: ['Executing generate command'],
-    cwd: process.cwd(),
-  })
+    // ESLint設定の取得（bundle-requireを使用）
+    logger.info('Fetching ESLint configuration using bundle-require...')
+    const eslintResult = await runESLintConfig({
+      configPath: options.eslintConfig, // 設定ファイルパスを指定
+    })
 
-  // Run tools to get linting configs
-  const biomeResult = await runBiomeRage({ additionalArgs: options.biomeArgs })
-  const eslintResult = await runESLintConfig({
-    additionalArgs: options.eslintArgs,
-    targetFile: 'src/index.ts',
-  })
+    const eslintRulesCount = Object.keys(eslintResult.rules).length
+    const eslintMetaCount = Object.keys(eslintResult.rulesMeta).length
+    logger.info(
+      `Found ${eslintRulesCount} ESLint rules and ${eslintMetaCount} rule metadata entries`,
+    )
 
-  // Generate markdown output
-  await generateMarkdown({
-    biomeResult,
-    eslintResult,
-    outputFile: options.output,
-  })
+    // Markdownの生成
+    logger.info(`Generating Markdown output to ${options.output}...`)
+    await generateMarkdown({
+      biomeResult,
+      eslintResult,
+      outputFile: options.output,
+    })
+
+    logger.info('Markdown generation complete!')
+  } catch (error) {
+    logger.error(
+      `Error generating lint rules: ${error instanceof Error ? error.message : String(error)}`,
+    )
+    throw error
+  }
 }
