@@ -8,10 +8,17 @@ const logger = new Logger({ verbose: process.env['DEBUG'] === 'true' })
 
 const program = new Command()
 
+// バージョンは package.json から動的に読み込む
+const { version } = JSON.parse(
+  await import('node:fs').then((fs) =>
+    fs.promises.readFile(new URL('../package.json', import.meta.url), 'utf8'),
+  ),
+)
+
 program
   .name('rulens')
   .description('CLI to extract and format linting rules into Markdown')
-  .version('0.1.0')
+  .version(version)
 
 program
   .command('generate')

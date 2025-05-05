@@ -2,12 +2,21 @@
   "name": "rulens",
   "version": "0.1.0",
   "description": "CLI to extract and format linting rules into Markdown for documentation and AI agents",
+  "keywords": ["biome", "documentation", "eslint", "linting", "markdown"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MH4GF/rulens"
+  },
   "license": "MIT",
   "author": "MH4GF",
+  "files": ["dist"],
   "engines": {
     "node": ">=20.0.0"
   },
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
@@ -21,6 +30,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
+    "@changesets/cli": "2.29.2",
     "@mh4gf/configs": "0.4.6",
     "@mh4gf/eslint-config": "0.6.10",
     "@tsconfig/strictest": "2.0.5",
@@ -37,6 +47,7 @@
   },
   "scripts": {
     "build": "tsup",
+    "changeset": "changeset",
     "crawl": "tsx scripts/crawl-biome-rules.ts",
     "dev": "tsup --watch",
     "fmt": "pnpm run fmt:syncpack-fix && pnpm run fmt:syncpack-format && pnpm run fmt:biome",
@@ -50,9 +61,11 @@
     "lint:knip": "knip",
     "lint:syncpack": "syncpack lint",
     "lint:tsc": "tsc --noEmit",
+    "release": "pnpm build && changeset publish",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "version": "changeset version"
   },
   "packageManager": "pnpm@10.10.0+sha512.d615db246fe70f25dcfea6d8d73dee782ce23e2245e3c4f6f888249fb568149318637dca73c2c5c8ef2a4ca0d5657fb9567188bfab47f566d1ee6ce987815c39"
 }

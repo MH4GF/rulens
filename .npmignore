@@ -1,0 +1,13 @@
+.changeset
+.github
+docs
+scripts
+src
+tests
+vitest.config.ts
+tsconfig.json
+tsup.config.ts
+biome.json
+eslint.config.js
+CLAUDE.md
+.npmignore
