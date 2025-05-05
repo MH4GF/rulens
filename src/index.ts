@@ -5,7 +5,9 @@ import { executeGenerate } from './commands/generate.ts'
 import { Logger } from './utils/logger.ts'
 import { generateOptionsSchema } from './utils/validators.ts'
 
-const logger = new Logger({ verbose: process.env['DEBUG'] === 'true' })
+const logger = new Logger({
+  verbose: process.env['VERBOSE'] === 'true',
+})
 
 const program = new Command()
 
@@ -20,25 +22,34 @@ program
   .option('--biome-args <args>', 'Additional arguments to pass to biome rage')
   .option('--eslint-config <path>', 'Path to ESLint config file (default: eslint.config.js)')
   .option('--output <file>', 'Output file path', 'docs/lint-rules.md')
-  .action(async (options: { biomeArgs?: string; eslintConfig?: string; output: string }) => {
-    try {
-      // Use schema to reference it and avoid unused import warning
-      // biome-ignore lint/complexity/noVoid: Just using to reference schema
-      void generateOptionsSchema
-      logger.info(`Generating documentation to ${options.output}`)
+  .option('--verbose', 'Enable verbose logging with detailed information and object dumps')
+  .action(
+    async (options: {
+      biomeArgs?: string
+      eslintConfig?: string
+      output: string
+      verbose?: boolean
+    }) => {
+      try {
+        // Use schema to reference it and avoid unused import warning
+        // biome-ignore lint/complexity/noVoid: Just using to reference schema
+        void generateOptionsSchema
+        logger.info(`Generating documentation to ${options.output}`)
 
-      await executeGenerate({
-        biomeArgs: options.biomeArgs || '',
-        eslintConfig: options.eslintConfig,
-        output: options.output,
-      })
+        await executeGenerate({
+          biomeArgs: options.biomeArgs || '',
+          eslintConfig: options.eslintConfig,
+          output: options.output,
+          verbose: options.verbose,
+        })
 
-      logger.info(pc.green('Successfully generated Markdown from linting rules!'))
-    } catch (error) {
-      // biome-ignore lint/suspicious/noConsole: Required for error reporting
-      console.error(pc.red(`Error: ${error instanceof Error ? error.message : String(error)}`))
-      process.exit(1)
-    }
-  })
+        logger.info(pc.green('Successfully generated Markdown from linting rules!'))
+      } catch (error) {
+        // biome-ignore lint/suspicious/noConsole: Required for error reporting
+        console.error(pc.red(`Error: ${error instanceof Error ? error.message : String(error)}`))
+        process.exit(1)
+      }
+    },
+  )
 
 program.parse()

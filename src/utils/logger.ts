@@ -1,4 +1,5 @@
 import pc from 'picocolors'
+import { safeStringify } from './safeStringify.ts'
 
 enum LogLevel {
   DEBUG = 0,
@@ -8,14 +9,16 @@ enum LogLevel {
 }
 
 interface LoggerOptions {
-  verbose?: boolean
+  verbose?: boolean | undefined
 }
 
 export class Logger {
   private level: LogLevel
+  private verboseMode: boolean
 
   constructor(options: LoggerOptions = {}) {
-    this.level = options.verbose ? LogLevel.DEBUG : LogLevel.INFO
+    this.verboseMode = options.verbose ?? false
+    this.level = this.verboseMode ? LogLevel.DEBUG : LogLevel.INFO
   }
 
   debug(message: string): void {
@@ -55,5 +58,45 @@ export class Logger {
       // biome-ignore lint/suspicious/noConsoleLog: Logger implementation
       console.log(pc.green(`[SUCCESS] ${message}`))
     }
+  }
+
+  /**
+   * Dumps an object to the console when verbose mode is enabled
+   * @param label Label to describe the object being dumped
+   * @param obj Object to dump
+   */
+  dump(label: string, obj: unknown): void {
+    if (this.verboseMode) {
+      // biome-ignore lint/suspicious/noConsole: Logger implementation
+      // biome-ignore lint/suspicious/noConsoleLog: Logger implementation
+      console.log(pc.cyan(`\n[VERBOSE] ${label}`))
+
+      if (typeof obj === 'object' && obj !== null) {
+        try {
+          // biome-ignore lint/suspicious/noConsole: Logger implementation
+          // biome-ignore lint/suspicious/noConsoleLog: Logger implementation
+          console.log(safeStringify(obj))
+        } catch {
+          // biome-ignore lint/suspicious/noConsole: Logger implementation
+          // biome-ignore lint/suspicious/noConsoleLog: Logger implementation
+          console.log(pc.yellow('Unable to stringify object (circular references)'))
+        }
+      } else {
+        // biome-ignore lint/suspicious/noConsole: Logger implementation
+        // biome-ignore lint/suspicious/noConsoleLog: Logger implementation
+        console.log(obj)
+      }
+
+      // biome-ignore lint/suspicious/noConsole: Logger implementation
+      // biome-ignore lint/suspicious/noConsoleLog: Logger implementation
+      console.log(pc.cyan('--------------------------'))
+    }
+  }
+
+  /**
+   * Checks if verbose mode is enabled
+   */
+  isVerboseMode(): boolean {
+    return this.verboseMode
   }
 }

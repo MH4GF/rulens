@@ -1,5 +1,7 @@
 # Rulens
 
+> No more maintaining coding guidelines. Your linter rules to AI instructions, instantly.
+
 [![npm version](https://img.shields.io/npm/v/rulens.svg)](https://www.npmjs.com/package/rulens)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/node/v/rulens.svg)](https://nodejs.org)
@@ -129,6 +131,7 @@ This simple instruction helps AI tools like GitHub Copilot, Cursor, Claude, and 
 | `--biome-args <args>`    | Additional arguments to pass to biome rage | -                    |
 | `--eslint-config <path>` | Path to ESLint config file                 | `eslint.config.js`   |
 | `--output <file>`        | Output file path                           | `docs/lint-rules.md` |
+| `--verbose`              | Enable verbose mode with detailed output   | `false`              |
 | `--help`                 | Display help information                   | -                    |
 | `--version`              | Display version number                     | -                    |
 
