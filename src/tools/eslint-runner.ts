@@ -52,50 +52,102 @@ const eslintRuleSchema = object({
 })
 
 /**
+ * List of supported ESLint configuration file formats in priority order
+ */
+const CONFIG_FILE_FORMATS = {
+  // New JavaScript formats
+  newJS: [
+    'eslint.config.js', // Original format
+    'eslint.config.mjs', // ESM format
+    'eslint.config.cjs', // CommonJS format
+  ],
+  // TypeScript formats
+  newTS: [
+    'eslint.config.ts', // TypeScript format
+    'eslint.config.mts', // TypeScript ESM format
+    'eslint.config.cts', // TypeScript CommonJS format
+  ],
+  // Legacy formats
+  legacy: ['.eslintrc.js', '.eslintrc.json', '.eslintrc.yaml', '.eslintrc.yml', '.eslintrc'],
+}
+
+/**
+ * Generates the error message for when no ESLint config file is found
+ */
+function getConfigNotFoundErrorMessage(): string {
+  const allFormats = [
+    ...CONFIG_FILE_FORMATS.newJS,
+    ...CONFIG_FILE_FORMATS.newTS,
+    ...CONFIG_FILE_FORMATS.legacy,
+  ].join(', ')
+
+  return `No ESLint configuration file found. Supported formats: ${allFormats}`
+}
+
+/**
+ * Checks if a file exists at the given path
+ * This function is a wrapper around existsSync to allow for easier testing
+ */
+function fileExists(filePath: string): boolean {
+  return existsSync(filePath)
+}
+
+/**
+ * Gets the full path for a config file
+ */
+function getFullConfigPath(basePath: string, configName: string): string {
+  return path.resolve(basePath, configName)
+}
+
+/**
  * Find ESLint configuration file in the project
  * Checks for both new (eslint.config.js) and legacy (.eslintrc.*) formats
  */
-function findESLintConfig(userConfigPath?: string): string {
+export function findESLintConfig(userConfigPath?: string): string {
   const localLogger = new Logger()
+  const basePath = process.cwd()
 
   // If user specified a config path, use it
   if (userConfigPath) {
-    const fullPath = path.resolve(process.cwd(), userConfigPath)
-    if (existsSync(fullPath)) {
+    const fullPath = getFullConfigPath(basePath, userConfigPath)
+    if (fileExists(fullPath)) {
       localLogger.debug(`Using user-specified ESLint config: ${fullPath}`)
       return fullPath
     }
     throw new Error(`ESLint config file not found at specified path: ${fullPath}`)
   }
 
-  // Check for default ESLint config (new format first)
-  const newFormatPath = path.resolve(process.cwd(), 'eslint.config.js')
-  if (existsSync(newFormatPath)) {
-    localLogger.debug(`Found new format ESLint config: ${newFormatPath}`)
-    return newFormatPath
+  // Check for all configuration formats in priority order
+
+  // First check new JavaScript formats
+  for (const format of CONFIG_FILE_FORMATS.newJS) {
+    const configPath = getFullConfigPath(basePath, format)
+    if (fileExists(configPath)) {
+      localLogger.debug(`Found new JS format ESLint config: ${configPath}`)
+      return configPath
+    }
   }
 
-  // Check for legacy formats in priority order
-  const legacyFormats = [
-    '.eslintrc.js',
-    '.eslintrc.json',
-    '.eslintrc.yaml',
-    '.eslintrc.yml',
-    '.eslintrc',
-  ]
+  // Then check TypeScript config formats
+  for (const format of CONFIG_FILE_FORMATS.newTS) {
+    const configPath = getFullConfigPath(basePath, format)
+    if (fileExists(configPath)) {
+      localLogger.debug(`Found new TS format ESLint config: ${configPath}`)
+      return configPath
+    }
+  }
 
-  for (const format of legacyFormats) {
-    const legacyPath = path.resolve(process.cwd(), format)
-    if (existsSync(legacyPath)) {
-      localLogger.debug(`Found legacy format ESLint config: ${legacyPath}`)
-      return legacyPath
+  // Finally check legacy formats
+  for (const format of CONFIG_FILE_FORMATS.legacy) {
+    const configPath = getFullConfigPath(basePath, format)
+    if (fileExists(configPath)) {
+      localLogger.debug(`Found legacy format ESLint config: ${configPath}`)
+      return configPath
     }
   }
 
   // No config found
-  throw new Error(
-    'No ESLint configuration file found. Supported formats: eslint.config.js, .eslintrc.*',
-  )
+  throw new Error(getConfigNotFoundErrorMessage())
 }
 
 /**

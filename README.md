@@ -62,10 +62,10 @@ Biome enforces modern JavaScript/TypeScript best practices with a focus on corre
 
 Rules in this category ensure that code is accessible to all users, including those using assistive technologies.
 
-| Rule | Description |
-| ---- | ----------- |
-| [`noAccessKey`](https://biomejs.dev/linter/rules/no-access-key) | Enforce that the accessKey attribute is not used on any HTML element. |
-| [`useAltText`](https://biomejs.dev/linter/rules/use-alt-text) | Enforce that all elements that require alternative text have meaningful information to relay back to the end user. |
+| Rule                                                            | Description                                                                                                        |
+| --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| [`noAccessKey`](https://biomejs.dev/linter/rules/no-access-key) | Enforce that the accessKey attribute is not used on any HTML element.                                              |
+| [`useAltText`](https://biomejs.dev/linter/rules/use-alt-text)   | Enforce that all elements that require alternative text have meaningful information to relay back to the end user. |
 
 ## 🔧 ESLint Rules
 
@@ -75,9 +75,9 @@ ESLint provides static analysis focused on identifying potential errors and enfo
 
 Rules in this category enforce TypeScript-specific best practices and type safety.
 
-| Rule | Description |
-| ---- | ----------- |
-| [`no-explicit-any`](https://typescript-eslint.io/rules/no-explicit-any) | Disallow the `any` type (error) |
+| Rule                                                                              | Description                                                         |
+| --------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| [`no-explicit-any`](https://typescript-eslint.io/rules/no-explicit-any)           | Disallow the `any` type (error)                                     |
 | [`no-floating-promises`](https://typescript-eslint.io/rules/no-floating-promises) | Require Promise-like statements to be handled appropriately (error) |
 ```
 
@@ -129,11 +129,17 @@ This simple instruction helps AI tools like GitHub Copilot, Cursor, Claude, and 
 | Option                   | Description                                | Default              |
 | ------------------------ | ------------------------------------------ | -------------------- |
 | `--biome-args <args>`    | Additional arguments to pass to biome rage | -                    |
-| `--eslint-config <path>` | Path to ESLint config file                 | `eslint.config.js`   |
+| `--eslint-config <path>` | Path to ESLint config file                 | Auto-detected\*      |
 | `--output <file>`        | Output file path                           | `docs/lint-rules.md` |
 | `--verbose`              | Enable verbose mode with detailed output   | `false`              |
 | `--help`                 | Display help information                   | -                    |
 | `--version`              | Display version number                     | -                    |
+
+_\* ESLint config is auto-detected in the following order:_
+
+1. _JavaScript formats: `eslint.config.js`, `eslint.config.mjs`, `eslint.config.cjs`_
+2. _TypeScript formats: `eslint.config.ts`, `eslint.config.mts`, `eslint.config.cts`_
+3. _Legacy formats: `.eslintrc.js`, `.eslintrc.json`, `.eslintrc.yaml`, `.eslintrc.yml`, `.eslintrc`_
 
 ## Prerequisites
 

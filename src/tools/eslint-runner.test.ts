@@ -1,9 +1,9 @@
+import path from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { extractRulesAndMeta, runESLintConfig } from './eslint-runner.ts'
+import { extractRulesAndMeta, findESLintConfig, runESLintConfig } from './eslint-runner.ts'
 
 // Define regular expression at top level
 const CONFIG_FILE_NOT_FOUND_REGEX = /ESLint config file not found/
-
 describe('eslint-runner', () => {
   describe('runESLintConfig', () => {
     // Test specifying config file path
@@ -48,6 +48,14 @@ describe('eslint-runner', () => {
       await expect(runESLintConfig({ configPath: nonExistentConfigPath })).rejects.toThrow(
         CONFIG_FILE_NOT_FOUND_REGEX,
       )
+    })
+  })
+
+  describe('findESLintConfig', () => {
+    it('should throw an error when config not found', () => {
+      // Use a non-existent file path to force the error
+      const nonExistentPath = path.resolve('./non-existent-dir', 'non-existent-config.js')
+      expect(() => findESLintConfig(nonExistentPath)).toThrow(CONFIG_FILE_NOT_FOUND_REGEX)
     })
   })
 
