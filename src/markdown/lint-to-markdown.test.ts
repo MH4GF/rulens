@@ -107,7 +107,8 @@ describe('lintRulesToMarkdown', () => {
 
     // Assert
     expect(result).toContain('`useConst`: Require const declarations')
-    expect(result).toContain('(error, with options)')
+    expect(result).toContain('(error)')
+    expect(result).toContain('Options: {"allowLet":true}')
   })
 
   it('should handle empty linter', () => {

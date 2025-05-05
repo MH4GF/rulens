@@ -103,6 +103,8 @@ export async function generateMarkdown(options: MarkdownGeneratorOptions): Promi
   const { biomeResult, eslintResult, outputFile } = options
   const logger = new Logger()
 
+  logger.info(`Generating markdown for ${outputFile}...`)
+
   // Generate each part of the document
   let markdown = generateHeader()
   markdown += '---\n\n'

@@ -109,8 +109,8 @@ function categoryToMarkdown(category: RulensCategory, useEnhancedFormat = false)
 
   if (useEnhancedFormat) {
     // Enhanced format: table format
-    markdown += '| Rule | Description |\n'
-    markdown += '| ---- | ----------- |\n'
+    markdown += '| Rule | Description | Options |\n'
+    markdown += '| ---- | ----------- | ------- |\n'
 
     // Display rules in table format
     for (const rule of sortedRules) {
@@ -128,10 +128,27 @@ function categoryToMarkdown(category: RulensCategory, useEnhancedFormat = false)
 }
 
 /**
+ * Format options as a string for display
+ */
+function formatOptions(options: unknown): string {
+  if (!options) {
+    return ''
+  }
+
+  try {
+    // Always use JSON.stringify for all types to avoid stringification issues
+    return JSON.stringify(options)
+  } catch {
+    // Fallback if JSON conversion fails
+    return 'Complex options'
+  }
+}
+
+/**
  * Convert rule to markdown table row (for enhanced format)
  */
 function ruleToMarkdownTableRow(rule: RulensRule): string {
-  // Build display for severity and options
+  // Build display for severity
   const metadataText = buildRuleMetadataText(rule)
 
   // Rule name and URL
@@ -148,14 +165,17 @@ function ruleToMarkdownTableRow(rule: RulensRule): string {
     description += ` ${metadataText}`
   }
 
-  return `| ${ruleName} | ${description} |\n`
+  // Format options
+  const optionsText = formatOptions(rule.options)
+
+  return `| ${ruleName} | ${description} | ${optionsText} |\n`
 }
 
 /**
  * Convert rule to markdown list item (for test compatibility)
  */
 function ruleToMarkdownListItem(rule: RulensRule): string {
-  // Build display for severity and options
+  // Build display for severity
   const metadataText = buildRuleMetadataText(rule)
 
   // Display with link if URL exists
@@ -166,33 +186,27 @@ function ruleToMarkdownListItem(rule: RulensRule): string {
     line = `- \`${rule.name}\`: ${rule.description}`
   }
 
-  // Add metadata if it exists
+  // Add severity if it exists
   if (metadataText) {
     line += ` ${metadataText}`
+  }
+
+  // Add options if they exist
+  if (rule.options) {
+    const optionsText = formatOptions(rule.options)
+    line += ` Options: ${optionsText}`
   }
 
   return `${line}\n`
 }
 
 /**
- * Generate rule metadata (severity and options) as a string
+ * Generate rule metadata (severity) as a string
  */
 function buildRuleMetadataText(rule: RulensRule): string {
-  const metadataParts: string[] = []
-
   // Add severity if it exists
   if (rule.severity) {
-    metadataParts.push(rule.severity)
-  }
-
-  // Add options if they exist
-  if (rule.options) {
-    metadataParts.push('with options')
-  }
-
-  // If metadata exists, display it enclosed in parentheses
-  if (metadataParts.length > 0) {
-    return `(${metadataParts.join(', ')})`
+    return `(${rule.severity})`
   }
 
   return ''
