@@ -1,8 +1,10 @@
 import { resolveBinary } from '../utils/bin-resolver.ts'
 import { executeCommand } from '../utils/executor.ts'
+import { Logger } from '../utils/logger.ts'
 
 interface BiomeRunnerOptions {
   additionalArgs?: string
+  verbose?: boolean | undefined
 }
 
 export interface BiomeRageResult {
@@ -15,7 +17,8 @@ export interface BiomeRageResult {
  * This command lists all available rules in the current Biome configuration
  */
 export async function runBiomeRage(options: BiomeRunnerOptions = {}): Promise<BiomeRageResult> {
-  const { additionalArgs } = options
+  const { additionalArgs, verbose } = options
+  const logger = new Logger({ verbose: verbose ?? undefined })
 
   const biomeBinary = await resolveBinary('biome')
 
@@ -35,10 +38,14 @@ export async function runBiomeRage(options: BiomeRunnerOptions = {}): Promise<Bi
   }
   const rules = parseRules(result.stdout)
 
-  return {
+  const biomeResult = {
     raw: result.stdout,
     rules,
   }
+
+  logger.dump('Biome rage output', result.stdout)
+
+  return biomeResult
 }
 
 /**

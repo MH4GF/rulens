@@ -1,13 +1,15 @@
-import { object, optional, string } from 'valibot'
+import { boolean, object, optional, string } from 'valibot'
 
 export const generateOptionsSchema = object({
   biomeArgs: optional(string()),
-  eslintConfig: optional(string()), // Changed from eslintArgs to eslintConfig
+  eslintConfig: optional(string()),
   output: string(),
+  verbose: optional(boolean()),
 })
 
 export type GenerateOptions = {
   biomeArgs: string
-  eslintConfig?: string | undefined // Changed from eslintArgs to eslintConfig
+  eslintConfig?: string | undefined
   output: string
+  verbose?: boolean | undefined
 }

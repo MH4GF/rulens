@@ -1,34 +1,16 @@
 import { existsSync } from 'node:fs'
 import path from 'node:path'
+import { safeStringify } from '@/utils/safeStringify.ts'
 import { bundleRequire } from 'bundle-require'
 import { object, optional, record, safeParse, string, unknown } from 'valibot'
 import { Logger } from '../utils/logger.ts'
 
 const logger = new Logger()
 
-/**
- * Custom JSON stringify function to handle circular references
- */
-function safeStringify(obj: unknown): string {
-  const seen = new Set()
-  return JSON.stringify(
-    obj,
-    (_key, value: unknown) => {
-      if (typeof value === 'object' && value !== null) {
-        if (seen.has(value)) {
-          return '[Circular]'
-        }
-        seen.add(value)
-      }
-      return value
-    },
-    2,
-  )
-}
-
 // ESLint config options
 interface ESLintRunnerOptions {
   configPath?: string | undefined // Path to ESLint config file (default: eslint.config.js)
+  verbose?: boolean | undefined // Enable verbose mode
 }
 
 // Type representing ESLint rule metadata
@@ -75,7 +57,8 @@ const eslintRuleSchema = object({
 export async function runESLintConfig(
   options: ESLintRunnerOptions = {},
 ): Promise<ESLintConfigResult> {
-  const { configPath = 'eslint.config.js' } = options
+  const { configPath = 'eslint.config.js', verbose } = options
+  const logger = new Logger({ verbose: verbose ?? undefined })
   const fullConfigPath = path.resolve(process.cwd(), configPath)
 
   // Check if config file exists
@@ -87,6 +70,8 @@ export async function runESLintConfig(
     const bundleResult = await bundleRequire({
       filepath: fullConfigPath,
     })
+
+    logger.dump('ESLint bundle-require result', bundleResult)
 
     const parseResult = safeParse(bundleResultSchema, bundleResult)
     if (!parseResult.success) {
@@ -105,12 +90,14 @@ export async function runESLintConfig(
     try {
       const { rules, rulesMeta, pluginsMetadata } = extractRulesAndMeta(config)
 
-      return {
+      const eslintResult = {
         raw: safeStringify(config), // String conversion that handles circular references
         rules,
         rulesMeta,
         pluginsMetadata,
       }
+
+      return eslintResult
     } catch (extractError) {
       logger.error(
         `Failed to extract rules from ESLint config: ${extractError instanceof Error ? extractError.message : String(extractError)}`,
@@ -211,8 +198,6 @@ export function extractRulesAndMeta(config: unknown): {
     },
   }
 
-  logger.debug(`Extracting rules and metadata from ESLint config: ${typeof config}`)
-
   // Process array-format configuration
   if (Array.isArray(config)) {
     processArrayConfig(config, rules, rulesMeta, pluginsMetadata)
@@ -220,8 +205,6 @@ export function extractRulesAndMeta(config: unknown): {
     // Process object-format configuration
     processConfigItem(config as Record<string, unknown>, rules, rulesMeta, pluginsMetadata)
   }
-
-  logger.debug(`Found plugin metadata: ${JSON.stringify(pluginsMetadata, null, 2)}`)
 
   return { rules, rulesMeta, pluginsMetadata }
 }
@@ -318,7 +301,7 @@ function extractRuleMetadata(
     return
   }
 
-  const ruleId = pluginName === '$' ? ruleName : `${pluginName}/${ruleName}`
+  const ruleId = pluginName === 'ESLint Core' ? ruleName : `${pluginName}/${ruleName}`
 
   rulesMeta[ruleId] = {
     description: meta.docs?.description || undefined,
