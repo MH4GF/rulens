@@ -76,9 +76,9 @@
 ### correctness
 
 - [`noChildrenProp`](https://biomejs.dev/linter/rules/no-children-prop): Prevent passing of children as props.
-- [`noConstAssign`](https://biomejs.dev/linter/rules/no-const-assign): Prevents from having const variables being re-assigned.
 - [`noConstantCondition`](https://biomejs.dev/linter/rules/no-constant-condition): Disallow constant expressions in conditions
 - [`noConstantMathMinMaxClamp`](https://biomejs.dev/linter/rules/no-constant-math-min-max-clamp): Disallow the use of Math.min and Math.max to clamp a value where the result itself is constant.
+- [`noConstAssign`](https://biomejs.dev/linter/rules/no-const-assign): Prevents from having const variables being re-assigned.
 - [`noConstructorReturn`](https://biomejs.dev/linter/rules/no-constructor-return): Disallow returning a value from a constructor.
 - [`noEmptyCharacterClassInRegex`](https://biomejs.dev/linter/rules/no-empty-character-class-in-regex): Disallow empty character classes in regular expression literals.
 - [`noEmptyPattern`](https://biomejs.dev/linter/rules/no-empty-pattern): Disallows empty destructuring patterns.
@@ -238,8 +238,8 @@
 - [`noGlobalIsFinite`](https://biomejs.dev/linter/rules/no-global-is-finite): Use Number.isFinite instead of global isFinite.
 - [`noGlobalIsNan`](https://biomejs.dev/linter/rules/no-global-is-nan): Use Number.isNaN instead of global isNaN.
 - [`noImplicitAnyLet`](https://biomejs.dev/linter/rules/no-implicit-any-let): Disallow use of implicit any type on variable declarations.
-- [`noImportAssign`](https://biomejs.dev/linter/rules/no-import-assign): Disallow assigning to imported bindings
 - [`noImportantInKeyframe`](https://biomejs.dev/linter/rules/no-important-in-keyframe): Disallow invalid !important within keyframe declarations
+- [`noImportAssign`](https://biomejs.dev/linter/rules/no-import-assign): Disallow assigning to imported bindings
 - [`noLabelVar`](https://biomejs.dev/linter/rules/no-label-var): Disallow labels that share a name with a variable
 - [`noMisleadingCharacterClass`](https://biomejs.dev/linter/rules/no-misleading-character-class): Disallow characters made with multiple code points in character class syntax.
 - [`noMisleadingInstantiator`](https://biomejs.dev/linter/rules/no-misleading-instantiator): Enforce proper usage of new and constructor.
@@ -266,143 +266,144 @@
 - [`useNamespaceKeyword`](https://biomejs.dev/linter/rules/use-namespace-keyword): Require using the namespace keyword over the module keyword to declare TypeScript namespaces.
 - [`useNumberToFixedDigitsArgument`](https://biomejs.dev/linter/rules/use-number-to-fixed-digits-argument): Enforce using the digits argument with Number#toFixed().
 - [`useValidTypeof`](https://biomejs.dev/linter/rules/use-valid-typeof): This rule verifies the result of typeof $expr unary expressions is being compared to valid values, either string literals containing valid type names or other typeof expressions
+
 ## ESLint Rules
 
 ### @typescript-eslint
 
-- `await-thenable`: error
-- `ban-ts-comment`: error (with options)
-- `consistent-type-imports`: error
-- `dot-notation`: off (with options)
-- `naming-convention`: error (with options)
-- `no-array-constructor`: error
-- `no-array-delete`: error
-- `no-base-to-string`: error
-- `no-duplicate-enum-values`: error
-- `no-duplicate-type-constituents`: error
-- `no-dynamic-delete`: error
-- `no-empty-interface`: off
-- `no-empty-object-type`: error
-- `no-explicit-any`: error
-- `no-extra-non-null-assertion`: error
-- `no-extraneous-class`: error
-- `no-floating-promises`: error
-- `no-for-in-array`: error
-- `no-implied-eval`: error
-- `no-invalid-void-type`: error
-- `no-misused-new`: error
-- `no-misused-promises`: error
-- `no-namespace`: error
-- `no-non-null-asserted-nullish-coalescing`: error
-- `no-non-null-asserted-optional-chain`: error
-- `no-non-null-assertion`: error
-- `no-redundant-type-constituents`: error
-- `no-require-imports`: error
-- `no-this-alias`: error
-- `no-unnecessary-type-assertion`: error
-- `no-unnecessary-type-constraint`: error
-- `no-unsafe-argument`: error
-- `no-unsafe-assignment`: error
-- `no-unsafe-call`: error
-- `no-unsafe-declaration-merging`: error
-- `no-unsafe-enum-comparison`: error
-- `no-unsafe-function-type`: error
-- `no-unsafe-member-access`: error
-- `no-unsafe-return`: error
-- `no-unsafe-unary-minus`: error
-- `no-unused-expressions`: error (with options)
-- `no-unused-vars`: off
-- `no-useless-constructor`: error
-- `no-wrapper-object-types`: error
-- `only-throw-error`: error
-- `prefer-as-const`: error
-- `prefer-literal-enum-member`: error
-- `prefer-namespace-keyword`: error
-- `prefer-promise-reject-errors`: error
-- `require-await`: error
-- `restrict-plus-operands`: error
-- `restrict-template-expressions`: error
-- `triple-slash-reference`: error
-- `unbound-method`: error
-- `unified-signatures`: error
+- `await-thenable`: ESLint rule: await-thenable (error, with options)
+- `ban-ts-comment`: ESLint rule: ban-ts-comment (error, with options)
+- `consistent-type-imports`: ESLint rule: consistent-type-imports (error, with options)
+- `dot-notation`: ESLint rule: dot-notation (off, with options)
+- `naming-convention`: ESLint rule: naming-convention (error, with options)
+- `no-array-constructor`: ESLint rule: no-array-constructor (error, with options)
+- `no-array-delete`: ESLint rule: no-array-delete (error, with options)
+- `no-base-to-string`: ESLint rule: no-base-to-string (error, with options)
+- `no-duplicate-enum-values`: ESLint rule: no-duplicate-enum-values (error, with options)
+- `no-duplicate-type-constituents`: ESLint rule: no-duplicate-type-constituents (error, with options)
+- `no-dynamic-delete`: ESLint rule: no-dynamic-delete (error, with options)
+- `no-empty-interface`: ESLint rule: no-empty-interface (off, with options)
+- `no-empty-object-type`: ESLint rule: no-empty-object-type (error, with options)
+- `no-explicit-any`: ESLint rule: no-explicit-any (error, with options)
+- `no-extra-non-null-assertion`: ESLint rule: no-extra-non-null-assertion (error, with options)
+- `no-extraneous-class`: ESLint rule: no-extraneous-class (error, with options)
+- `no-floating-promises`: ESLint rule: no-floating-promises (error, with options)
+- `no-for-in-array`: ESLint rule: no-for-in-array (error, with options)
+- `no-implied-eval`: ESLint rule: no-implied-eval (error, with options)
+- `no-invalid-void-type`: ESLint rule: no-invalid-void-type (error, with options)
+- `no-misused-new`: ESLint rule: no-misused-new (error, with options)
+- `no-misused-promises`: ESLint rule: no-misused-promises (error, with options)
+- `no-namespace`: ESLint rule: no-namespace (error, with options)
+- `no-non-null-asserted-nullish-coalescing`: ESLint rule: no-non-null-asserted-nullish-coalescing (error, with options)
+- `no-non-null-asserted-optional-chain`: ESLint rule: no-non-null-asserted-optional-chain (error, with options)
+- `no-non-null-assertion`: ESLint rule: no-non-null-assertion (error, with options)
+- `no-redundant-type-constituents`: ESLint rule: no-redundant-type-constituents (error, with options)
+- `no-require-imports`: ESLint rule: no-require-imports (error, with options)
+- `no-this-alias`: ESLint rule: no-this-alias (error, with options)
+- `no-unnecessary-type-assertion`: ESLint rule: no-unnecessary-type-assertion (error, with options)
+- `no-unnecessary-type-constraint`: ESLint rule: no-unnecessary-type-constraint (error, with options)
+- `no-unsafe-argument`: ESLint rule: no-unsafe-argument (error, with options)
+- `no-unsafe-assignment`: ESLint rule: no-unsafe-assignment (error, with options)
+- `no-unsafe-call`: ESLint rule: no-unsafe-call (error, with options)
+- `no-unsafe-declaration-merging`: ESLint rule: no-unsafe-declaration-merging (error, with options)
+- `no-unsafe-enum-comparison`: ESLint rule: no-unsafe-enum-comparison (error, with options)
+- `no-unsafe-function-type`: ESLint rule: no-unsafe-function-type (error, with options)
+- `no-unsafe-member-access`: ESLint rule: no-unsafe-member-access (error, with options)
+- `no-unsafe-return`: ESLint rule: no-unsafe-return (error, with options)
+- `no-unsafe-unary-minus`: ESLint rule: no-unsafe-unary-minus (error, with options)
+- `no-unused-expressions`: ESLint rule: no-unused-expressions (error, with options)
+- `no-unused-vars`: ESLint rule: no-unused-vars (off, with options)
+- `no-useless-constructor`: ESLint rule: no-useless-constructor (error, with options)
+- `no-wrapper-object-types`: ESLint rule: no-wrapper-object-types (error, with options)
+- `only-throw-error`: ESLint rule: only-throw-error (error, with options)
+- `prefer-as-const`: ESLint rule: prefer-as-const (error, with options)
+- `prefer-literal-enum-member`: ESLint rule: prefer-literal-enum-member (error, with options)
+- `prefer-namespace-keyword`: ESLint rule: prefer-namespace-keyword (error, with options)
+- `prefer-promise-reject-errors`: ESLint rule: prefer-promise-reject-errors (error, with options)
+- `require-await`: ESLint rule: require-await (error, with options)
+- `restrict-plus-operands`: ESLint rule: restrict-plus-operands (error, with options)
+- `restrict-template-expressions`: ESLint rule: restrict-template-expressions (error, with options)
+- `triple-slash-reference`: ESLint rule: triple-slash-reference (error, with options)
+- `unbound-method`: ESLint rule: unbound-method (error, with options)
+- `unified-signatures`: ESLint rule: unified-signatures (error, with options)
 
 ### ESLint Core
 
-- `constructor-super`: off
-- `for-direction`: error
-- `getter-return`: off (with options)
-- `no-array-constructor`: off
-- `no-async-promise-executor`: error
-- `no-case-declarations`: error
-- `no-class-assign`: off
-- `no-compare-neg-zero`: error
-- `no-cond-assign`: error (with options)
-- `no-const-assign`: off
-- `no-constant-binary-expression`: error
-- `no-constant-condition`: error (with options)
-- `no-control-regex`: error
-- `no-debugger`: error
-- `no-delete-var`: error
-- `no-dupe-args`: off
-- `no-dupe-class-members`: off
-- `no-dupe-else-if`: error
-- `no-dupe-keys`: off
-- `no-duplicate-case`: error
-- `no-empty`: error (with options)
-- `no-empty-character-class`: error
-- `no-empty-pattern`: error (with options)
-- `no-empty-static-block`: error
-- `no-ex-assign`: error
-- `no-extra-boolean-cast`: error (with options)
-- `no-fallthrough`: error (with options)
-- `no-func-assign`: off
-- `no-global-assign`: error (with options)
-- `no-implied-eval`: off
-- `no-import-assign`: off
-- `no-invalid-regexp`: error (with options)
-- `no-irregular-whitespace`: error (with options)
-- `no-loss-of-precision`: error
-- `no-misleading-character-class`: error
-- `no-new-native-nonconstructor`: off
-- `no-new-symbol`: off
-- `no-nonoctal-decimal-escape`: error
-- `no-obj-calls`: off
-- `no-octal`: error
-- `no-prototype-builtins`: error
-- `no-redeclare`: off (with options)
-- `no-regex-spaces`: error
-- `no-self-assign`: error (with options)
-- `no-setter-return`: off
-- `no-shadow-restricted-names`: error (with options)
-- `no-sparse-arrays`: error
-- `no-this-before-super`: off
-- `no-throw-literal`: off
-- `no-undef`: off (with options)
-- `no-unexpected-multiline`: error
-- `no-unreachable`: off
-- `no-unsafe-finally`: error
-- `no-unsafe-negation`: off (with options)
-- `no-unsafe-optional-chaining`: error (with options)
-- `no-unused-expressions`: off (with options)
-- `no-unused-labels`: error
-- `no-unused-private-class-members`: error
-- `no-unused-vars`: off
-- `no-useless-backreference`: error
-- `no-useless-catch`: error
-- `no-useless-constructor`: off
-- `no-useless-escape`: error
-- `no-var`: error
-- `no-with`: off
-- `prefer-const`: error (with options)
-- `prefer-promise-reject-errors`: off (with options)
-- `prefer-rest-params`: error
-- `prefer-spread`: error
-- `require-await`: off
-- `require-yield`: error
-- `use-isnan`: error (with options)
-- `valid-typeof`: error (with options)
+- `constructor-super`: ESLint rule: constructor-super (off, with options)
+- `for-direction`: ESLint rule: for-direction (error, with options)
+- `getter-return`: ESLint rule: getter-return (off, with options)
+- `no-array-constructor`: ESLint rule: no-array-constructor (off, with options)
+- `no-async-promise-executor`: ESLint rule: no-async-promise-executor (error, with options)
+- `no-case-declarations`: ESLint rule: no-case-declarations (error, with options)
+- `no-class-assign`: ESLint rule: no-class-assign (off, with options)
+- `no-compare-neg-zero`: ESLint rule: no-compare-neg-zero (error, with options)
+- `no-cond-assign`: ESLint rule: no-cond-assign (error, with options)
+- `no-const-assign`: ESLint rule: no-const-assign (off, with options)
+- `no-constant-binary-expression`: ESLint rule: no-constant-binary-expression (error, with options)
+- `no-constant-condition`: ESLint rule: no-constant-condition (error, with options)
+- `no-control-regex`: ESLint rule: no-control-regex (error, with options)
+- `no-debugger`: ESLint rule: no-debugger (error, with options)
+- `no-delete-var`: ESLint rule: no-delete-var (error, with options)
+- `no-dupe-args`: ESLint rule: no-dupe-args (off, with options)
+- `no-dupe-class-members`: ESLint rule: no-dupe-class-members (off, with options)
+- `no-dupe-else-if`: ESLint rule: no-dupe-else-if (error, with options)
+- `no-dupe-keys`: ESLint rule: no-dupe-keys (off, with options)
+- `no-duplicate-case`: ESLint rule: no-duplicate-case (error, with options)
+- `no-empty`: ESLint rule: no-empty (error, with options)
+- `no-empty-character-class`: ESLint rule: no-empty-character-class (error, with options)
+- `no-empty-pattern`: ESLint rule: no-empty-pattern (error, with options)
+- `no-empty-static-block`: ESLint rule: no-empty-static-block (error, with options)
+- `no-ex-assign`: ESLint rule: no-ex-assign (error, with options)
+- `no-extra-boolean-cast`: ESLint rule: no-extra-boolean-cast (error, with options)
+- `no-fallthrough`: ESLint rule: no-fallthrough (error, with options)
+- `no-func-assign`: ESLint rule: no-func-assign (off, with options)
+- `no-global-assign`: ESLint rule: no-global-assign (error, with options)
+- `no-implied-eval`: ESLint rule: no-implied-eval (off, with options)
+- `no-import-assign`: ESLint rule: no-import-assign (off, with options)
+- `no-invalid-regexp`: ESLint rule: no-invalid-regexp (error, with options)
+- `no-irregular-whitespace`: ESLint rule: no-irregular-whitespace (error, with options)
+- `no-loss-of-precision`: ESLint rule: no-loss-of-precision (error, with options)
+- `no-misleading-character-class`: ESLint rule: no-misleading-character-class (error, with options)
+- `no-new-native-nonconstructor`: ESLint rule: no-new-native-nonconstructor (off, with options)
+- `no-new-symbol`: ESLint rule: no-new-symbol (off, with options)
+- `no-nonoctal-decimal-escape`: ESLint rule: no-nonoctal-decimal-escape (error, with options)
+- `no-obj-calls`: ESLint rule: no-obj-calls (off, with options)
+- `no-octal`: ESLint rule: no-octal (error, with options)
+- `no-prototype-builtins`: ESLint rule: no-prototype-builtins (error, with options)
+- `no-redeclare`: ESLint rule: no-redeclare (off, with options)
+- `no-regex-spaces`: ESLint rule: no-regex-spaces (error, with options)
+- `no-self-assign`: ESLint rule: no-self-assign (error, with options)
+- `no-setter-return`: ESLint rule: no-setter-return (off, with options)
+- `no-shadow-restricted-names`: ESLint rule: no-shadow-restricted-names (error, with options)
+- `no-sparse-arrays`: ESLint rule: no-sparse-arrays (error, with options)
+- `no-this-before-super`: ESLint rule: no-this-before-super (off, with options)
+- `no-throw-literal`: ESLint rule: no-throw-literal (off, with options)
+- `no-undef`: ESLint rule: no-undef (off, with options)
+- `no-unexpected-multiline`: ESLint rule: no-unexpected-multiline (error, with options)
+- `no-unreachable`: ESLint rule: no-unreachable (off, with options)
+- `no-unsafe-finally`: ESLint rule: no-unsafe-finally (error, with options)
+- `no-unsafe-negation`: ESLint rule: no-unsafe-negation (off, with options)
+- `no-unsafe-optional-chaining`: ESLint rule: no-unsafe-optional-chaining (error, with options)
+- `no-unused-expressions`: ESLint rule: no-unused-expressions (off, with options)
+- `no-unused-labels`: ESLint rule: no-unused-labels (error, with options)
+- `no-unused-private-class-members`: ESLint rule: no-unused-private-class-members (error, with options)
+- `no-unused-vars`: ESLint rule: no-unused-vars (off, with options)
+- `no-useless-backreference`: ESLint rule: no-useless-backreference (error, with options)
+- `no-useless-catch`: ESLint rule: no-useless-catch (error, with options)
+- `no-useless-constructor`: ESLint rule: no-useless-constructor (off, with options)
+- `no-useless-escape`: ESLint rule: no-useless-escape (error, with options)
+- `no-var`: ESLint rule: no-var (error, with options)
+- `no-with`: ESLint rule: no-with (off, with options)
+- `prefer-const`: ESLint rule: prefer-const (error, with options)
+- `prefer-promise-reject-errors`: ESLint rule: prefer-promise-reject-errors (off, with options)
+- `prefer-rest-params`: ESLint rule: prefer-rest-params (error, with options)
+- `prefer-spread`: ESLint rule: prefer-spread (error, with options)
+- `require-await`: ESLint rule: require-await (off, with options)
+- `require-yield`: ESLint rule: require-yield (error, with options)
+- `use-isnan`: ESLint rule: use-isnan (error, with options)
+- `valid-typeof`: ESLint rule: valid-typeof (error, with options)
 
 ### unused-imports
 
-- `no-unused-imports`: error
-- `no-unused-vars`: warn (with options)
+- `no-unused-imports`: ESLint rule: no-unused-imports (error, with options)
+- `no-unused-vars`: ESLint rule: no-unused-vars (warn, with options)

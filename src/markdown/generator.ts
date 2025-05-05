@@ -1,8 +1,9 @@
 import fs from 'node:fs/promises'
+import { parseBiomeRules } from '../parsers/biome-parser.ts'
+import { parseESLintRules } from '../parsers/eslint-parser.ts'
 import type { BiomeRageResult } from '../tools/biome-runner.ts'
 import type { ESLintConfigResult } from '../tools/eslint-runner.ts'
-import { biomeRulesToMarkdown } from './biome-to-markdown.ts'
-import { eslintRulesToMarkdown } from './eslint-to-markdown.ts'
+import { lintRulesToMarkdown } from './lint-to-markdown.ts'
 
 interface MarkdownGeneratorOptions {
   biomeResult: BiomeRageResult
@@ -16,14 +17,16 @@ export async function generateMarkdown(options: MarkdownGeneratorOptions): Promi
   // Start generating markdown
   let markdown = '# Rulens Lint Rules Dump\n\n'
 
-  // Add Biome section if available
+  // 1. Biome設定を共通中間表現に変換
   if (biomeResult) {
-    markdown += biomeRulesToMarkdown(biomeResult)
+    const biomeLinter = parseBiomeRules(biomeResult)
+    markdown += `${lintRulesToMarkdown(biomeLinter)}\n`
   }
 
-  // Add ESLint section if available
+  // 2. ESLint設定を共通中間表現に変換
   if (eslintResult) {
-    markdown += eslintRulesToMarkdown(eslintResult)
+    const eslintLinter = parseESLintRules(eslintResult)
+    markdown += lintRulesToMarkdown(eslintLinter)
   }
 
   // Write to file

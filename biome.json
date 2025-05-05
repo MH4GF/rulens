@@ -10,7 +10,8 @@
         "useExplicitType": "error"
       },
       "complexity": {
-        "useLiteralKeys": "off"
+        "useLiteralKeys": "off",
+        "noExcessiveCognitiveComplexity": "error"
       }
     }
   }

@@ -164,7 +164,12 @@ async function extractRuleInformation(): Promise<BiomeRuleDescription> {
  * 例: "no-autofocus" → "noAutofocus"
  */
 function convertToCamelCase(str: string): string {
-  return str.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())
+  return str.replace(/-([a-z])/g, (_, letter) => {
+    if (typeof letter === 'string') {
+      return letter.toUpperCase()
+    }
+    return ''
+  })
 }
 
 /**
@@ -176,10 +181,13 @@ async function main(): Promise<void> {
     const descriptions = await extractRuleInformation()
     await fs.mkdir(path.dirname(OUTPUT_PATH), { recursive: true })
     await fs.writeFile(OUTPUT_PATH, JSON.stringify(descriptions, null, 2), 'utf8')
-  } catch (_error) {
+  } catch {
+    // エラーの場合は終了
     process.exit(1)
   }
 }
 
 // スクリプトを実行
-main()
+main().catch((_error) => {
+  process.exit(1)
+})

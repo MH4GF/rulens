@@ -49,11 +49,11 @@
 ### ディレクトリ構造整備
 - [x] src/ディレクトリと基本ファイル構造作成
 - [x] サブディレクトリ作成（commands/, tools/, markdown/, utils/）
-- [ ] 新規ディレクトリ作成
-  - [ ] src/data/ ディレクトリの作成（ルール説明JSONデータ用）
-  - [ ] src/types/ ディレクトリの作成（共通型定義用）
-  - [ ] src/parsers/ ディレクトリの作成（各linter用パーサー）
-  - [ ] ルートに scripts/ ディレクトリの作成（開発用スクリプト用）
+- [x] 新規ディレクトリ作成
+  - [x] src/data/ ディレクトリの作成（ルール説明JSONデータ用）
+  - [x] src/types/ ディレクトリの作成（共通型定義用）
+  - [x] src/parsers/ ディレクトリの作成（各linter用パーサー）
+  - [x] ルートに scripts/ ディレクトリの作成（開発用スクリプト用）
 - [ ] README.mdの初期版作成
 
 ## コア機能実装
@@ -79,9 +79,9 @@
 
 ## ESLint対応
 
-- [ ] ESLint実行ロジック実装
-- [ ] ESLint出力結果のパース・整形
-- [ ] ESLint設定をMarkdown形式に変換
+- [x] ESLint実行ロジック実装
+- [x] ESLint出力結果のパース・整形
+- [x] ESLint設定をMarkdown形式に変換
 
 ## Markdown生成
 
@@ -89,17 +89,17 @@
 - [x] Biomeルール出力テンプレート作成
 - [x] ESLintルール出力テンプレート作成
 - [x] ファイル出力機能実装
-- [ ] 共通中間表現を使ったマークダウン生成機能への改修
-  - [ ] 共通の型定義ファイル作成（`src/types/rulens.ts`）
-  - [ ] Biome用パーサーの実装（`src/parsers/biome-parser.ts`）
-  - [ ] ESLint用パーサーの実装（`src/parsers/eslint-parser.ts`）
-  - [ ] 中間表現からマークダウンを生成する共通関数の実装（`src/markdown/lint-to-markdown.ts`）
-  - [ ] メインジェネレーターの更新（パーサーと中間表現を使用）
-  - [ ] 各ツール固有の実装とのインターフェース調整
-- [ ] ルール説明を含むマークダウン形式への拡張
-  - [ ] Biomeルール説明のJSONデータをパーサーで活用
-  - [ ] マークダウン出力にルール説明と URL を含める
-  - [ ] テストの更新
+- [x] 共通中間表現を使ったマークダウン生成機能への改修
+  - [x] 共通の型定義ファイル作成（`src/types/rulens.ts`）
+  - [x] Biome用パーサーの実装（`src/parsers/biome-parser.ts`）
+  - [x] ESLint用パーサーの実装（`src/parsers/eslint-parser.ts`）
+  - [x] 中間表現からマークダウンを生成する共通関数の実装（`src/markdown/lint-to-markdown.ts`）
+  - [x] メインジェネレーターの更新（パーサーと中間表現を使用）
+  - [x] 各ツール固有の実装とのインターフェース調整
+- [x] ルール説明を含むマークダウン形式への拡張
+  - [x] Biomeルール説明のJSONデータをパーサーで活用
+  - [x] マークダウン出力にルール説明と URL を含める
+  - [x] テストの更新
 
 ## テスト・デプロイ
 
