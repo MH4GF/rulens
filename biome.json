@@ -4,6 +4,9 @@
     "./node_modules/@mh4gf/configs/biome/index.jsonc",
     "./node_modules/@mh4gf/configs/biome/nodejs.jsonc"
   ],
+  "formatter": {
+    "ignore": ["package.json"]
+  },
   "linter": {
     "rules": {
       "nursery": {
