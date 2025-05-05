@@ -131,6 +131,7 @@ This simple instruction helps AI tools like GitHub Copilot, Cursor, Claude, and 
 | `--biome-args <args>`    | Additional arguments to pass to biome rage | -                    |
 | `--eslint-config <path>` | Path to ESLint config file                 | `eslint.config.js`   |
 | `--output <file>`        | Output file path                           | `docs/lint-rules.md` |
+| `--verbose`              | Enable verbose mode with detailed output   | `false`              |
 | `--help`                 | Display help information                   | -                    |
 | `--version`              | Display version number                     | -                    |
 
