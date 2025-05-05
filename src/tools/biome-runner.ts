@@ -3,7 +3,7 @@ import { executeCommand } from '../utils/executor.ts'
 import { Logger } from '../utils/logger.ts'
 
 interface BiomeRunnerOptions {
-  additionalArgs?: string
+  additionalArgs?: string | undefined
   verbose?: boolean | undefined
 }
 

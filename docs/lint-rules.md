@@ -367,7 +367,6 @@ Rules in this category enforce TypeScript-specific best practices and type safet
 | [`await-thenable`](https://typescript-eslint.io/rules/await-thenable) | Disallow awaiting a value that is not a Thenable (error) |
 | [`ban-ts-comment`](https://typescript-eslint.io/rules/ban-ts-comment) | Disallow `@ts-<directive>` comments or require descriptions after directives (error, with options) |
 | [`consistent-type-imports`](https://typescript-eslint.io/rules/consistent-type-imports) | Enforce consistent usage of type imports (error, with options) |
-| [`dot-notation`](https://typescript-eslint.io/rules/dot-notation) | Enforce dot notation whenever possible (off) |
 | [`naming-convention`](https://typescript-eslint.io/rules/naming-convention) | Enforce naming conventions for everything across a codebase (error, with options) |
 | [`no-array-constructor`](https://typescript-eslint.io/rules/no-array-constructor) | Disallow generic `Array` constructors (error) |
 | [`no-array-delete`](https://typescript-eslint.io/rules/no-array-delete) | Disallow using the `delete` operator on array values (error) |
@@ -375,7 +374,6 @@ Rules in this category enforce TypeScript-specific best practices and type safet
 | [`no-duplicate-enum-values`](https://typescript-eslint.io/rules/no-duplicate-enum-values) | Disallow duplicate enum member values (error) |
 | [`no-duplicate-type-constituents`](https://typescript-eslint.io/rules/no-duplicate-type-constituents) | Disallow duplicate constituents of union or intersection types (error) |
 | [`no-dynamic-delete`](https://typescript-eslint.io/rules/no-dynamic-delete) | Disallow using the `delete` operator on computed key expressions (error) |
-| [`no-empty-interface`](https://typescript-eslint.io/rules/no-empty-interface) | Disallow the declaration of empty interfaces (off) |
 | [`no-empty-object-type`](https://typescript-eslint.io/rules/no-empty-object-type) | Disallow accidentally using the "empty object" type (error) |
 | [`no-explicit-any`](https://typescript-eslint.io/rules/no-explicit-any) | Disallow the `any` type (error) |
 | [`no-extra-non-null-assertion`](https://typescript-eslint.io/rules/no-extra-non-null-assertion) | Disallow extra non-null assertions (error) |
@@ -405,7 +403,6 @@ Rules in this category enforce TypeScript-specific best practices and type safet
 | [`no-unsafe-return`](https://typescript-eslint.io/rules/no-unsafe-return) | Disallow returning a value with type `any` from a function (error) |
 | [`no-unsafe-unary-minus`](https://typescript-eslint.io/rules/no-unsafe-unary-minus) | Require unary negation to take a number (error) |
 | [`no-unused-expressions`](https://typescript-eslint.io/rules/no-unused-expressions) | Disallow unused expressions (error) |
-| [`no-unused-vars`](https://typescript-eslint.io/rules/no-unused-vars) | Disallow unused variables (off) |
 | [`no-useless-constructor`](https://typescript-eslint.io/rules/no-useless-constructor) | Disallow unnecessary constructors (error) |
 | [`no-wrapper-object-types`](https://typescript-eslint.io/rules/no-wrapper-object-types) | Disallow using confusing built-in primitive class wrappers (error) |
 | [`only-throw-error`](https://typescript-eslint.io/rules/only-throw-error) | Disallow throwing non-`Error` values as exceptions (error) |
@@ -428,25 +425,17 @@ Core ESLint rules that apply to JavaScript code.
 
 | Rule | Description |
 | ---- | ----------- |
-| `constructor-super` | ESLint rule: constructor-super (off) |
 | `for-direction` | ESLint rule: for-direction (error) |
-| `getter-return` | ESLint rule: getter-return (off) |
-| `no-array-constructor` | ESLint rule: no-array-constructor (off) |
 | `no-async-promise-executor` | ESLint rule: no-async-promise-executor (error) |
 | `no-case-declarations` | ESLint rule: no-case-declarations (error) |
-| `no-class-assign` | ESLint rule: no-class-assign (off) |
 | `no-compare-neg-zero` | ESLint rule: no-compare-neg-zero (error) |
 | `no-cond-assign` | ESLint rule: no-cond-assign (error) |
-| `no-const-assign` | ESLint rule: no-const-assign (off) |
 | `no-constant-binary-expression` | ESLint rule: no-constant-binary-expression (error) |
 | `no-constant-condition` | ESLint rule: no-constant-condition (error) |
 | `no-control-regex` | ESLint rule: no-control-regex (error) |
 | `no-debugger` | ESLint rule: no-debugger (error) |
 | `no-delete-var` | ESLint rule: no-delete-var (error) |
-| `no-dupe-args` | ESLint rule: no-dupe-args (off) |
-| `no-dupe-class-members` | ESLint rule: no-dupe-class-members (off) |
 | `no-dupe-else-if` | ESLint rule: no-dupe-else-if (error) |
-| `no-dupe-keys` | ESLint rule: no-dupe-keys (off) |
 | `no-duplicate-case` | ESLint rule: no-duplicate-case (error) |
 | `no-empty` | ESLint rule: no-empty (error) |
 | `no-empty-character-class` | ESLint rule: no-empty-character-class (error) |
@@ -455,49 +444,30 @@ Core ESLint rules that apply to JavaScript code.
 | `no-ex-assign` | ESLint rule: no-ex-assign (error) |
 | `no-extra-boolean-cast` | ESLint rule: no-extra-boolean-cast (error) |
 | `no-fallthrough` | ESLint rule: no-fallthrough (error) |
-| `no-func-assign` | ESLint rule: no-func-assign (off) |
 | `no-global-assign` | ESLint rule: no-global-assign (error) |
-| `no-implied-eval` | ESLint rule: no-implied-eval (off) |
-| `no-import-assign` | ESLint rule: no-import-assign (off) |
 | `no-invalid-regexp` | ESLint rule: no-invalid-regexp (error) |
 | `no-irregular-whitespace` | ESLint rule: no-irregular-whitespace (error) |
 | `no-loss-of-precision` | ESLint rule: no-loss-of-precision (error) |
 | `no-misleading-character-class` | ESLint rule: no-misleading-character-class (error) |
-| `no-new-native-nonconstructor` | ESLint rule: no-new-native-nonconstructor (off) |
-| `no-new-symbol` | ESLint rule: no-new-symbol (off) |
 | `no-nonoctal-decimal-escape` | ESLint rule: no-nonoctal-decimal-escape (error) |
-| `no-obj-calls` | ESLint rule: no-obj-calls (off) |
 | `no-octal` | ESLint rule: no-octal (error) |
 | `no-prototype-builtins` | ESLint rule: no-prototype-builtins (error) |
-| `no-redeclare` | ESLint rule: no-redeclare (off) |
 | `no-regex-spaces` | ESLint rule: no-regex-spaces (error) |
 | `no-self-assign` | ESLint rule: no-self-assign (error) |
-| `no-setter-return` | ESLint rule: no-setter-return (off) |
 | `no-shadow-restricted-names` | ESLint rule: no-shadow-restricted-names (error) |
 | `no-sparse-arrays` | ESLint rule: no-sparse-arrays (error) |
-| `no-this-before-super` | ESLint rule: no-this-before-super (off) |
-| `no-throw-literal` | ESLint rule: no-throw-literal (off) |
-| `no-undef` | ESLint rule: no-undef (off) |
 | `no-unexpected-multiline` | ESLint rule: no-unexpected-multiline (error) |
-| `no-unreachable` | ESLint rule: no-unreachable (off) |
 | `no-unsafe-finally` | ESLint rule: no-unsafe-finally (error) |
-| `no-unsafe-negation` | ESLint rule: no-unsafe-negation (off) |
 | `no-unsafe-optional-chaining` | ESLint rule: no-unsafe-optional-chaining (error) |
-| `no-unused-expressions` | ESLint rule: no-unused-expressions (off) |
 | `no-unused-labels` | ESLint rule: no-unused-labels (error) |
 | `no-unused-private-class-members` | ESLint rule: no-unused-private-class-members (error) |
-| `no-unused-vars` | ESLint rule: no-unused-vars (off) |
 | `no-useless-backreference` | ESLint rule: no-useless-backreference (error) |
 | `no-useless-catch` | ESLint rule: no-useless-catch (error) |
-| `no-useless-constructor` | ESLint rule: no-useless-constructor (off) |
 | `no-useless-escape` | ESLint rule: no-useless-escape (error) |
 | `no-var` | ESLint rule: no-var (error) |
-| `no-with` | ESLint rule: no-with (off) |
 | `prefer-const` | ESLint rule: prefer-const (error) |
-| `prefer-promise-reject-errors` | ESLint rule: prefer-promise-reject-errors (off) |
 | `prefer-rest-params` | ESLint rule: prefer-rest-params (error) |
 | `prefer-spread` | ESLint rule: prefer-spread (error) |
-| `require-await` | ESLint rule: require-await (off) |
 | `require-yield` | ESLint rule: require-yield (error) |
 | `use-isnan` | ESLint rule: use-isnan (error) |
 | `valid-typeof` | ESLint rule: valid-typeof (error) |

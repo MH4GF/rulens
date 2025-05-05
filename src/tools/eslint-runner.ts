@@ -52,18 +52,71 @@ const eslintRuleSchema = object({
 })
 
 /**
+ * Find ESLint configuration file in the project
+ * Checks for both new (eslint.config.js) and legacy (.eslintrc.*) formats
+ */
+function findESLintConfig(userConfigPath?: string): string {
+  const localLogger = new Logger()
+
+  // If user specified a config path, use it
+  if (userConfigPath) {
+    const fullPath = path.resolve(process.cwd(), userConfigPath)
+    if (existsSync(fullPath)) {
+      localLogger.debug(`Using user-specified ESLint config: ${fullPath}`)
+      return fullPath
+    }
+    throw new Error(`ESLint config file not found at specified path: ${fullPath}`)
+  }
+
+  // Check for default ESLint config (new format first)
+  const newFormatPath = path.resolve(process.cwd(), 'eslint.config.js')
+  if (existsSync(newFormatPath)) {
+    localLogger.debug(`Found new format ESLint config: ${newFormatPath}`)
+    return newFormatPath
+  }
+
+  // Check for legacy formats in priority order
+  const legacyFormats = [
+    '.eslintrc.js',
+    '.eslintrc.json',
+    '.eslintrc.yaml',
+    '.eslintrc.yml',
+    '.eslintrc',
+  ]
+
+  for (const format of legacyFormats) {
+    const legacyPath = path.resolve(process.cwd(), format)
+    if (existsSync(legacyPath)) {
+      localLogger.debug(`Found legacy format ESLint config: ${legacyPath}`)
+      return legacyPath
+    }
+  }
+
+  // No config found
+  throw new Error(
+    'No ESLint configuration file found. Supported formats: eslint.config.js, .eslintrc.*',
+  )
+}
+
+/**
  * Load ESLint configuration using bundle-require
  */
 export async function runESLintConfig(
   options: ESLintRunnerOptions = {},
 ): Promise<ESLintConfigResult> {
-  const { configPath = 'eslint.config.js', verbose } = options
+  const { configPath, verbose } = options
   const logger = new Logger({ verbose: verbose ?? undefined })
-  const fullConfigPath = path.resolve(process.cwd(), configPath)
 
-  // Check if config file exists
-  if (!existsSync(fullConfigPath)) {
-    throw new Error(`ESLint config file not found: ${fullConfigPath}`)
+  // Find the config file (will throw if not found)
+  let fullConfigPath: string
+  try {
+    fullConfigPath = findESLintConfig(configPath)
+    logger.info(`Using ESLint config file: ${fullConfigPath}`)
+  } catch (error) {
+    logger.error(
+      `ESLint config file error: ${error instanceof Error ? error.message : String(error)}`,
+    )
+    throw error
   }
 
   try {

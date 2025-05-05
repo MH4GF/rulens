@@ -192,24 +192,22 @@ describe('parseESLintRules', () => {
     expect(firstCategory).toBeDefined()
 
     if (firstCategory) {
-      expect(firstCategory.rules.length).toBe(3)
+      // We only expect 2 rules because 'off' rules are filtered out in parseESLintRules
+      expect(firstCategory.rules.length).toBe(2)
 
       const rules = firstCategory.rules
 
-      if (rules.length >= 3) {
+      if (rules.length >= 2) {
         const rule0 = rules[0]
         const rule1 = rules[1]
-        const rule2 = rules[2]
 
         expect(rule0).toBeDefined()
         expect(rule1).toBeDefined()
-        expect(rule2).toBeDefined()
 
-        if (rule0 && rule1 && rule2) {
-          expect(rule0.severity).toBe('off')
-          expect(rule1.severity).toBe('warn')
-          expect(rule2.severity).toBe('error')
-        }
+        // Verify we have both warn and error rules (rule with severity 'off' is filtered out)
+        const severities = [rule0?.severity, rule1?.severity].filter(Boolean) as string[]
+        expect(severities).toContain('warn')
+        expect(severities).toContain('error')
       }
     }
   })

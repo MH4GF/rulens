@@ -8,7 +8,7 @@ export const generateOptionsSchema = object({
 })
 
 export type GenerateOptions = {
-  biomeArgs: string
+  biomeArgs?: string | undefined
   eslintConfig?: string | undefined
   output: string
   verbose?: boolean | undefined

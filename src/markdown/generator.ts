@@ -1,13 +1,15 @@
 import fs from 'node:fs/promises'
+import path from 'node:path'
 import { parseBiomeRules } from '../parsers/biome-parser.ts'
 import { parseESLintRules } from '../parsers/eslint-parser.ts'
 import type { BiomeRageResult } from '../tools/biome-runner.ts'
 import type { ESLintConfigResult } from '../tools/eslint-runner.ts'
+import { Logger } from '../utils/logger.ts'
 import { lintRulesToMarkdown } from './lint-to-markdown.ts'
 
 interface MarkdownGeneratorOptions {
-  biomeResult: BiomeRageResult
-  eslintResult: ESLintConfigResult
+  biomeResult: BiomeRageResult | null
+  eslintResult: ESLintConfigResult | null
   outputFile: string
 }
 
@@ -82,8 +84,24 @@ function generateAIUsageGuide(): string {
   )
 }
 
+/**
+ * Ensure directory exists before writing file
+ */
+async function ensureDirectoryExists(filePath: string): Promise<void> {
+  const directory = path.dirname(filePath)
+  try {
+    await fs.mkdir(directory, { recursive: true })
+  } catch (error) {
+    // Ignore error if directory already exists
+    if ((error as NodeJS.ErrnoException).code !== 'EEXIST') {
+      throw error
+    }
+  }
+}
+
 export async function generateMarkdown(options: MarkdownGeneratorOptions): Promise<string> {
   const { biomeResult, eslintResult, outputFile } = options
+  const logger = new Logger()
 
   // Generate each part of the document
   let markdown = generateHeader()
@@ -110,6 +128,8 @@ export async function generateMarkdown(options: MarkdownGeneratorOptions): Promi
     const eslintLinter = parseESLintRules(eslintResult)
     markdown += lintRulesToMarkdown(eslintLinter, true)
   }
+
+  await ensureDirectoryExists(outputFile)
 
   // Write to file
   await fs.writeFile(outputFile, markdown, 'utf-8')

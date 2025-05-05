@@ -85,10 +85,17 @@ export function parseESLintRules(eslintResult: ESLintConfigResult): RulensLinter
       }
     }
 
-    // Convert rules in this category
-    const categoryRules = Object.entries(rulesInCategory).map(
-      ([ruleName, ruleConfig]): RulensRule => createRulensRule(ruleName, ruleConfig, categoryName),
-    )
+    // Convert rules in this category, filtering out those with "off" severity
+    const categoryRules = Object.entries(rulesInCategory)
+      .map(([ruleName, ruleConfig]) => {
+        const { severity } = parseRuleConfig(ruleConfig)
+        // Skip rules with "off" severity
+        if (severity === 'off') {
+          return null
+        }
+        return createRulensRule(ruleName, ruleConfig, categoryName)
+      })
+      .filter((rule): rule is RulensRule => rule !== null)
 
     // Get description for this category
     const description = getCategoryDescription(categoryName)

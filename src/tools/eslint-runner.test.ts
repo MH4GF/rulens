@@ -54,7 +54,7 @@ describe('eslint-runner', () => {
   describe('extractRulesAndMeta', () => {
     // Test rule and metadata extraction
     it('should extract rules and metadata from ESLint config object', () => {
-      // Mock ESLint configuration object
+      // ESLint configuration object
       const mockConfig = [
         {
           // Rule settings
@@ -143,6 +143,52 @@ describe('eslint-runner', () => {
 
       expect(rulesMeta).toHaveProperty('nested-plugin/nested-rule')
       expect(rulesMeta['nested-plugin/nested-rule']?.description).toBe('A nested rule description')
+    })
+
+    // Test handling of array format rules
+    it('should extract rules from array format', () => {
+      const arrayConfig = {
+        rules: {
+          'array-rule': ['error', { option1: true }],
+        },
+      }
+
+      const { rules } = extractRulesAndMeta(arrayConfig)
+      expect(rules).toHaveProperty('array-rule')
+      expect(rules['array-rule']).toEqual(['error', { option1: true }])
+    })
+
+    // Test plugins metadata extraction
+    it('should extract plugins metadata', () => {
+      const pluginsConfig = {
+        plugins: {
+          'test-plugin': {
+            meta: {
+              description: 'A test plugin description',
+            },
+            rules: {
+              'test-rule': {
+                meta: {
+                  type: 'problem',
+                  docs: {
+                    description: 'A test rule',
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
+
+      const { rulesMeta, pluginsMetadata } = extractRulesAndMeta(pluginsConfig)
+
+      // Check plugins metadata
+      expect(pluginsMetadata).toHaveProperty('test-plugin')
+      expect(pluginsMetadata?.['test-plugin']?.description).toBe('A test plugin description')
+
+      // Check rule metadata
+      expect(rulesMeta).toHaveProperty('test-plugin/test-rule')
+      expect(rulesMeta?.['test-plugin/test-rule']?.description).toBe('A test rule')
     })
   })
 })
