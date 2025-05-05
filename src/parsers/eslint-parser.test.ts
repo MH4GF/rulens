@@ -3,7 +3,7 @@ import type { ESLintConfigResult } from '../tools/eslint-runner.ts'
 import { parseESLintRules } from './eslint-parser.ts'
 
 describe('parseESLintRules', () => {
-  // 共通のモックデータを定義
+  // Define common mock data
   const createMockESLintResult = (): ESLintConfigResult => ({
     raw: 'ESLint config output',
     rules: {

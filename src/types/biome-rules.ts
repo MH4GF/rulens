@@ -1,5 +1,5 @@
 /**
- * Biomeルールの説明に関する型定義
+ * Type definitions for Biome rule descriptions
  */
 export interface BiomeRuleDescription {
   [ruleId: string]: {

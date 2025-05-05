@@ -12,12 +12,12 @@ interface MarkdownGeneratorOptions {
 }
 
 /**
- * プロジェクト名を推測
+ * Guess project name
  */
 function guessProjectName(): string {
   try {
-    // package.jsonからプロジェクト名を取得する実装も可能だが、
-    // 現時点ではプロジェクト名は固定で良い
+    // It's possible to implement getting the project name from package.json,
+    // but for now it's fine to use a fixed name
     return 'Project'
   } catch {
     return 'Project'
@@ -25,7 +25,7 @@ function guessProjectName(): string {
 }
 
 /**
- * 目次を生成
+ * Generate table of contents
  */
 function generateTableOfContents(hasBiome: boolean, hasEslint: boolean): string {
   let toc = '## 📑 Table of Contents\n\n'
@@ -35,19 +35,19 @@ function generateTableOfContents(hasBiome: boolean, hasEslint: boolean): string 
 
   if (hasBiome) {
     toc += '- [Biome Rules](#biome-rules)\n'
-    // カテゴリーを全て列挙することも可能だが、シンプルにする
+    // It's possible to enumerate all categories, but keeping it simple
   }
 
   if (hasEslint) {
     toc += '- [ESLint Rules](#eslint-rules)\n'
-    // カテゴリーを全て列挙することも可能だが、シンプルにする
+    // It's possible to enumerate all categories, but keeping it simple
   }
 
   return toc
 }
 
 /**
- * ドキュメントヘッダーを生成
+ * Generate document header
  */
 function generateHeader(): string {
   const projectName = guessProjectName()
@@ -55,7 +55,7 @@ function generateHeader(): string {
 }
 
 /**
- * 導入部を生成
+ * Generate introduction
  */
 function generateIntroduction(): string {
   return (
@@ -69,7 +69,7 @@ function generateIntroduction(): string {
 }
 
 /**
- * AI使用ガイドを生成
+ * Generate AI usage guide
  */
 function generateAIUsageGuide(): string {
   return (
@@ -85,27 +85,27 @@ function generateAIUsageGuide(): string {
 export async function generateMarkdown(options: MarkdownGeneratorOptions): Promise<string> {
   const { biomeResult, eslintResult, outputFile } = options
 
-  // ドキュメントの各部分を生成
+  // Generate each part of the document
   let markdown = generateHeader()
   markdown += '---\n\n'
 
-  // 目次を追加
+  // Add table of contents
   markdown += generateTableOfContents(!!biomeResult, !!eslintResult)
   markdown += '---\n\n'
 
-  // 導入部とAI使用ガイドを追加
+  // Add introduction and AI usage guide
   markdown += generateIntroduction()
   markdown += '---\n\n'
   markdown += generateAIUsageGuide()
   markdown += '---\n\n'
 
-  // 1. Biome設定を共通中間表現に変換
+  // 1. Convert Biome configuration to common intermediate representation
   if (biomeResult) {
     const biomeLinter = parseBiomeRules(biomeResult)
     markdown += `${lintRulesToMarkdown(biomeLinter, true)}\n`
   }
 
-  // 2. ESLint設定を共通中間表現に変換
+  // 2. Convert ESLint configuration to common intermediate representation
   if (eslintResult) {
     const eslintLinter = parseESLintRules(eslintResult)
     markdown += lintRulesToMarkdown(eslintLinter, true)

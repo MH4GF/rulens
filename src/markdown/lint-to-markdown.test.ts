@@ -67,7 +67,7 @@ describe('lintRulesToMarkdown', () => {
               id: 'style/useConst',
               name: 'useConst',
               description: 'Require const declarations for variables that are only assigned once.',
-              // URL無し
+              // No URL
             },
           ],
         },
@@ -132,7 +132,7 @@ describe('lintRulesToMarkdown', () => {
       categories: [
         {
           name: 'emptyCategory',
-          rules: [], // 空のルールリスト
+          rules: [], // Empty rule list
         },
       ],
     }

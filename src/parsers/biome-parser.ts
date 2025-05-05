@@ -3,26 +3,26 @@ import type { BiomeRageResult } from '../tools/biome-runner.ts'
 import type { BiomeRuleDescription } from '../types/biome-rules.js'
 import type { RulensCategory, RulensLinter, RulensRule } from '../types/rulens.ts'
 
-// JSONファイルをインポート
+// Import JSON file
 const biomeRuleDescriptions: BiomeRuleDescription =
   biomeRuleDescriptionsData as BiomeRuleDescription
 
 /**
- * Biomeの実行結果を共通中間表現に変換する
+ * Convert Biome execution results to common intermediate representation
  */
 export function parseBiomeRules(biomeResult: BiomeRageResult): RulensLinter {
   const { rules } = biomeResult
 
-  // カテゴリごとにルールを分類
+  // Categorize rules by category
   const categorizedRules = categorizeRules(rules)
 
-  // カテゴリをアルファベット順にソート
+  // Sort categories alphabetically
   const categories = Object.keys(categorizedRules)
     .sort()
     .map((categoryName): RulensCategory => {
       const categoryRules = categorizedRules[categoryName] || []
       const rules = categoryRules.map((ruleInfo): RulensRule => {
-        // JSONからルールの説明とURLを取得
+        // Get rule description and URL from JSON
         const ruleDescription = getRuleDescription(ruleInfo.id)
 
         return {
@@ -46,12 +46,12 @@ export function parseBiomeRules(biomeResult: BiomeRageResult): RulensLinter {
 }
 
 /**
- * ルールIDからカテゴリと名前を抽出する
+ * Extract category and name from rule ID
  */
 function parseRuleId(ruleId: string): { category: string; name: string; id: string } {
   const parts = ruleId.split('/')
 
-  // ルールIDのフォーマットが不正の場合
+  // If rule ID format is invalid
   if (parts.length !== 2 || !parts[0] || !parts[1]) {
     return {
       category: 'other',
@@ -62,7 +62,7 @@ function parseRuleId(ruleId: string): { category: string; name: string; id: stri
 
   const [category, name] = parts
 
-  // a11y カテゴリは accessibility に正規化
+  // Normalize a11y category to accessibility
   const normalizedCategory = category === 'a11y' ? 'accessibility' : category
 
   return {
@@ -73,7 +73,7 @@ function parseRuleId(ruleId: string): { category: string; name: string; id: stri
 }
 
 /**
- * ルールリストをカテゴリ別に分類する
+ * Categorize rule list by category
  */
 function categorizeRules(rules: string[]): Record<string, Array<{ id: string; name: string }>> {
   const result: Record<string, Array<{ id: string; name: string }>> = {}
@@ -97,10 +97,10 @@ interface RuleDescription {
 }
 
 /**
- * ルールIDに基づいて説明とURLを取得
+ * Get description and URL based on rule ID
  */
 function getRuleDescription(ruleId: string): RuleDescription {
-  // a11y/useAltText のような形式でJSON内を検索
+  // Search in JSON with format like a11y/useAltText
   const info = biomeRuleDescriptions[ruleId]
   if (info) {
     return {
@@ -109,10 +109,10 @@ function getRuleDescription(ruleId: string): RuleDescription {
     }
   }
 
-  // 処理対象のルールID
+  // Rule ID being processed
   const { category, name } = parseRuleId(ruleId)
 
-  // accessibility → a11y の変換が必要
+  // Need to convert accessibility → a11y
   if (category === 'accessibility') {
     const a11yRuleId = `a11y/${name}`
     const a11yInfo = biomeRuleDescriptions[a11yRuleId]
@@ -124,7 +124,7 @@ function getRuleDescription(ruleId: string): RuleDescription {
     }
   }
 
-  // Suspicious/noThenProperty → suspicious/noThenProperty の変換（大文字小文字の調整）
+  // Convert Suspicious/noThenProperty → suspicious/noThenProperty (case adjustment)
   const lowerCaseCategory = category.toLowerCase()
   if (lowerCaseCategory !== category) {
     const lowerCaseRuleId = `${lowerCaseCategory}/${name}`
@@ -137,10 +137,10 @@ function getRuleDescription(ruleId: string): RuleDescription {
     }
   }
 
-  // Biome では category/ruleName の形式でJSON内を検索することが一般的
-  // 大文字小文字を厳密に考慮
+  // In Biome, it's common to search in JSON using the category/ruleName format
+  // Strictly consider case sensitivity
   for (const key of Object.keys(biomeRuleDescriptions)) {
-    // 完全一致か、大文字小文字を無視した一致を確認
+    // Check for exact match or case-insensitive match
     if (key.toLowerCase() === ruleId.toLowerCase()) {
       const info = biomeRuleDescriptions[key]
       if (info) {
@@ -152,6 +152,6 @@ function getRuleDescription(ruleId: string): RuleDescription {
     }
   }
 
-  // 対応するルール情報が見つからない場合
+  // If corresponding rule information is not found
   return {}
 }

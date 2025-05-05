@@ -4,11 +4,10 @@ import { bundleRequire } from 'bundle-require'
 import { object, optional, record, safeParse, string, unknown } from 'valibot'
 import { Logger } from '../utils/logger.ts'
 
-// ロガーのインスタンスを作成
 const logger = new Logger()
 
 /**
- * 循環参照を処理するためのカスタムJSON stringify関数
+ * Custom JSON stringify function to handle circular references
  */
 function safeStringify(obj: unknown): string {
   const seen = new Set()
@@ -27,20 +26,20 @@ function safeStringify(obj: unknown): string {
   )
 }
 
-// ESLint設定取得オプション
+// ESLint config options
 interface ESLintRunnerOptions {
-  configPath?: string | undefined // ESLint設定ファイルのパス（デフォルト：eslint.config.js）
+  configPath?: string | undefined // Path to ESLint config file (default: eslint.config.js)
 }
 
-// ESLintルールのメタデータを表す型
+// Type representing ESLint rule metadata
 interface ESLintRuleMeta {
-  description?: string | undefined // ルールの説明
-  url?: string | undefined // ドキュメントURL
-  recommended?: boolean | undefined // 推奨ルールかどうか
-  type?: string | undefined // ルールの種類（例: "problem", "suggestion", "layout"）
+  description?: string | undefined // Rule description
+  url?: string | undefined // Documentation URL
+  recommended?: boolean | undefined // Whether it's a recommended rule
+  type?: string | undefined // Rule type (e.g. "problem", "suggestion", "layout")
 }
 
-// ESLint実行結果の型定義
+// Type definition for ESLint execution result
 export interface ESLintConfigResult {
   raw: string
   rules: Record<string, unknown>
@@ -48,13 +47,13 @@ export interface ESLintConfigResult {
   pluginsMetadata?: Record<string, { name: string; description?: string }>
 }
 
-// bundle-requireの結果のバリデーションスキーマ
+// Validation schema for bundle-require results
 const bundleResultSchema = object({
   mod: optional(record(string(), unknown())),
   default: optional(unknown()),
 })
 
-// ESLint設定のバリデーションスキーマ
+// Validation schema for ESLint configuration
 const eslintDocsSchema = object({
   description: optional(string()),
   url: optional(string()),
@@ -71,7 +70,7 @@ const eslintRuleSchema = object({
 })
 
 /**
- * ESLint設定をbundle-requireを使って読み込む
+ * Load ESLint configuration using bundle-require
  */
 export async function runESLintConfig(
   options: ESLintRunnerOptions = {},
@@ -79,18 +78,16 @@ export async function runESLintConfig(
   const { configPath = 'eslint.config.js' } = options
   const fullConfigPath = path.resolve(process.cwd(), configPath)
 
-  // 設定ファイルが存在するか確認
+  // Check if config file exists
   if (!existsSync(fullConfigPath)) {
     throw new Error(`ESLint config file not found: ${fullConfigPath}`)
   }
 
   try {
-    // bundle-requireでESLint設定を読み込む
     const bundleResult = await bundleRequire({
       filepath: fullConfigPath,
     })
 
-    // valibot でバリデーション
     const parseResult = safeParse(bundleResultSchema, bundleResult)
     if (!parseResult.success) {
       throw new Error(`Invalid bundle result format: ${parseResult.issues[0]?.message}`)
@@ -98,7 +95,6 @@ export async function runESLintConfig(
 
     const validatedResult = parseResult.output
 
-    // デフォルトエクスポートを取得
     const config =
       validatedResult.default || (validatedResult.mod ? validatedResult.mod['default'] : undefined)
 
@@ -107,11 +103,10 @@ export async function runESLintConfig(
     }
 
     try {
-      // ルールとメタデータを抽出
       const { rules, rulesMeta, pluginsMetadata } = extractRulesAndMeta(config)
 
       return {
-        raw: safeStringify(config), // 循環参照に対応した文字列化
+        raw: safeStringify(config), // String conversion that handles circular references
         rules,
         rulesMeta,
         pluginsMetadata,
@@ -121,7 +116,6 @@ export async function runESLintConfig(
         `Failed to extract rules from ESLint config: ${extractError instanceof Error ? extractError.message : String(extractError)}`,
       )
 
-      // 抽出に失敗した場合は空のルールセットを返す
       return {
         raw: safeStringify(config),
         rules: {},
@@ -138,7 +132,7 @@ export async function runESLintConfig(
 }
 
 /**
- * オブジェクトからルールを抽出する補助関数
+ * Helper function to extract rules from an object
  */
 function extractRulesFromObject(
   item: Record<string, unknown>,
@@ -150,7 +144,7 @@ function extractRulesFromObject(
 }
 
 /**
- * オブジェクトからプラグイン情報を抽出する補助関数
+ * Helper function to extract plugin information from an object
  */
 function extractPluginsFromObject(
   item: Record<string, unknown>,
@@ -162,7 +156,7 @@ function extractPluginsFromObject(
 }
 
 /**
- * 配列形式の設定からルールやプラグインを処理する
+ * Process rules and plugins from array-format configuration
  */
 function processArrayConfig(
   configArray: unknown[],
@@ -179,7 +173,7 @@ function processArrayConfig(
 }
 
 /**
- * 単一の設定オブジェクトを処理する
+ * Process a single configuration object
  */
 function processConfigItem(
   configItem: Record<string, unknown>,
@@ -187,7 +181,6 @@ function processConfigItem(
   rulesMeta: Record<string, ESLintRuleMeta>,
   pluginsMetadata: Record<string, { name: string; description?: string }>,
 ): void {
-  // プラグイン名と説明を抽出
   if (
     'plugins' in configItem &&
     configItem['plugins'] &&
@@ -195,14 +188,12 @@ function processConfigItem(
   ) {
     extractPluginsMetadata(configItem['plugins'] as Record<string, unknown>, pluginsMetadata)
   }
-
-  // ルールとプラグインを処理
   extractRulesFromObject(configItem, rules)
   extractPluginsFromObject(configItem, rulesMeta)
 }
 
 /**
- * 設定からルールとメタデータを抽出する
+ * Extract rules and metadata from configuration
  */
 export function extractRulesAndMeta(config: unknown): {
   rules: Record<string, unknown>
@@ -211,37 +202,35 @@ export function extractRulesAndMeta(config: unknown): {
 } {
   const rules: Record<string, unknown> = {}
   const rulesMeta: Record<string, ESLintRuleMeta> = {}
-  // カテゴリ（プラグイン）のメタデータを格納
+  // Store metadata for categories (plugins)
   const pluginsMetadata: Record<string, { name: string; description?: string }> = {
-    // デフォルトのESLint Coreのカテゴリ説明
+    // Default category description for ESLint Core
     'ESLint Core': {
       name: 'ESLint Core',
       description: 'Core ESLint rules that apply to JavaScript code.',
     },
   }
 
-  // デバッグ出力（開発時のみ）
   logger.debug(`Extracting rules and metadata from ESLint config: ${typeof config}`)
 
-  // 配列形式の設定を処理
+  // Process array-format configuration
   if (Array.isArray(config)) {
     processArrayConfig(config, rules, rulesMeta, pluginsMetadata)
   } else if (config && typeof config === 'object') {
-    // オブジェクト形式の設定を処理
+    // Process object-format configuration
     processConfigItem(config as Record<string, unknown>, rules, rulesMeta, pluginsMetadata)
   }
 
-  // デバッグ：見つかったプラグインメタデータを出力
   logger.debug(`Found plugin metadata: ${JSON.stringify(pluginsMetadata, null, 2)}`)
 
   return { rules, rulesMeta, pluginsMetadata }
 }
 
 /**
- * プラグインの説明をオブジェクトから抽出
+ * Extract plugin description from an object
  */
 function extractPluginDescription(pluginObj: Record<string, unknown>): string | undefined {
-  // 最初に meta?.description を試す
+  // First try meta?.description
   if ('meta' in pluginObj && pluginObj['meta'] && typeof pluginObj['meta'] === 'object') {
     const meta = pluginObj['meta'] as Record<string, unknown>
     if ('description' in meta && typeof meta['description'] === 'string') {
@@ -253,10 +242,10 @@ function extractPluginDescription(pluginObj: Record<string, unknown>): string | 
 }
 
 /**
- * プラグイン名に基づくフォールバック説明を提供
+ * Provide fallback description based on plugin name
  */
 function getFallbackDescription(pluginName: string): string {
-  // よく使われるESLintプラグインの説明
+  // Descriptions for commonly used ESLint plugins
   const knownDescriptions: { [key: string]: string } = {
     '@typescript-eslint':
       'Rules in this category enforce TypeScript-specific best practices and type safety.',
@@ -264,12 +253,12 @@ function getFallbackDescription(pluginName: string): string {
     vitest: 'Rules that ensure effective testing practices when using Vitest.',
   }
 
-  // 既知のプラグインの説明があればそれを返す、そうでなければ汎用的な説明を生成
+  // Return known description if available, otherwise generate a generic one
   return knownDescriptions[pluginName] || `Rules provided from the ${pluginName} plugin.`
 }
 
 /**
- * 単一プラグインのメタデータを抽出する
+ * Extract metadata for a single plugin
  */
 function extractSinglePluginMetadata(
   pluginName: string,
@@ -282,23 +271,23 @@ function extractSinglePluginMetadata(
 
   const pluginObj = plugin as Record<string, unknown>
 
-  // 初期メタデータを設定
+  // Set initial metadata
   pluginsMetadata[pluginName] = {
     name: pluginName,
   }
 
-  // 説明を取得する順序:
-  // 1. プラグインオブジェクトから直接抽出
-  // 2. フォールバック説明を使用
+  // Order of getting description:
+  // 1. Extract directly from plugin object
+  // 2. Use fallback description
   const extractedDescription = extractPluginDescription(pluginObj)
 
-  // プラグインから説明が取得できる場合はそれを使用、そうでなければフォールバック
+  // Use description from plugin if available, otherwise use fallback
   pluginsMetadata[pluginName].description =
     extractedDescription || getFallbackDescription(pluginName)
 }
 
 /**
- * プラグインのメタデータを抽出する
+ * Extract metadata from plugins
  */
 function extractPluginsMetadata(
   plugins: Record<string, unknown>,
@@ -310,7 +299,7 @@ function extractPluginsMetadata(
 }
 
 /**
- * ルールのメタデータを検証して抽出する補助関数
+ * Helper function to validate and extract rule metadata
  */
 function extractRuleMetadata(
   ruleName: string,
@@ -318,7 +307,7 @@ function extractRuleMetadata(
   ruleConfig: unknown,
   rulesMeta: Record<string, ESLintRuleMeta>,
 ): void {
-  // valibotでルール設定の構造を検証
+  // Validate rule configuration structure with valibot
   const result = safeParse(eslintRuleSchema, ruleConfig)
   if (!result.success) {
     return
@@ -340,14 +329,14 @@ function extractRuleMetadata(
 }
 
 /**
- * プラグインからルールメタデータを抽出
+ * Extract rule metadata from plugins
  */
 function extractPluginMetadata(
   plugins: Record<string, unknown>,
   rulesMeta: Record<string, ESLintRuleMeta>,
   depth = 0,
 ): void {
-  // 再帰の深さを制限して無限ループを防止
+  // Limit recursion depth to prevent infinite loops
   if (depth >= 3) {
     logger.warn('Plugin recursion depth exceeded, stopping further processing')
     return
@@ -358,12 +347,12 @@ function extractPluginMetadata(
       continue
     }
 
-    // プラグインルールを処理
+    // Process plugin rules
     if ('rules' in plugin && plugin.rules && typeof plugin.rules === 'object') {
       processPluginRules(pluginName, plugin.rules as Record<string, unknown>, rulesMeta)
     }
 
-    // 特別なケース: @typescript-eslint などネストされた設定を処理
+    // Special case: process nested configs like @typescript-eslint
     if ('configs' in plugin && plugin.configs && typeof plugin.configs === 'object') {
       processNestedConfigs(plugin.configs as Record<string, unknown>, rulesMeta, depth + 1)
     }
@@ -371,7 +360,7 @@ function extractPluginMetadata(
 }
 
 /**
- * プラグインルールを処理する
+ * Process plugin rules
  */
 function processPluginRules(
   pluginName: string,
@@ -384,7 +373,7 @@ function processPluginRules(
 }
 
 /**
- * ネストされた設定（configsプロパティ）からルールメタデータを抽出
+ * Extract rule metadata from nested configs (configs property)
  */
 function processNestedConfigs(
   configs: Record<string, unknown>,
@@ -396,7 +385,7 @@ function processNestedConfigs(
       continue
     }
 
-    // plugins内のルールを再帰的に処理
+    // Recursively process rules in plugins
     if ('plugins' in config && config['plugins'] && typeof config['plugins'] === 'object') {
       extractPluginMetadata(config['plugins'] as Record<string, unknown>, rulesMeta, depth)
     }

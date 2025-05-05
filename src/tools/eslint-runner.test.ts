@@ -1,47 +1,47 @@
 import { describe, expect, it } from 'vitest'
 import { extractRulesAndMeta, runESLintConfig } from './eslint-runner.ts'
 
-// トップレベルに正規表現を定義
+// Define regular expression at top level
 const CONFIG_FILE_NOT_FOUND_REGEX = /ESLint config file not found/
 
 describe('eslint-runner', () => {
   describe('runESLintConfig', () => {
-    // 設定ファイルパスを指定するテスト
+    // Test specifying config file path
     it('should load ESLint config using bundle-require and return the expected result structure', async () => {
-      // eslintの設定ファイルパスを指定
-      const configPath = 'eslint.config.js' // デフォルト設定ファイル名
+      // Specify eslint config file path
+      const configPath = 'eslint.config.js' // Default config file name
 
-      // 実際に設定を読み込む
+      // Actually load the configuration
       const result = await runESLintConfig({ configPath })
 
-      // 期待される結果構造を確認（スナップショットを使わずに具体的な検証を行う）
+      // Verify the expected result structure (using specific checks instead of snapshots)
       expect(result).toHaveProperty('raw')
       expect(result).toHaveProperty('rules')
       expect(result).toHaveProperty('rulesMeta')
 
-      // このプロジェクトのESLint設定にルールが含まれていることを確認
+      // Confirm that rules are included in this project's ESLint configuration
       expect(Object.keys(result.rules).length).toBeGreaterThan(0)
 
-      // 注意: rawConfigの構造はプロジェクトによって異なるため、簡易的なチェックに変更
-      // JSONデータの代わりにrawが文字列であることを確認
+      // Note: rawConfig structure varies by project, so changed to a simple check
+      // Verify that raw is a string instead of JSON data
       expect(typeof result.raw).toBe('string')
       expect(result.raw).toContain('"rules"')
 
-      // ルールの構造のみを確認
+      // Only check the structure of rules
       const rules = result.rules
       expect(Object.keys(rules).length).toBeGreaterThan(0)
 
-      // 少なくともいくつかのESLintの標準ルールが存在することを確認
-      // プロジェクトに必ず含まれる可能性が高いものを選択
+      // Verify that at least some standard ESLint rules exist
+      // Select ones that are likely to be included in the project
       const commonRules = ['no-empty', 'no-unused-vars', 'no-console', 'no-debugger']
       const hasAtLeastOneCommonRule = commonRules.some((rule) => rule in rules)
       expect(hasAtLeastOneCommonRule).toBe(true)
 
-      // メタデータが正しく抽出されていることを確認
+      // Verify that metadata is correctly extracted
       expect(Object.keys(result.rulesMeta).length).toBeGreaterThan(0)
     })
 
-    // 存在しない設定ファイルを指定した場合のエラーテスト
+    // Error test when specifying a non-existent configuration file
     it('should throw an error if the specified config file does not exist', async () => {
       const nonExistentConfigPath = 'non-existent-config.js'
 
@@ -52,19 +52,19 @@ describe('eslint-runner', () => {
   })
 
   describe('extractRulesAndMeta', () => {
-    // ルールとメタデータの抽出をテスト
+    // Test rule and metadata extraction
     it('should extract rules and metadata from ESLint config object', () => {
-      // モックESLint設定オブジェクト
+      // Mock ESLint configuration object
       const mockConfig = [
         {
-          // ルール設定
+          // Rule settings
           rules: {
             'no-console': 'error',
             'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
           },
         },
         {
-          // プラグイン設定
+          // Plugin settings
           plugins: {
             '@typescript-eslint': {
               rules: {
@@ -83,14 +83,14 @@ describe('eslint-runner', () => {
         },
       ]
 
-      // ルールとメタデータを抽出
+      // Extract rules and metadata
       const { rules, rulesMeta } = extractRulesAndMeta(mockConfig)
 
-      // ルールが正しく抽出されていることを確認
+      // Verify that rules are correctly extracted
       expect(rules).toHaveProperty('no-console', 'error')
       expect(rules).toHaveProperty('no-unused-vars')
 
-      // メタデータが正しく抽出されていることを確認
+      // Verify that metadata is correctly extracted
       expect(rulesMeta).toHaveProperty('@typescript-eslint/no-explicit-any')
       expect(rulesMeta['@typescript-eslint/no-explicit-any']).toEqual({
         description: 'Disallow the `any` type',
@@ -100,7 +100,7 @@ describe('eslint-runner', () => {
       })
     })
 
-    // 空のコンフィグオブジェクトを処理できることを確認
+    // Verify that an empty config object can be processed
     it('should handle empty config objects', () => {
       const emptyConfig = {}
       const { rules, rulesMeta } = extractRulesAndMeta(emptyConfig)
@@ -109,7 +109,7 @@ describe('eslint-runner', () => {
       expect(rulesMeta).toEqual({})
     })
 
-    // 複雑なネストされた設定を処理できることを確認
+    // Verify that complex nested configurations can be processed
     it('should handle nested config objects with configs property', () => {
       const nestedConfig = [
         {

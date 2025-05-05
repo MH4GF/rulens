@@ -17,28 +17,22 @@ export interface BiomeRageResult {
 export async function runBiomeRage(options: BiomeRunnerOptions = {}): Promise<BiomeRageResult> {
   const { additionalArgs } = options
 
-  // 1. Use the bin-resolver to find the biome binary
   const biomeBinary = await resolveBinary('biome')
 
-  // 2. Prepare command arguments
   const args = ['rage', '--linter']
   if (additionalArgs) {
     args.push(...additionalArgs.split(' ').filter(Boolean))
   }
 
-  // 3. Use the executor to run the biome rage command
   const result = await executeCommand({
     command: biomeBinary,
     args,
     cwd: process.cwd(),
   })
 
-  // 4. Handle command execution errors
   if (result.exitCode !== 0) {
     throw new Error(`Failed to run biome rage command: ${result.stderr || 'Unknown error'}`)
   }
-
-  // 5. Parse the result and extract the rules
   const rules = parseRules(result.stdout)
 
   return {
@@ -54,7 +48,6 @@ function parseRules(output: string): string[] {
   const lines = output.split('\n')
   const rules: string[] = []
 
-  // Find the "Enabled rules:" section and extract rule IDs
   let inRulesSection = false
 
   for (const line of lines) {

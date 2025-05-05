@@ -15,7 +15,7 @@ const OUTPUT_PATH = path.resolve(__dirname, '../src/data/biome-rules.json')
 type Node = ReturnType<CheerioAPI>[0]
 
 /**
- * 表のセルからルール情報を抽出する
+ * Extract rule information from table cells
  */
 function extractRuleInfo(
   $: CheerioAPI,
@@ -25,7 +25,7 @@ function extractRuleInfo(
   const ruleNameCell = $(cells[0])
   const descriptionCell = $(cells[1])
 
-  // ルール名を取得 (リンクの中にある場合が多い)
+  // Get rule name (often inside a link)
   const ruleLink = ruleNameCell.find('a')
   const ruleName = (ruleLink.length > 0 ? ruleLink.text() : ruleNameCell.text()).trim()
   const description = descriptionCell.text().trim()
@@ -34,7 +34,7 @@ function extractRuleInfo(
     return null
   }
 
-  // ルールの詳細ページURLを取得 (存在する場合)
+  // Get the rule detail page URL (if it exists)
   let url: string | undefined
   if (ruleLink.length > 0) {
     const href = ruleLink.attr('href')
@@ -43,12 +43,12 @@ function extractRuleInfo(
     }
   }
 
-  // Biomeの命名規則に合わせてキャメルケースに変換
+  // Convert to camelCase according to Biome naming conventions
   const camelCaseRuleName = convertToCamelCase(ruleName)
 
-  // カテゴリ名のマッピング
-  // 特に "Accessibility" は Biome CLI では "a11y" として認識されるため調整
-  // カテゴリ名は先頭大文字に統一する
+  // Category name mapping
+  // Particularly, "Accessibility" is recognized as "a11y" in Biome CLI, so adjust
+  // Standardize category names to start with a capital letter
   let jsonCategoryName = categoryName
   if (categoryName.toLowerCase() === 'accessibility') {
     jsonCategoryName = 'a11y'
@@ -64,7 +64,7 @@ function extractRuleInfo(
 }
 
 /**
- * 指定されたカテゴリのテーブルからルール情報を抽出する
+ * Extract rule information from a table for the specified category
  */
 function extractRulesFromTable(
   $: CheerioAPI,
@@ -73,10 +73,10 @@ function extractRulesFromTable(
 ): { ruleId: string; description: string; url?: string | undefined }[] {
   const result: { ruleId: string; description: string; url?: string | undefined }[] = []
 
-  // テーブル内の各ルール行を処理
+  // Process each rule row in the table
   const rows = $(table).find('tr').toArray()
 
-  // ヘッダー行をスキップ (インデックス0)
+  // Skip header row (index 0)
   for (let rowIndex = 1; rowIndex < rows.length; rowIndex++) {
     const row = rows[rowIndex]
     const cells = $(row).find('td').toArray()
@@ -85,7 +85,7 @@ function extractRulesFromTable(
       continue
     }
 
-    // ルール情報を解析
+    // Parse rule information
     const ruleInfo = extractRuleInfo($, cells, categoryName)
     if (ruleInfo) {
       result.push(ruleInfo)
@@ -96,7 +96,7 @@ function extractRulesFromTable(
 }
 
 /**
- * HTMLからカテゴリとテーブルの対応関係を抽出する
+ * Extract categories and tables relationship from HTML
  */
 function extractCategoriesAndTables($: CheerioAPI): {
   categories: string[]
@@ -115,7 +115,7 @@ function extractCategoriesAndTables($: CheerioAPI): {
 }
 
 /**
- * Biomeルール一覧ページから直接ルール情報を抽出する
+ * Extract rule information directly from Biome rule list page
  */
 async function extractRuleInformation(): Promise<BiomeRuleDescription> {
   const descriptions: BiomeRuleDescription = {}
@@ -160,8 +160,8 @@ async function extractRuleInformation(): Promise<BiomeRuleDescription> {
 }
 
 /**
- * ダッシュ区切りの文字列をキャメルケースに変換
- * 例: "no-autofocus" → "noAutofocus"
+ * Convert dash-separated string to camelCase
+ * Example: "no-autofocus" → "noAutofocus"
  */
 function convertToCamelCase(str: string): string {
   return str.replace(/-([a-z])/g, (_, letter) => {
@@ -173,21 +173,21 @@ function convertToCamelCase(str: string): string {
 }
 
 /**
- * メイン処理
+ * Main process
  */
 async function main(): Promise<void> {
   try {
-    // ルール情報を一括抽出
+    // Extract all rule information at once
     const descriptions = await extractRuleInformation()
     await fs.mkdir(path.dirname(OUTPUT_PATH), { recursive: true })
     await fs.writeFile(OUTPUT_PATH, JSON.stringify(descriptions, null, 2), 'utf8')
   } catch {
-    // エラーの場合は終了
+    // Exit in case of error
     process.exit(1)
   }
 }
 
-// スクリプトを実行
+// Execute the script
 main().catch((_error) => {
   process.exit(1)
 })
