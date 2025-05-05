@@ -13,7 +13,6 @@ export async function resolveBinary(name: string): Promise<string> {
     await fs.access(localBin, fs.constants.X_OK)
     return localBin
   } catch {
-    // Fall back to global command
     return name
   }
 }

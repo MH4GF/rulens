@@ -1,28 +1,28 @@
 /**
- * 個別のルール情報を表す型
+ * Type representing individual rule information
  */
 export interface RulensRule {
-  id: string // 完全なルールID (例: "suspicious/noCatchAssign")
-  name: string // ルール名のみ (例: "noCatchAssign")
-  description: string // 説明文
-  url?: string // ドキュメントURL (任意)
-  severity?: string // ルールの重要度 (任意、"error"/"warn"/"off"など)
-  options?: unknown // ルール固有のオプション設定 (任意)
+  id: string // Complete rule ID (e.g., "suspicious/noCatchAssign")
+  name: string // Rule name only (e.g., "noCatchAssign")
+  description: string // Description text
+  url?: string // Documentation URL (optional)
+  severity?: string // Rule severity (optional, "error"/"warn"/"off" etc.)
+  options?: unknown // Rule-specific option settings (optional)
 }
 
 /**
- * カテゴリー内のルール集合を表す型
+ * Type representing a set of rules within a category
  */
 export interface RulensCategory {
-  name: string // カテゴリー名 (例: "suspicious")
-  description?: string // カテゴリーの説明 (任意)
-  rules: RulensRule[] // このカテゴリーに属するルール
+  name: string // Category name (e.g., "suspicious")
+  description?: string // Category description (optional)
+  rules: RulensRule[] // Rules belonging to this category
 }
 
 /**
- * Lintツール全体の設定を表す型
+ * Type representing the configuration of the entire lint tool
  */
 export interface RulensLinter {
-  name: string // Linterの名前 (例: "Biome", "ESLint")
-  categories: RulensCategory[] // カテゴリーのリスト
+  name: string // Linter name (e.g., "Biome", "ESLint")
+  categories: RulensCategory[] // List of categories
 }

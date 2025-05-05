@@ -303,6 +303,26 @@ Rules in this category enforce TypeScript-specific best practices and type safet
 | [`no-unused-vars`](https://typescript-eslint.io/rules/no-unused-vars)   | Disallow variables that are declared but unused |
 ```
 
+### 5.6 エラーハンドリング強化
+
+- **Lint ツール検出ロジック**
+
+  - Biome と ESLint それぞれがプロジェクトにインストールされているかを個別に検出
+  - どちらかが見つからない場合も、見つかったツールだけ処理して実行を継続
+  - 全てのツールが見つからない場合のみエラーを表示
+
+- **ESLint 設定ファイル解決の改善**
+
+  - 複数の ESLint 設定ファイル形式をサポート
+    - 新形式: `eslint.config.js`
+    - 従来形式: `.eslintrc.js`, `.eslintrc.json`, `.eslintrc.yaml` など
+  - 設定ファイルが見つからない場合は明確なエラーメッセージを表示
+
+- **出力ディレクトリの自動作成**
+
+  - 出力先の `docs` ディレクトリが存在しない場合は自動的に作成
+  - 親ディレクトリが存在することを確認し、必要に応じて再帰的に作成
+
 ## 6. 非機能要件
 
 - 実行速度：1 ツールあたり 1 秒以内

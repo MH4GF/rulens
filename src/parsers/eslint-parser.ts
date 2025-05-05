@@ -5,7 +5,7 @@ import { Logger } from '../utils/logger.ts'
 const logger = new Logger()
 
 /**
- * ESLintの実行結果を共通中間表現に変換する
+ * Convert ESLint execution results to common intermediate representation
  */
 export function parseESLintRules(eslintResult: ESLintConfigResult): RulensLinter {
   const { rules, rulesMeta } = eslintResult
@@ -17,11 +17,11 @@ export function parseESLintRules(eslintResult: ESLintConfigResult): RulensLinter
     }
   }
 
-  // ルールごとにカテゴリ分類
+  // Categorize rules
   const categorizedRules = categorizeESLintRules(rules)
 
   /**
-   * カテゴリごとにルールを変換
+   * Convert rules for each category
    */
   function createRulensRule(
     ruleName: string,
@@ -30,11 +30,11 @@ export function parseESLintRules(eslintResult: ESLintConfigResult): RulensLinter
   ): RulensRule {
     const { severity, options } = parseRuleConfig(ruleConfig)
 
-    // ESLintではruleNameは 'no-console' のような形式で、
-    // プラグインの場合は '@typescript-eslint/no-explicit-any' のような形式
+    // In ESLint, ruleName is in the format like 'no-console', and
+    // for plugins, it's like '@typescript-eslint/no-explicit-any'
     const fullRuleId = categoryName === 'ESLint Core' ? ruleName : `${categoryName}/${ruleName}`
 
-    // ルールメタデータから説明とURLを取得
+    // Get description and URL from rule metadata
     const ruleMeta = rulesMeta[fullRuleId]
     const description = ruleMeta?.description || `ESLint rule: ${ruleName}`
     const url = ruleMeta?.url
@@ -50,16 +50,16 @@ export function parseESLintRules(eslintResult: ESLintConfigResult): RulensLinter
   }
 
   /**
-   * カテゴリの説明を取得
+   * Get category description
    */
   function getCategoryDescription(categoryName: string): string | undefined {
-    // pluginsMetadataから説明を取得
+    // Get description from pluginsMetadata
     if (eslintResult.pluginsMetadata?.[categoryName]) {
       return eslintResult.pluginsMetadata[categoryName].description
     }
 
-    // プラグインメタデータが見つからなかった場合のフォールバック説明
-    // よく使われるESLintプラグインの説明
+    // Fallback descriptions for when plugin metadata is not found
+    // Descriptions for commonly used ESLint plugins
     const fallbackDescriptions: Record<string, string> = {
       '@typescript-eslint':
         'Rules in this category enforce TypeScript-specific best practices and type safety.',
@@ -73,7 +73,7 @@ export function parseESLintRules(eslintResult: ESLintConfigResult): RulensLinter
   }
 
   /**
-   * カテゴリごとにRulensCategoryを生成
+   * Generate RulensCategory for each category
    */
   function createRulensCategory(categoryName: string): RulensCategory {
     const rulesInCategory = categorizedRules[categoryName]
@@ -85,12 +85,12 @@ export function parseESLintRules(eslintResult: ESLintConfigResult): RulensLinter
       }
     }
 
-    // カテゴリのルールを変換
+    // Convert rules in this category
     const categoryRules = Object.entries(rulesInCategory).map(
       ([ruleName, ruleConfig]): RulensRule => createRulensRule(ruleName, ruleConfig, categoryName),
     )
 
-    // カテゴリに説明を取得
+    // Get description for this category
     const description = getCategoryDescription(categoryName)
 
     logger.debug(`Category: ${categoryName}, Description: ${description || 'none'}`)
@@ -102,7 +102,7 @@ export function parseESLintRules(eslintResult: ESLintConfigResult): RulensLinter
     }
   }
 
-  // カテゴリをアルファベット順にソート
+  // Sort categories alphabetically
   const categories = Object.keys(categorizedRules).sort().map(createRulensCategory)
 
   return {
@@ -112,7 +112,7 @@ export function parseESLintRules(eslintResult: ESLintConfigResult): RulensLinter
 }
 
 /**
- * ESLintルールをカテゴリごとに分類
+ * Categorize ESLint rules by category
  */
 function categorizeESLintRules(
   rules: Record<string, unknown>,
@@ -120,28 +120,28 @@ function categorizeESLintRules(
   const categorized: Record<string, Record<string, unknown>> = {}
 
   for (const [ruleId, ruleConfig] of Object.entries(rules)) {
-    // プラグインルールかコアルールかを判定
+    // Determine if it's a plugin rule or core rule
     let category: string
     let ruleName: string
 
     if (ruleId.includes('/')) {
-      // プラグインルール (例: '@typescript-eslint/no-explicit-any')
+      // Plugin rule (e.g., '@typescript-eslint/no-explicit-any')
       const parts = ruleId.split('/')
       if (parts.length >= 2) {
         category = parts[0] || 'ESLint Core'
         ruleName = parts[1] || ruleId
       } else {
-        // フォールバック
+        // Fallback
         category = 'ESLint Core'
         ruleName = ruleId
       }
     } else {
-      // コアルール (例: 'no-console')
+      // Core rule (e.g., 'no-console')
       category = 'ESLint Core'
       ruleName = ruleId
     }
 
-    // カテゴリを初期化してルールを追加
+    // Initialize category and add rules
     const categoryRules = categorized[category] ?? {}
     categoryRules[ruleName] = ruleConfig
     categorized[category] = categoryRules
@@ -151,26 +151,26 @@ function categorizeESLintRules(
 }
 
 /**
- * ESLintルール設定から重要度とオプションを解析
+ * Parse severity and options from ESLint rule configuration
  */
 function parseRuleConfig(config: unknown): { severity: string; options?: unknown } {
-  // 文字列形式 (例: 'error', 'warn', 'off')
+  // String format (e.g., 'error', 'warn', 'off')
   if (typeof config === 'string') {
     return { severity: config }
   }
 
-  // 数値形式 (例: 0, 1, 2)
+  // Numeric format (e.g., 0, 1, 2)
   if (typeof config === 'number') {
     return { severity: convertNumericSeverity(config) }
   }
 
-  // 配列形式 (例: ['error', { option1: true }])
+  // Array format (e.g., ['error', { option1: true }])
   if (Array.isArray(config) && config.length > 0) {
-    // 最初の要素を重要度として扱う
+    // Treat the first element as severity
     const severityValue: unknown = config[0]
     const optionsValues = config.slice(1)
 
-    // 数値または文字列の重要度をstring型に変換
+    // Convert numeric or string severity to string type
     const severity =
       typeof severityValue === 'number'
         ? convertNumericSeverity(severityValue)
@@ -184,12 +184,12 @@ function parseRuleConfig(config: unknown): { severity: string; options?: unknown
     }
   }
 
-  // 不明な形式の場合はデフォルト値を返す
+  // Return default value for unknown formats
   return { severity: 'unknown' }
 }
 
 /**
- * 数値形式の重要度を文字列に変換
+ * Convert numeric severity to string
  */
 function convertNumericSeverity(value: number): string {
   switch (value) {

@@ -1,18 +1,18 @@
 import { describe, expect, it } from 'vitest'
 import { runBiomeRage } from './biome-runner.ts'
 
-// トップレベルの正規表現定数
+// Top-level regular expression constants
 const RULE_FORMAT_REGEX = /^[a-z0-9]+\/[a-zA-Z0-9-]+$/
 const ERROR_MESSAGE_REGEX = /Failed to run biome rage command/
 
 describe('biome-runner', () => {
   describe('runBiomeRage', () => {
-    // 基本機能テスト
+    // Basic functionality test
     it('should resolve biome binary and return the expected result structure', async () => {
       const result = await runBiomeRage()
 
-      // スナップショットテストではなく、必要な構造のみをテスト
-      // 環境依存の値がスナップショットテストの失敗を引き起こすため
+      // Test only the necessary structure, not snapshot test
+      // Because environment-dependent values can cause snapshot test failures
       expect(result.raw).toContain('CLI:')
       expect(result.raw).toContain('Version:')
       expect(result.raw).toContain('Platform:')
@@ -20,7 +20,7 @@ describe('biome-runner', () => {
       expect(result.raw).toContain('Linter:')
       expect(result.raw).toContain('Enabled rules:')
 
-      // ルールリストは配列で、最低限これらのルールを含むことを検証
+      // Verify that the rule list is an array and contains at least these rules
       expect(Array.isArray(result.rules)).toBe(true)
       expect(result.rules.length).toBeGreaterThan(0)
       expect(result.rules).toContain('suspicious/noCatchAssign')
@@ -28,54 +28,54 @@ describe('biome-runner', () => {
       expect(result.rules).toContain('a11y/noAutofocus')
     })
 
-    // 追加引数テスト
+    // Additional arguments test
     it('should correctly pass additional arguments to the biome command', async () => {
-      // Biomeのヘルプを表示するオプションを使用
+      // Use the option to display Biome's help
       const result = await runBiomeRage({
         additionalArgs: '--help',
       })
 
-      // --helpオプションを使用した場合、ヘルプメッセージが出力に含まれる
+      // When using the --help option, help message is included in the output
       expect(result.raw).toContain('Usage: biome rage')
       expect(result.raw).toContain('Available options:')
     })
 
-    // 出力解析テスト
+    // Output parsing test
     it('should correctly parse rules from biome rage output', async () => {
       const result = await runBiomeRage()
 
-      // 実際のBiomeインストールにはルールが存在するはず
+      // Rules should exist in the actual Biome installation
       expect(result.rules.length).toBeGreaterThan(0)
 
-      // ルールが正しい形式であることを確認
-      // 通常ルールは 'category/ruleName' の形式
+      // Verify that rules are in the correct format
+      // Normal rules are in the format 'category/ruleName'
       for (const rule of result.rules) {
         expect(rule).toMatch(RULE_FORMAT_REGEX)
       }
 
-      // rawの出力とrules配列の整合性を確認
-      // 各ルールがraw出力に含まれているはず
+      // Check consistency between raw output and rules array
+      // Each rule should be included in the raw output
       for (const rule of result.rules) {
         expect(result.raw).toContain(rule)
       }
     })
 
-    // エラー処理テスト
+    // Error handling test
     it('should throw an error with helpful message when biome command fails', async () => {
-      // 無効な引数でコマンドを実行
+      // Run command with invalid arguments
       await expect(runBiomeRage({ additionalArgs: '--non-existent-flag' })).rejects.toThrow(
         ERROR_MESSAGE_REGEX,
       )
     })
 
-    // biome-ignore lint/suspicious/noSkippedTests: 環境依存の複雑なテストなので意図的にスキップ
+    // biome-ignore lint/suspicious/noSkippedTests: Intentionally skipped due to complex environment dependencies
     it.skip('should handle the case when biome binary is not found', async () => {
-      // このテストはテスト環境によって複雑なので、現時点ではスキップする
-      // テストするには以下のようなアプローチが考えられる:
-      // 1. NODE_PATHを一時的に変更し、バイナリが見つからない状況を作る
-      // 2. resolveBinaryをモックして失敗させる
-      // 3. 存在しない実行ファイル名を指定する
-      // 実際の環境でこのようなエラーが発生した場合は、以下のようなメッセージが期待される
+      // This test is skipped due to complexity with test environments
+      // Possible approaches to test this scenario:
+      // 1. Temporarily change NODE_PATH to create a situation where the binary is not found
+      // 2. Mock resolveBinary to make it fail
+      // 3. Specify a non-existent executable name
+      // When this error occurs in a real environment, the following message would be expected
       // const BINARY_NOT_FOUND_REGEX = /biome binary not found/
       // await expect(
       //  runBiomeRage()

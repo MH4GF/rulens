@@ -3,7 +3,7 @@ import type { BiomeRageResult } from '../tools/biome-runner.ts'
 import { parseBiomeRules } from './biome-parser.ts'
 
 describe('parseBiomeRules', () => {
-  // 共通のモックデータを定義
+  // Define common mock data
   const createMockBiomeResult = (): BiomeRageResult => ({
     raw: 'Biome rage output',
     rules: [
@@ -24,7 +24,7 @@ describe('parseBiomeRules', () => {
     // Assert
     expect(result).toBeDefined()
     expect(result.name).toBe('Biome')
-    expect(result.categories).toHaveLength(3) // suspicious, style, a11y の3カテゴリ
+    expect(result.categories).toHaveLength(3) // 3 categories: suspicious, style, a11y
   })
 
   it('should sort categories correctly', () => {
@@ -203,9 +203,9 @@ describe('parseBiomeRules', () => {
       raw: 'Biome rage output',
       rules: [
         'suspicious/noCatchAssign',
-        'malformed-rule', // カテゴリなし
-        '/onlyRuleName', // カテゴリが空
-        'category/rule/extra', // 追加のスラッシュ
+        'malformed-rule', // No category
+        '/onlyRuleName', // Empty category
+        'category/rule/extra', // Extra slash
       ],
     }
 
@@ -213,9 +213,9 @@ describe('parseBiomeRules', () => {
     const result = parseBiomeRules(mockBiomeResult)
 
     // Assert
-    expect(result.categories.length).toBeGreaterThanOrEqual(2) // 'suspicious' と 'other'
+    expect(result.categories.length).toBeGreaterThanOrEqual(2) // 'suspicious' and 'other'
 
-    // 不正な形式のルールは 'other' カテゴリに分類される
+    // Malformed rules are categorized into the 'other' category
     const otherCategory = result.categories.find((c) => c.name === 'other')
     expect(otherCategory).toBeDefined()
     if (otherCategory) {

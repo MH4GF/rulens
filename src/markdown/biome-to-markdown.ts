@@ -2,7 +2,7 @@ import biomeRuleDescriptionsData from '../data/biome-rules.json' with { type: 'j
 import type { BiomeRageResult } from '../tools/biome-runner.ts'
 import type { BiomeRuleDescription } from '../types/biome-rules.js'
 
-// JSONファイルをインポート
+// Import JSON file
 const biomeRuleDescriptions: BiomeRuleDescription =
   biomeRuleDescriptionsData as BiomeRuleDescription
 
@@ -38,25 +38,25 @@ export function biomeRulesToCategorizedMap(rules: string[]): Record<string, stri
 }
 
 /**
- * カテゴリ名をJSON用の形式に変換する
+ * Convert category name to JSON format
  */
 function normalizeCategory(category: string): string {
   return category.charAt(0).toUpperCase() + category.slice(1)
 }
 
 /**
- * ルール情報から適切なマークダウン表示を生成
+ * Generate appropriate markdown display from rule information
  */
 function formatRuleMarkdown(ruleName: string, description: string, url: string): string {
   if (description) {
     if (url) {
-      // 説明文とURLの両方がある場合はリンク付きで表示
+      // If both description and URL exist, display with link
       return `- [\`${ruleName}\`](${url}): ${description}\n`
     }
-    // 説明文のみある場合
+    // If only description exists
     return `- \`${ruleName}\`: ${description}\n`
   }
-  // 説明文がない場合はルール名のみ表示
+  // If no description, display only rule name
   return `- \`${ruleName}\`\n`
 }
 
@@ -67,25 +67,25 @@ export function biomeCategoryToMarkdown(category: string, rules: string[]): stri
   let markdown = `### ${category}\n\n`
 
   if (rules.length > 0) {
-    // ルール名をアルファベット順にソート
+    // Sort rule names alphabetically
     const sortedRules = [...rules].sort()
 
     for (const ruleName of sortedRules) {
-      // ルールIDを構築（カテゴリー/ルール名 形式）
+      // Build rule ID (category/ruleName format)
       const camelCaseRuleName = convertToCamelCase(ruleName)
 
-      // JSONファイルでのカテゴリ名マッピング
-      // "a11y"を特別に扱う - カテゴリーを正しくマッピングする
+      // Category name mapping in JSON file
+      // Special handling for "a11y" - map category correctly
       const jsonCategory = category === 'accessibility' ? 'a11y' : normalizeCategory(category)
 
       const ruleId = `${jsonCategory}/${camelCaseRuleName}`
 
-      // 説明文とURLがあれば追加する
+      // Add description and URL if available
       const ruleInfo = biomeRuleDescriptions[ruleId]
       const description = ruleInfo?.description || ''
       const url = ruleInfo?.url || ''
 
-      // マークダウン出力を追加
+      // Add markdown output
       markdown += formatRuleMarkdown(ruleName, description, url || '')
     }
   }
@@ -94,8 +94,8 @@ export function biomeCategoryToMarkdown(category: string, rules: string[]): stri
 }
 
 /**
- * ダッシュ区切りの文字列をキャメルケースに変換
- * 例: "no-autofocus" → "noAutofocus"
+ * Convert dash-separated string to camelCase
+ * Example: "no-autofocus" → "noAutofocus"
  */
 function convertToCamelCase(str: string): string {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access

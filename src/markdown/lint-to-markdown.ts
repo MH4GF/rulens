@@ -1,10 +1,10 @@
 import type { RulensCategory, RulensLinter, RulensRule } from '../types/rulens.ts'
 
 /**
- * カテゴリー別の説明文
+ * Descriptions by category
  */
 const CATEGORY_DESCRIPTIONS: Record<string, string> = {
-  // Biomeカテゴリ
+  // Biome categories
   accessibility:
     'Rules in this category ensure that code is accessible to all users, including those using assistive technologies.',
   complexity:
@@ -16,13 +16,10 @@ const CATEGORY_DESCRIPTIONS: Record<string, string> = {
   security: 'Rules in this category identify security vulnerabilities that could be exploited.',
   style: 'Rules in this category enforce consistent code style and patterns.',
   suspicious: 'Rules in this category identify potentially problematic code patterns.',
-
-  // 他のカテゴリはここに追加
-  // 注: ESLintのカテゴリ説明はparser側から直接取得するようになりました
 }
 
 /**
- * Linterの説明文
+ * Linter descriptions
  */
 const LINTER_DESCRIPTIONS: Record<string, string> = {
   Biome:
@@ -32,7 +29,7 @@ const LINTER_DESCRIPTIONS: Record<string, string> = {
 }
 
 /**
- * セクションアイコン
+ * Section icons
  */
 const SECTION_ICONS: Record<string, string> = {
   introduction: '📖',
@@ -44,17 +41,17 @@ const SECTION_ICONS: Record<string, string> = {
 }
 
 /**
- * 共通中間表現からマークダウンを生成する
- * @param linter リンター情報
- * @param useEnhancedFormat 拡張フォーマットを使用するかどうか (テスト時はfalseにする)
+ * Generate markdown from common intermediate representation
+ * @param linter Linter information
+ * @param useEnhancedFormat Whether to use enhanced format (set to false for testing)
  */
 export function lintRulesToMarkdown(linter: RulensLinter, useEnhancedFormat = false): string {
   const { name, categories } = linter
 
-  // カテゴリをアルファベット順にソート（すでにソート済みでも念のため）
+  // Sort categories alphabetically (as a precaution, even if they're already sorted)
   const sortedCategories = [...categories].sort((a, b) => a.name.localeCompare(b.name))
 
-  // テスト時はシンプルな形式を使用
+  // Use simple format for testing
   let markdown = useEnhancedFormat
     ? `## ${SECTION_ICONS[`${linter.name.toLowerCase()}-rules`] || '🔧'} ${name} Rules\n\n`
     : `## ${name} Rules\n\n`
@@ -64,7 +61,7 @@ export function lintRulesToMarkdown(linter: RulensLinter, useEnhancedFormat = fa
     return markdown
   }
 
-  // Linterの説明文を追加（拡張フォーマット時のみ）
+  // Add linter description (enhanced format only)
   if (useEnhancedFormat) {
     const linterDescription = LINTER_DESCRIPTIONS[name]
     if (linterDescription) {
@@ -75,7 +72,7 @@ export function lintRulesToMarkdown(linter: RulensLinter, useEnhancedFormat = fa
   for (const category of sortedCategories) {
     markdown += categoryToMarkdown(category, useEnhancedFormat)
 
-    // 最後のカテゴリ以外で区切りを追加
+    // Add separator for all categories except the last one
     if (category !== sortedCategories[sortedCategories.length - 1]) {
       if (useEnhancedFormat) {
         markdown += '---\n\n'
@@ -89,7 +86,7 @@ export function lintRulesToMarkdown(linter: RulensLinter, useEnhancedFormat = fa
 }
 
 /**
- * カテゴリをマークダウンに変換
+ * Convert category to markdown
  */
 function categoryToMarkdown(category: RulensCategory, useEnhancedFormat = false): string {
   let markdown = `### ${category.name}\n\n`
@@ -99,7 +96,7 @@ function categoryToMarkdown(category: RulensCategory, useEnhancedFormat = false)
     return markdown
   }
 
-  // カテゴリ説明を追加（拡張フォーマット時のみ、優先順位: 指定された説明 > 定義済み説明）
+  // Add category description (enhanced format only, priority: specified description > predefined description)
   if (useEnhancedFormat) {
     const description = category.description || CATEGORY_DESCRIPTIONS[category.name]
     if (description) {
@@ -107,20 +104,20 @@ function categoryToMarkdown(category: RulensCategory, useEnhancedFormat = false)
     }
   }
 
-  // ルールをアルファベット順にソート
+  // Sort rules alphabetically
   const sortedRules = [...category.rules].sort((a, b) => a.name.localeCompare(b.name))
 
   if (useEnhancedFormat) {
-    // 拡張フォーマット: テーブル形式
+    // Enhanced format: table format
     markdown += '| Rule | Description |\n'
     markdown += '| ---- | ----------- |\n'
 
-    // テーブル形式でルールを表示
+    // Display rules in table format
     for (const rule of sortedRules) {
       markdown += ruleToMarkdownTableRow(rule)
     }
   } else {
-    // 通常フォーマット: リスト形式（テスト用）
+    // Normal format: list format (for testing)
     for (const rule of sortedRules) {
       markdown += ruleToMarkdownListItem(rule)
     }
@@ -131,13 +128,13 @@ function categoryToMarkdown(category: RulensCategory, useEnhancedFormat = false)
 }
 
 /**
- * ルールをマークダウンテーブル行に変換（拡張フォーマット用）
+ * Convert rule to markdown table row (for enhanced format)
  */
 function ruleToMarkdownTableRow(rule: RulensRule): string {
-  // 重要度とオプションの表示を構築
+  // Build display for severity and options
   const metadataText = buildRuleMetadataText(rule)
 
-  // ルール名とURL
+  // Rule name and URL
   let ruleName = rule.name
   if (rule.url) {
     ruleName = `[\`${rule.name}\`](${rule.url})`
@@ -145,7 +142,7 @@ function ruleToMarkdownTableRow(rule: RulensRule): string {
     ruleName = `\`${rule.name}\``
   }
 
-  // 説明文と重要度
+  // Description and severity
   let description = rule.description
   if (metadataText) {
     description += ` ${metadataText}`
@@ -155,13 +152,13 @@ function ruleToMarkdownTableRow(rule: RulensRule): string {
 }
 
 /**
- * ルールをマークダウンリストアイテムに変換（テスト互換性用）
+ * Convert rule to markdown list item (for test compatibility)
  */
 function ruleToMarkdownListItem(rule: RulensRule): string {
-  // 重要度とオプションの表示を構築
+  // Build display for severity and options
   const metadataText = buildRuleMetadataText(rule)
 
-  // URLがある場合はリンク付きで表示
+  // Display with link if URL exists
   let line = ''
   if (rule.url) {
     line = `- [\`${rule.name}\`](${rule.url}): ${rule.description}`
@@ -169,7 +166,7 @@ function ruleToMarkdownListItem(rule: RulensRule): string {
     line = `- \`${rule.name}\`: ${rule.description}`
   }
 
-  // メタデータがあれば追加
+  // Add metadata if it exists
   if (metadataText) {
     line += ` ${metadataText}`
   }
@@ -178,22 +175,22 @@ function ruleToMarkdownListItem(rule: RulensRule): string {
 }
 
 /**
- * ルールのメタデータ（重要度とオプション）を文字列として生成
+ * Generate rule metadata (severity and options) as a string
  */
 function buildRuleMetadataText(rule: RulensRule): string {
   const metadataParts: string[] = []
 
-  // 重要度があれば追加
+  // Add severity if it exists
   if (rule.severity) {
     metadataParts.push(rule.severity)
   }
 
-  // オプションがあれば追加
+  // Add options if they exist
   if (rule.options) {
     metadataParts.push('with options')
   }
 
-  // メタデータがある場合は括弧で囲んで表示
+  // If metadata exists, display it enclosed in parentheses
   if (metadataParts.length > 0) {
     return `(${metadataParts.join(', ')})`
   }

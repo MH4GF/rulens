@@ -62,7 +62,7 @@ function formatRuleSeverity(rule: unknown): string {
   }
 
   if (Array.isArray(rule) && rule.length > 0) {
-    // インデックスアクセスなしで型安全に処理
+    // Process in a type-safe way without direct index access
     const hasOptions = rule.length > 1
     return `${formatRuleSeverity(Array.isArray(rule) ? rule[0] : undefined)}${hasOptions ? ' (with options)' : ''}`
   }
