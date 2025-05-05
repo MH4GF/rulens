@@ -35,6 +35,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Type Safety**: Avoid eslint-disable directives and type assertions (as keyword), use valibot for runtime type validation
 - **External Data**: Handle all external data (JSON, API responses) as untrusted and validate with valibot
 - **Logging**: Use the Logger class instead of console.log/error for consistent logging
+- **Comments**: Follow these guidelines for code comments:
+  - Use JSDoc style comments for functions, classes, and interfaces
+  - Write comments that explain "why" not "what" the code is doing
+  - Avoid redundant comments that merely restate the code
+  - Don't use comments for code organization or section markers; structure your code instead
+  - Document non-obvious behavior, complex algorithms, or business rules
+  - Keep comments up-to-date with code changes
+  - Use English for all comments
 
 ## Testing Strategy
 
