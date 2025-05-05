@@ -59,7 +59,7 @@
     "changeset": "changeset",
     "crawl": "tsx scripts/crawl-biome-rules.ts",
     "dev": "tsup --watch",
-    "fmt": "pnpm run fmt:syncpack-fix && pnpm run fmt:syncpack-format && pnpm run fmt:biome",
+    "fmt": "pnpm run fmt:syncpack-fix && pnpm run fmt:syncpack-format && pnpm run fmt:biome && pnpm run fmt:knip",
     "fmt:biome": "biome check --write --unsafe . --log-level=warn",
     "fmt:knip": "knip --fix",
     "fmt:syncpack-fix": "syncpack fix-mismatches",
