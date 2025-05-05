@@ -82,6 +82,8 @@
 - [x] ESLint実行ロジック実装
 - [x] ESLint出力結果のパース・整形
 - [x] ESLint設定をMarkdown形式に変換
+- [x] ESLint実行時の無限再帰問題の修正（スタックオーバーフロー対策）
+- [x] ESLint設定のバリデーションとより厳密な型付けの実装
 
 ## Markdown生成
 
