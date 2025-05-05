@@ -1,5 +1,7 @@
 # Rulens
 
+> No more maintaining coding guidelines. Your linter rules to AI instructions, instantly.
+
 [![npm version](https://img.shields.io/npm/v/rulens.svg)](https://www.npmjs.com/package/rulens)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/node/v/rulens.svg)](https://nodejs.org)
