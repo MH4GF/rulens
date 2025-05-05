@@ -30,9 +30,18 @@ export function parseESLintRules(eslintResult: ESLintConfigResult): RulensLinter
   ): RulensRule {
     const { severity, options } = parseRuleConfig(ruleConfig)
 
-    // In ESLint, ruleName is in the format like 'no-console', and
-    // for plugins, it's like '@typescript-eslint/no-explicit-any'
-    const fullRuleId = categoryName === 'ESLint Core' ? ruleName : `${categoryName}/${ruleName}`
+    // Build the full rule ID based on the category
+    let fullRuleId: string
+    if (categoryName === 'ESLint Core') {
+      // Core rule: just use the name
+      fullRuleId = ruleName
+    } else if (categoryName.startsWith('@') && categoryName.split('/').length > 1) {
+      // Double namespace plugin (e.g., @next/next): use the full pattern
+      fullRuleId = `${categoryName}/${ruleName}`
+    } else {
+      // Standard plugin: combine category and rule name
+      fullRuleId = `${categoryName}/${ruleName}`
+    }
 
     // Get description and URL from rule metadata
     const ruleMeta = rulesMeta[fullRuleId]
@@ -67,6 +76,11 @@ export function parseESLintRules(eslintResult: ESLintConfigResult): RulensLinter
       'unused-imports':
         'Rules that prevent unused imports and variables from cluttering your code.',
       vitest: 'Rules that ensure effective testing practices when using Vitest.',
+      '@next/next':
+        'Rules specific to Next.js applications that enforce best practices and prevent common issues.',
+      import: 'Rules that help verify proper imports and prevent issues with importing modules.',
+      react: 'Rules for React-specific code quality and best practices.',
+      'react-hooks': 'Rules that enforce the Rules of Hooks and other React Hooks best practices.',
     }
 
     return fallbackDescriptions[categoryName]
@@ -119,6 +133,46 @@ export function parseESLintRules(eslintResult: ESLintConfigResult): RulensLinter
 }
 
 /**
+ * Parse a rule ID to determine its category and rule name
+ */
+function parseRuleId(ruleId: string): { category: string; ruleName: string } {
+  // If rule doesn't include '/', it's a core rule
+  if (!ruleId.includes('/')) {
+    return {
+      category: 'ESLint Core',
+      ruleName: ruleId,
+    }
+  }
+
+  // Handle rules with different namespace patterns
+  const parts = ruleId.split('/')
+
+  // Handle double namespace pattern like @next/next/rule-name (parts.length >= 3)
+  if (parts.length >= 3 && parts[0]?.startsWith('@') && parts[1] !== undefined) {
+    const lastPart = parts[parts.length - 1]
+    // For rules like @next/next/no-img-element, we want category as @next/next
+    return {
+      category: `${parts[0]}/${parts[1]}`,
+      ruleName: lastPart !== undefined ? lastPart : ruleId,
+    }
+  }
+
+  // Standard plugin rule (e.g., '@typescript-eslint/no-explicit-any')
+  if (parts.length >= 2) {
+    return {
+      category: parts[0] || 'ESLint Core',
+      ruleName: parts[1] || ruleId,
+    }
+  }
+
+  // Fallback for any edge cases
+  return {
+    category: 'ESLint Core',
+    ruleName: ruleId,
+  }
+}
+
+/**
  * Categorize ESLint rules by category
  */
 function categorizeESLintRules(
@@ -127,26 +181,8 @@ function categorizeESLintRules(
   const categorized: Record<string, Record<string, unknown>> = {}
 
   for (const [ruleId, ruleConfig] of Object.entries(rules)) {
-    // Determine if it's a plugin rule or core rule
-    let category: string
-    let ruleName: string
-
-    if (ruleId.includes('/')) {
-      // Plugin rule (e.g., '@typescript-eslint/no-explicit-any')
-      const parts = ruleId.split('/')
-      if (parts.length >= 2) {
-        category = parts[0] || 'ESLint Core'
-        ruleName = parts[1] || ruleId
-      } else {
-        // Fallback
-        category = 'ESLint Core'
-        ruleName = ruleId
-      }
-    } else {
-      // Core rule (e.g., 'no-console')
-      category = 'ESLint Core'
-      ruleName = ruleId
-    }
+    // Parse the rule ID to get category and rule name
+    const { category, ruleName } = parseRuleId(ruleId)
 
     // Initialize category and add rules
     const categoryRules = categorized[category] ?? {}

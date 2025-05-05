@@ -243,4 +243,53 @@ describe('parseESLintRules', () => {
       }
     }
   })
+
+  it('should handle plugin rules with double namespace (@next/next format)', () => {
+    // Arrange
+    const mockESLintResult: ESLintConfigResult = {
+      raw: 'ESLint config output',
+      rules: {
+        '@next/next/no-img-element': 'error',
+        '@next/next/no-html-link-for-pages': 'warn',
+      },
+      rulesMeta: {
+        '@next/next/no-img-element': {
+          description: 'Prohibit usage of HTML img element',
+          url: 'https://nextjs.org/docs/messages/no-img-element',
+        },
+      },
+    }
+
+    // Act
+    const result = parseESLintRules(mockESLintResult)
+
+    // Assert
+    // Find the @next/next category
+    const nextCategory = result.categories.find((c) => c.name === '@next/next')
+    expect(nextCategory).toBeDefined()
+
+    if (nextCategory) {
+      expect(nextCategory.rules.length).toBe(2)
+
+      // Check first rule - no-img-element
+      const imgRule = nextCategory.rules.find((r) => r.name === 'no-img-element')
+      expect(imgRule).toBeDefined()
+
+      if (imgRule) {
+        expect(imgRule.id).toBe('@next/next/no-img-element')
+        expect(imgRule.description).toBe('Prohibit usage of HTML img element')
+        expect(imgRule.url).toBe('https://nextjs.org/docs/messages/no-img-element')
+        expect(imgRule.severity).toBe('error')
+      }
+
+      // Check second rule - no-html-link-for-pages
+      const linkRule = nextCategory.rules.find((r) => r.name === 'no-html-link-for-pages')
+      expect(linkRule).toBeDefined()
+
+      if (linkRule) {
+        expect(linkRule.id).toBe('@next/next/no-html-link-for-pages')
+        expect(linkRule.severity).toBe('warn')
+      }
+    }
+  })
 })
