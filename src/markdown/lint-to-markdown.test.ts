@@ -82,7 +82,7 @@ describe('lintRulesToMarkdown', () => {
     expect(result).not.toContain('[`useConst`]')
   })
 
-  it('should handle rules with severity and options', () => {
+  it('should handle rules with severity and options for non-ESLint linters', () => {
     // Arrange
     const rulensLinter: RulensLinter = {
       name: 'TestLinter',
@@ -109,6 +109,35 @@ describe('lintRulesToMarkdown', () => {
     expect(result).toContain('`useConst`: Require const declarations')
     expect(result).toContain('(error)')
     expect(result).toContain('Options: {"allowLet":true}')
+  })
+
+  it('should not display severity for ESLint rules', () => {
+    // Arrange
+    const eslintRulensLinter: RulensLinter = {
+      name: 'ESLint',
+      categories: [
+        {
+          name: '@typescript-eslint',
+          rules: [
+            {
+              id: '@typescript-eslint/no-explicit-any',
+              name: 'no-explicit-any',
+              description: 'Disallow the `any` type',
+              severity: 'error',
+              options: { ignoreRestArgs: true },
+            },
+          ],
+        },
+      ],
+    }
+
+    // Act
+    const result = lintRulesToMarkdown(eslintRulensLinter)
+
+    // Assert
+    expect(result).toContain('`no-explicit-any`: Disallow the `any` type')
+    expect(result).not.toContain('(error)')
+    expect(result).toContain('Options: {"ignoreRestArgs":true}')
   })
 
   it('should handle empty linter', () => {

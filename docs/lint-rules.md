@@ -364,58 +364,58 @@ Rules in this category enforce TypeScript-specific best practices and type safet
 
 | Rule | Description | Options |
 | ---- | ----------- | ------- |
-| [`await-thenable`](https://typescript-eslint.io/rules/await-thenable) | Disallow awaiting a value that is not a Thenable (error) |  |
-| [`ban-ts-comment`](https://typescript-eslint.io/rules/ban-ts-comment) | Disallow `@ts-<directive>` comments or require descriptions after directives (error) | {"minimumDescriptionLength":10} |
-| [`consistent-type-imports`](https://typescript-eslint.io/rules/consistent-type-imports) | Enforce consistent usage of type imports (error) | [] |
-| [`naming-convention`](https://typescript-eslint.io/rules/naming-convention) | Enforce naming conventions for everything across a codebase (error) | [{"selector":"default","format":["camelCase","PascalCase","UPPER_CASE"],"leadingUnderscore":"allowSingleOrDouble"},{"selector":"parameter","format":["camelCase","PascalCase"],"leadingUnderscore":"allow"},{"selector":"typeLike","format":["PascalCase"]},{"selector":["classProperty","objectLiteralProperty","typeProperty","objectLiteralMethod"],"format":null}] |
-| [`no-array-constructor`](https://typescript-eslint.io/rules/no-array-constructor) | Disallow generic `Array` constructors (error) |  |
-| [`no-array-delete`](https://typescript-eslint.io/rules/no-array-delete) | Disallow using the `delete` operator on array values (error) |  |
-| [`no-base-to-string`](https://typescript-eslint.io/rules/no-base-to-string) | Require `.toString()` and `.toLocaleString()` to only be called on objects which provide useful information when stringified (error) |  |
-| [`no-duplicate-enum-values`](https://typescript-eslint.io/rules/no-duplicate-enum-values) | Disallow duplicate enum member values (error) |  |
-| [`no-duplicate-type-constituents`](https://typescript-eslint.io/rules/no-duplicate-type-constituents) | Disallow duplicate constituents of union or intersection types (error) |  |
-| [`no-dynamic-delete`](https://typescript-eslint.io/rules/no-dynamic-delete) | Disallow using the `delete` operator on computed key expressions (error) |  |
-| [`no-empty-object-type`](https://typescript-eslint.io/rules/no-empty-object-type) | Disallow accidentally using the "empty object" type (error) |  |
-| [`no-explicit-any`](https://typescript-eslint.io/rules/no-explicit-any) | Disallow the `any` type (error) |  |
-| [`no-extra-non-null-assertion`](https://typescript-eslint.io/rules/no-extra-non-null-assertion) | Disallow extra non-null assertions (error) |  |
-| [`no-extraneous-class`](https://typescript-eslint.io/rules/no-extraneous-class) | Disallow classes used as namespaces (error) |  |
-| [`no-floating-promises`](https://typescript-eslint.io/rules/no-floating-promises) | Require Promise-like statements to be handled appropriately (error) |  |
-| [`no-for-in-array`](https://typescript-eslint.io/rules/no-for-in-array) | Disallow iterating over an array with a for-in loop (error) |  |
-| [`no-implied-eval`](https://typescript-eslint.io/rules/no-implied-eval) | Disallow the use of `eval()`-like functions (error) |  |
-| [`no-invalid-void-type`](https://typescript-eslint.io/rules/no-invalid-void-type) | Disallow `void` type outside of generic or return types (error) |  |
-| [`no-misused-new`](https://typescript-eslint.io/rules/no-misused-new) | Enforce valid definition of `new` and `constructor` (error) |  |
-| [`no-misused-promises`](https://typescript-eslint.io/rules/no-misused-promises) | Disallow Promises in places not designed to handle them (error) |  |
-| [`no-namespace`](https://typescript-eslint.io/rules/no-namespace) | Disallow TypeScript namespaces (error) |  |
-| [`no-non-null-asserted-nullish-coalescing`](https://typescript-eslint.io/rules/no-non-null-asserted-nullish-coalescing) | Disallow non-null assertions in the left operand of a nullish coalescing operator (error) |  |
-| [`no-non-null-asserted-optional-chain`](https://typescript-eslint.io/rules/no-non-null-asserted-optional-chain) | Disallow non-null assertions after an optional chain expression (error) |  |
-| [`no-non-null-assertion`](https://typescript-eslint.io/rules/no-non-null-assertion) | Disallow non-null assertions using the `!` postfix operator (error) |  |
-| [`no-redundant-type-constituents`](https://typescript-eslint.io/rules/no-redundant-type-constituents) | Disallow members of unions and intersections that do nothing or override type information (error) |  |
-| [`no-require-imports`](https://typescript-eslint.io/rules/no-require-imports) | Disallow invocation of `require()` (error) |  |
-| [`no-this-alias`](https://typescript-eslint.io/rules/no-this-alias) | Disallow aliasing `this` (error) |  |
-| [`no-unnecessary-type-assertion`](https://typescript-eslint.io/rules/no-unnecessary-type-assertion) | Disallow type assertions that do not change the type of an expression (error) |  |
-| [`no-unnecessary-type-constraint`](https://typescript-eslint.io/rules/no-unnecessary-type-constraint) | Disallow unnecessary constraints on generic types (error) |  |
-| [`no-unsafe-argument`](https://typescript-eslint.io/rules/no-unsafe-argument) | Disallow calling a function with a value with type `any` (error) |  |
-| [`no-unsafe-assignment`](https://typescript-eslint.io/rules/no-unsafe-assignment) | Disallow assigning a value with type `any` to variables and properties (error) |  |
-| [`no-unsafe-call`](https://typescript-eslint.io/rules/no-unsafe-call) | Disallow calling a value with type `any` (error) |  |
-| [`no-unsafe-declaration-merging`](https://typescript-eslint.io/rules/no-unsafe-declaration-merging) | Disallow unsafe declaration merging (error) |  |
-| [`no-unsafe-enum-comparison`](https://typescript-eslint.io/rules/no-unsafe-enum-comparison) | Disallow comparing an enum value with a non-enum value (error) |  |
-| [`no-unsafe-function-type`](https://typescript-eslint.io/rules/no-unsafe-function-type) | Disallow using the unsafe built-in Function type (error) |  |
-| [`no-unsafe-member-access`](https://typescript-eslint.io/rules/no-unsafe-member-access) | Disallow member access on a value with type `any` (error) |  |
-| [`no-unsafe-return`](https://typescript-eslint.io/rules/no-unsafe-return) | Disallow returning a value with type `any` from a function (error) |  |
-| [`no-unsafe-unary-minus`](https://typescript-eslint.io/rules/no-unsafe-unary-minus) | Require unary negation to take a number (error) |  |
-| [`no-unused-expressions`](https://typescript-eslint.io/rules/no-unused-expressions) | Disallow unused expressions (error) |  |
-| [`no-useless-constructor`](https://typescript-eslint.io/rules/no-useless-constructor) | Disallow unnecessary constructors (error) |  |
-| [`no-wrapper-object-types`](https://typescript-eslint.io/rules/no-wrapper-object-types) | Disallow using confusing built-in primitive class wrappers (error) |  |
-| [`only-throw-error`](https://typescript-eslint.io/rules/only-throw-error) | Disallow throwing non-`Error` values as exceptions (error) |  |
-| [`prefer-as-const`](https://typescript-eslint.io/rules/prefer-as-const) | Enforce the use of `as const` over literal type (error) |  |
-| [`prefer-literal-enum-member`](https://typescript-eslint.io/rules/prefer-literal-enum-member) | Require all enum members to be literal values (error) |  |
-| [`prefer-namespace-keyword`](https://typescript-eslint.io/rules/prefer-namespace-keyword) | Require using `namespace` keyword over `module` keyword to declare custom TypeScript modules (error) |  |
-| [`prefer-promise-reject-errors`](https://typescript-eslint.io/rules/prefer-promise-reject-errors) | Require using Error objects as Promise rejection reasons (error) |  |
-| [`require-await`](https://typescript-eslint.io/rules/require-await) | Disallow async functions which do not return promises and have no `await` expression (error) |  |
-| [`restrict-plus-operands`](https://typescript-eslint.io/rules/restrict-plus-operands) | Require both operands of addition to be the same type and be `bigint`, `number`, or `string` (error) |  |
-| [`restrict-template-expressions`](https://typescript-eslint.io/rules/restrict-template-expressions) | Enforce template literal expressions to be of `string` type (error) |  |
-| [`triple-slash-reference`](https://typescript-eslint.io/rules/triple-slash-reference) | Disallow certain triple slash directives in favor of ES6-style import declarations (error) |  |
-| [`unbound-method`](https://typescript-eslint.io/rules/unbound-method) | Enforce unbound methods are called with their expected scope (error) |  |
-| [`unified-signatures`](https://typescript-eslint.io/rules/unified-signatures) | Disallow two overloads that could be unified into one with a union or an optional/rest parameter (error) |  |
+| [`await-thenable`](https://typescript-eslint.io/rules/await-thenable) | Disallow awaiting a value that is not a Thenable |  |
+| [`ban-ts-comment`](https://typescript-eslint.io/rules/ban-ts-comment) | Disallow `@ts-<directive>` comments or require descriptions after directives | {"minimumDescriptionLength":10} |
+| [`consistent-type-imports`](https://typescript-eslint.io/rules/consistent-type-imports) | Enforce consistent usage of type imports | [] |
+| [`naming-convention`](https://typescript-eslint.io/rules/naming-convention) | Enforce naming conventions for everything across a codebase | [{"selector":"default","format":["camelCase","PascalCase","UPPER_CASE"],"leadingUnderscore":"allowSingleOrDouble"},{"selector":"parameter","format":["camelCase","PascalCase"],"leadingUnderscore":"allow"},{"selector":"typeLike","format":["PascalCase"]},{"selector":["classProperty","objectLiteralProperty","typeProperty","objectLiteralMethod"],"format":null}] |
+| [`no-array-constructor`](https://typescript-eslint.io/rules/no-array-constructor) | Disallow generic `Array` constructors |  |
+| [`no-array-delete`](https://typescript-eslint.io/rules/no-array-delete) | Disallow using the `delete` operator on array values |  |
+| [`no-base-to-string`](https://typescript-eslint.io/rules/no-base-to-string) | Require `.toString()` and `.toLocaleString()` to only be called on objects which provide useful information when stringified |  |
+| [`no-duplicate-enum-values`](https://typescript-eslint.io/rules/no-duplicate-enum-values) | Disallow duplicate enum member values |  |
+| [`no-duplicate-type-constituents`](https://typescript-eslint.io/rules/no-duplicate-type-constituents) | Disallow duplicate constituents of union or intersection types |  |
+| [`no-dynamic-delete`](https://typescript-eslint.io/rules/no-dynamic-delete) | Disallow using the `delete` operator on computed key expressions |  |
+| [`no-empty-object-type`](https://typescript-eslint.io/rules/no-empty-object-type) | Disallow accidentally using the "empty object" type |  |
+| [`no-explicit-any`](https://typescript-eslint.io/rules/no-explicit-any) | Disallow the `any` type |  |
+| [`no-extra-non-null-assertion`](https://typescript-eslint.io/rules/no-extra-non-null-assertion) | Disallow extra non-null assertions |  |
+| [`no-extraneous-class`](https://typescript-eslint.io/rules/no-extraneous-class) | Disallow classes used as namespaces |  |
+| [`no-floating-promises`](https://typescript-eslint.io/rules/no-floating-promises) | Require Promise-like statements to be handled appropriately |  |
+| [`no-for-in-array`](https://typescript-eslint.io/rules/no-for-in-array) | Disallow iterating over an array with a for-in loop |  |
+| [`no-implied-eval`](https://typescript-eslint.io/rules/no-implied-eval) | Disallow the use of `eval()`-like functions |  |
+| [`no-invalid-void-type`](https://typescript-eslint.io/rules/no-invalid-void-type) | Disallow `void` type outside of generic or return types |  |
+| [`no-misused-new`](https://typescript-eslint.io/rules/no-misused-new) | Enforce valid definition of `new` and `constructor` |  |
+| [`no-misused-promises`](https://typescript-eslint.io/rules/no-misused-promises) | Disallow Promises in places not designed to handle them |  |
+| [`no-namespace`](https://typescript-eslint.io/rules/no-namespace) | Disallow TypeScript namespaces |  |
+| [`no-non-null-asserted-nullish-coalescing`](https://typescript-eslint.io/rules/no-non-null-asserted-nullish-coalescing) | Disallow non-null assertions in the left operand of a nullish coalescing operator |  |
+| [`no-non-null-asserted-optional-chain`](https://typescript-eslint.io/rules/no-non-null-asserted-optional-chain) | Disallow non-null assertions after an optional chain expression |  |
+| [`no-non-null-assertion`](https://typescript-eslint.io/rules/no-non-null-assertion) | Disallow non-null assertions using the `!` postfix operator |  |
+| [`no-redundant-type-constituents`](https://typescript-eslint.io/rules/no-redundant-type-constituents) | Disallow members of unions and intersections that do nothing or override type information |  |
+| [`no-require-imports`](https://typescript-eslint.io/rules/no-require-imports) | Disallow invocation of `require()` |  |
+| [`no-this-alias`](https://typescript-eslint.io/rules/no-this-alias) | Disallow aliasing `this` |  |
+| [`no-unnecessary-type-assertion`](https://typescript-eslint.io/rules/no-unnecessary-type-assertion) | Disallow type assertions that do not change the type of an expression |  |
+| [`no-unnecessary-type-constraint`](https://typescript-eslint.io/rules/no-unnecessary-type-constraint) | Disallow unnecessary constraints on generic types |  |
+| [`no-unsafe-argument`](https://typescript-eslint.io/rules/no-unsafe-argument) | Disallow calling a function with a value with type `any` |  |
+| [`no-unsafe-assignment`](https://typescript-eslint.io/rules/no-unsafe-assignment) | Disallow assigning a value with type `any` to variables and properties |  |
+| [`no-unsafe-call`](https://typescript-eslint.io/rules/no-unsafe-call) | Disallow calling a value with type `any` |  |
+| [`no-unsafe-declaration-merging`](https://typescript-eslint.io/rules/no-unsafe-declaration-merging) | Disallow unsafe declaration merging |  |
+| [`no-unsafe-enum-comparison`](https://typescript-eslint.io/rules/no-unsafe-enum-comparison) | Disallow comparing an enum value with a non-enum value |  |
+| [`no-unsafe-function-type`](https://typescript-eslint.io/rules/no-unsafe-function-type) | Disallow using the unsafe built-in Function type |  |
+| [`no-unsafe-member-access`](https://typescript-eslint.io/rules/no-unsafe-member-access) | Disallow member access on a value with type `any` |  |
+| [`no-unsafe-return`](https://typescript-eslint.io/rules/no-unsafe-return) | Disallow returning a value with type `any` from a function |  |
+| [`no-unsafe-unary-minus`](https://typescript-eslint.io/rules/no-unsafe-unary-minus) | Require unary negation to take a number |  |
+| [`no-unused-expressions`](https://typescript-eslint.io/rules/no-unused-expressions) | Disallow unused expressions |  |
+| [`no-useless-constructor`](https://typescript-eslint.io/rules/no-useless-constructor) | Disallow unnecessary constructors |  |
+| [`no-wrapper-object-types`](https://typescript-eslint.io/rules/no-wrapper-object-types) | Disallow using confusing built-in primitive class wrappers |  |
+| [`only-throw-error`](https://typescript-eslint.io/rules/only-throw-error) | Disallow throwing non-`Error` values as exceptions |  |
+| [`prefer-as-const`](https://typescript-eslint.io/rules/prefer-as-const) | Enforce the use of `as const` over literal type |  |
+| [`prefer-literal-enum-member`](https://typescript-eslint.io/rules/prefer-literal-enum-member) | Require all enum members to be literal values |  |
+| [`prefer-namespace-keyword`](https://typescript-eslint.io/rules/prefer-namespace-keyword) | Require using `namespace` keyword over `module` keyword to declare custom TypeScript modules |  |
+| [`prefer-promise-reject-errors`](https://typescript-eslint.io/rules/prefer-promise-reject-errors) | Require using Error objects as Promise rejection reasons |  |
+| [`require-await`](https://typescript-eslint.io/rules/require-await) | Disallow async functions which do not return promises and have no `await` expression |  |
+| [`restrict-plus-operands`](https://typescript-eslint.io/rules/restrict-plus-operands) | Require both operands of addition to be the same type and be `bigint`, `number`, or `string` |  |
+| [`restrict-template-expressions`](https://typescript-eslint.io/rules/restrict-template-expressions) | Enforce template literal expressions to be of `string` type |  |
+| [`triple-slash-reference`](https://typescript-eslint.io/rules/triple-slash-reference) | Disallow certain triple slash directives in favor of ES6-style import declarations |  |
+| [`unbound-method`](https://typescript-eslint.io/rules/unbound-method) | Enforce unbound methods are called with their expected scope |  |
+| [`unified-signatures`](https://typescript-eslint.io/rules/unified-signatures) | Disallow two overloads that could be unified into one with a union or an optional/rest parameter |  |
 
 ---
 
@@ -425,52 +425,52 @@ Core ESLint rules that apply to JavaScript code.
 
 | Rule | Description | Options |
 | ---- | ----------- | ------- |
-| `for-direction` | ESLint rule: for-direction (error) |  |
-| `no-async-promise-executor` | ESLint rule: no-async-promise-executor (error) |  |
-| `no-case-declarations` | ESLint rule: no-case-declarations (error) |  |
-| `no-compare-neg-zero` | ESLint rule: no-compare-neg-zero (error) |  |
-| `no-cond-assign` | ESLint rule: no-cond-assign (error) |  |
-| `no-constant-binary-expression` | ESLint rule: no-constant-binary-expression (error) |  |
-| `no-constant-condition` | ESLint rule: no-constant-condition (error) |  |
-| `no-control-regex` | ESLint rule: no-control-regex (error) |  |
-| `no-debugger` | ESLint rule: no-debugger (error) |  |
-| `no-delete-var` | ESLint rule: no-delete-var (error) |  |
-| `no-dupe-else-if` | ESLint rule: no-dupe-else-if (error) |  |
-| `no-duplicate-case` | ESLint rule: no-duplicate-case (error) |  |
-| `no-empty` | ESLint rule: no-empty (error) |  |
-| `no-empty-character-class` | ESLint rule: no-empty-character-class (error) |  |
-| `no-empty-pattern` | ESLint rule: no-empty-pattern (error) |  |
-| `no-empty-static-block` | ESLint rule: no-empty-static-block (error) |  |
-| `no-ex-assign` | ESLint rule: no-ex-assign (error) |  |
-| `no-extra-boolean-cast` | ESLint rule: no-extra-boolean-cast (error) |  |
-| `no-fallthrough` | ESLint rule: no-fallthrough (error) |  |
-| `no-global-assign` | ESLint rule: no-global-assign (error) |  |
-| `no-invalid-regexp` | ESLint rule: no-invalid-regexp (error) |  |
-| `no-irregular-whitespace` | ESLint rule: no-irregular-whitespace (error) |  |
-| `no-loss-of-precision` | ESLint rule: no-loss-of-precision (error) |  |
-| `no-misleading-character-class` | ESLint rule: no-misleading-character-class (error) |  |
-| `no-nonoctal-decimal-escape` | ESLint rule: no-nonoctal-decimal-escape (error) |  |
-| `no-octal` | ESLint rule: no-octal (error) |  |
-| `no-prototype-builtins` | ESLint rule: no-prototype-builtins (error) |  |
-| `no-regex-spaces` | ESLint rule: no-regex-spaces (error) |  |
-| `no-self-assign` | ESLint rule: no-self-assign (error) |  |
-| `no-shadow-restricted-names` | ESLint rule: no-shadow-restricted-names (error) |  |
-| `no-sparse-arrays` | ESLint rule: no-sparse-arrays (error) |  |
-| `no-unexpected-multiline` | ESLint rule: no-unexpected-multiline (error) |  |
-| `no-unsafe-finally` | ESLint rule: no-unsafe-finally (error) |  |
-| `no-unsafe-optional-chaining` | ESLint rule: no-unsafe-optional-chaining (error) |  |
-| `no-unused-labels` | ESLint rule: no-unused-labels (error) |  |
-| `no-unused-private-class-members` | ESLint rule: no-unused-private-class-members (error) |  |
-| `no-useless-backreference` | ESLint rule: no-useless-backreference (error) |  |
-| `no-useless-catch` | ESLint rule: no-useless-catch (error) |  |
-| `no-useless-escape` | ESLint rule: no-useless-escape (error) |  |
-| `no-var` | ESLint rule: no-var (error) |  |
-| `prefer-const` | ESLint rule: prefer-const (error) |  |
-| `prefer-rest-params` | ESLint rule: prefer-rest-params (error) |  |
-| `prefer-spread` | ESLint rule: prefer-spread (error) |  |
-| `require-yield` | ESLint rule: require-yield (error) |  |
-| `use-isnan` | ESLint rule: use-isnan (error) |  |
-| `valid-typeof` | ESLint rule: valid-typeof (error) |  |
+| `for-direction` | ESLint rule: for-direction |  |
+| `no-async-promise-executor` | ESLint rule: no-async-promise-executor |  |
+| `no-case-declarations` | ESLint rule: no-case-declarations |  |
+| `no-compare-neg-zero` | ESLint rule: no-compare-neg-zero |  |
+| `no-cond-assign` | ESLint rule: no-cond-assign |  |
+| `no-constant-binary-expression` | ESLint rule: no-constant-binary-expression |  |
+| `no-constant-condition` | ESLint rule: no-constant-condition |  |
+| `no-control-regex` | ESLint rule: no-control-regex |  |
+| `no-debugger` | ESLint rule: no-debugger |  |
+| `no-delete-var` | ESLint rule: no-delete-var |  |
+| `no-dupe-else-if` | ESLint rule: no-dupe-else-if |  |
+| `no-duplicate-case` | ESLint rule: no-duplicate-case |  |
+| `no-empty` | ESLint rule: no-empty |  |
+| `no-empty-character-class` | ESLint rule: no-empty-character-class |  |
+| `no-empty-pattern` | ESLint rule: no-empty-pattern |  |
+| `no-empty-static-block` | ESLint rule: no-empty-static-block |  |
+| `no-ex-assign` | ESLint rule: no-ex-assign |  |
+| `no-extra-boolean-cast` | ESLint rule: no-extra-boolean-cast |  |
+| `no-fallthrough` | ESLint rule: no-fallthrough |  |
+| `no-global-assign` | ESLint rule: no-global-assign |  |
+| `no-invalid-regexp` | ESLint rule: no-invalid-regexp |  |
+| `no-irregular-whitespace` | ESLint rule: no-irregular-whitespace |  |
+| `no-loss-of-precision` | ESLint rule: no-loss-of-precision |  |
+| `no-misleading-character-class` | ESLint rule: no-misleading-character-class |  |
+| `no-nonoctal-decimal-escape` | ESLint rule: no-nonoctal-decimal-escape |  |
+| `no-octal` | ESLint rule: no-octal |  |
+| `no-prototype-builtins` | ESLint rule: no-prototype-builtins |  |
+| `no-regex-spaces` | ESLint rule: no-regex-spaces |  |
+| `no-self-assign` | ESLint rule: no-self-assign |  |
+| `no-shadow-restricted-names` | ESLint rule: no-shadow-restricted-names |  |
+| `no-sparse-arrays` | ESLint rule: no-sparse-arrays |  |
+| `no-unexpected-multiline` | ESLint rule: no-unexpected-multiline |  |
+| `no-unsafe-finally` | ESLint rule: no-unsafe-finally |  |
+| `no-unsafe-optional-chaining` | ESLint rule: no-unsafe-optional-chaining |  |
+| `no-unused-labels` | ESLint rule: no-unused-labels |  |
+| `no-unused-private-class-members` | ESLint rule: no-unused-private-class-members |  |
+| `no-useless-backreference` | ESLint rule: no-useless-backreference |  |
+| `no-useless-catch` | ESLint rule: no-useless-catch |  |
+| `no-useless-escape` | ESLint rule: no-useless-escape |  |
+| `no-var` | ESLint rule: no-var |  |
+| `prefer-const` | ESLint rule: prefer-const |  |
+| `prefer-rest-params` | ESLint rule: prefer-rest-params |  |
+| `prefer-spread` | ESLint rule: prefer-spread |  |
+| `require-yield` | ESLint rule: require-yield |  |
+| `use-isnan` | ESLint rule: use-isnan |  |
+| `valid-typeof` | ESLint rule: valid-typeof |  |
 
 ---
 
@@ -480,8 +480,8 @@ Rules that prevent unused imports and variables from cluttering your code.
 
 | Rule | Description | Options |
 | ---- | ----------- | ------- |
-| [`no-unused-imports`](https://github.com/sweepline/eslint-plugin-unused-imports/blob/master/docs/rules/no-unused-imports.md) | Disallow unused variables (error) |  |
-| [`no-unused-vars`](https://github.com/sweepline/eslint-plugin-unused-imports/blob/master/docs/rules/no-unused-vars.md) | Disallow unused variables (warn) | {"vars":"all","varsIgnorePattern":"^_","args":"after-used","argsIgnorePattern":"^_"} |
+| [`no-unused-imports`](https://github.com/sweepline/eslint-plugin-unused-imports/blob/master/docs/rules/no-unused-imports.md) | Disallow unused variables |  |
+| [`no-unused-vars`](https://github.com/sweepline/eslint-plugin-unused-imports/blob/master/docs/rules/no-unused-vars.md) | Disallow unused variables | {"vars":"all","varsIgnorePattern":"^_","args":"after-used","argsIgnorePattern":"^_"} |
 
 ---
 
@@ -491,13 +491,13 @@ Rules that ensure effective testing practices when using Vitest.
 
 | Rule | Description | Options |
 | ---- | ----------- | ------- |
-| [`expect-expect`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/expect-expect.md) | enforce having expectation in test body (error) |  |
-| [`no-commented-out-tests`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/no-commented-out-tests.md) | disallow commented out tests (error) |  |
-| [`no-identical-title`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/no-identical-title.md) | disallow identical titles (error) |  |
-| [`no-import-node-test`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/no-import-node-test.md) | disallow importing `node:test` (error) |  |
-| [`no-restricted-vi-methods`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/no-restricted-vi-methods.md) | disallow specific `vi.` methods (error) | {"mock":"Don't use vi.mock","spyOn":"Don't use vi.spyOn"} |
-| [`require-local-test-context-for-concurrent-snapshots`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/require-local-test-context-for-concurrent-snapshots.md) | require local Test Context for concurrent snapshot tests (error) |  |
-| [`valid-describe-callback`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/valid-describe-callback.md) | enforce valid describe callback (error) |  |
-| [`valid-expect`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/valid-expect.md) | enforce valid `expect()` usage (error) |  |
-| [`valid-title`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/valid-title.md) | enforce valid titles (error) |  |
+| [`expect-expect`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/expect-expect.md) | enforce having expectation in test body |  |
+| [`no-commented-out-tests`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/no-commented-out-tests.md) | disallow commented out tests |  |
+| [`no-identical-title`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/no-identical-title.md) | disallow identical titles |  |
+| [`no-import-node-test`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/no-import-node-test.md) | disallow importing `node:test` |  |
+| [`no-restricted-vi-methods`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/no-restricted-vi-methods.md) | disallow specific `vi.` methods | {"mock":"Don't use vi.mock","spyOn":"Don't use vi.spyOn"} |
+| [`require-local-test-context-for-concurrent-snapshots`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/require-local-test-context-for-concurrent-snapshots.md) | require local Test Context for concurrent snapshot tests |  |
+| [`valid-describe-callback`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/valid-describe-callback.md) | enforce valid describe callback |  |
+| [`valid-expect`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/valid-expect.md) | enforce valid `expect()` usage |  |
+| [`valid-title`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/valid-title.md) | enforce valid titles |  |
 

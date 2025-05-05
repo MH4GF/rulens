@@ -122,9 +122,9 @@
 - [x] severityがoffのルールは出力しない機能実装
   - [x] eslint-parser.tsにフィルタリング機能を追加
   - [x] テストケースの追加
-- [ ] ESLintのマークダウン出力からseverityを削除
-  - [ ] ESLint特有のseverity表示を削除
-  - [ ] カテゴリ表示の最適化
+- [x] ESLintのマークダウン出力からseverityを削除
+  - [x] ESLint特有のseverity表示を削除
+  - [x] カテゴリ表示の最適化
 - [ ] 出力されるMarkdownの改善
   - [ ] TOCの自動生成機能強化
   - [ ] カテゴリ説明の拡充（ESLint）

@@ -70,7 +70,7 @@ export function lintRulesToMarkdown(linter: RulensLinter, useEnhancedFormat = fa
   }
 
   for (const category of sortedCategories) {
-    markdown += categoryToMarkdown(category, useEnhancedFormat)
+    markdown += categoryToMarkdown(category, useEnhancedFormat, name)
 
     // Add separator for all categories except the last one
     if (category !== sortedCategories[sortedCategories.length - 1]) {
@@ -88,7 +88,11 @@ export function lintRulesToMarkdown(linter: RulensLinter, useEnhancedFormat = fa
 /**
  * Convert category to markdown
  */
-function categoryToMarkdown(category: RulensCategory, useEnhancedFormat = false): string {
+function categoryToMarkdown(
+  category: RulensCategory,
+  useEnhancedFormat = false,
+  linterName = '',
+): string {
   let markdown = `### ${category.name}\n\n`
 
   if (category.rules.length === 0) {
@@ -114,12 +118,12 @@ function categoryToMarkdown(category: RulensCategory, useEnhancedFormat = false)
 
     // Display rules in table format
     for (const rule of sortedRules) {
-      markdown += ruleToMarkdownTableRow(rule)
+      markdown += ruleToMarkdownTableRow(rule, linterName)
     }
   } else {
     // Normal format: list format (for testing)
     for (const rule of sortedRules) {
-      markdown += ruleToMarkdownListItem(rule)
+      markdown += ruleToMarkdownListItem(rule, linterName)
     }
   }
 
@@ -147,9 +151,9 @@ function formatOptions(options: unknown): string {
 /**
  * Convert rule to markdown table row (for enhanced format)
  */
-function ruleToMarkdownTableRow(rule: RulensRule): string {
+function ruleToMarkdownTableRow(rule: RulensRule, linterName = ''): string {
   // Build display for severity
-  const metadataText = buildRuleMetadataText(rule)
+  const metadataText = buildRuleMetadataText(rule, linterName)
 
   // Rule name and URL
   let ruleName = rule.name
@@ -174,9 +178,9 @@ function ruleToMarkdownTableRow(rule: RulensRule): string {
 /**
  * Convert rule to markdown list item (for test compatibility)
  */
-function ruleToMarkdownListItem(rule: RulensRule): string {
+function ruleToMarkdownListItem(rule: RulensRule, linterName = ''): string {
   // Build display for severity
-  const metadataText = buildRuleMetadataText(rule)
+  const metadataText = buildRuleMetadataText(rule, linterName)
 
   // Display with link if URL exists
   let line = ''
@@ -202,9 +206,15 @@ function ruleToMarkdownListItem(rule: RulensRule): string {
 
 /**
  * Generate rule metadata (severity) as a string
+ * ESLint rules will not display severity as specified in the requirements
  */
-function buildRuleMetadataText(rule: RulensRule): string {
-  // Add severity if it exists
+function buildRuleMetadataText(rule: RulensRule, linterName = ''): string {
+  // If this is an ESLint rule, don't display severity
+  if (linterName === 'ESLint') {
+    return ''
+  }
+
+  // Add severity if it exists for non-ESLint rules
   if (rule.severity) {
     return `(${rule.severity})`
   }
