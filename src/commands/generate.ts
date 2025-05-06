@@ -32,23 +32,22 @@ export async function executeGenerate(options: GenerateOptions): Promise<void> {
   }
 
   // Try to run ESLint, but don't fail if it's not available
-  try {
-    logger.info('Fetching ESLint configuration using bundle-require...')
-    eslintResult = await runESLintConfig({
-      configPath: options.eslintConfig,
-      verbose: options.verbose ?? undefined,
-    })
+  logger.info('Fetching ESLint configuration using bundle-require...')
+  const eslintRageResult = await runESLintConfig({
+    configPath: options.eslintConfig,
+    verbose: options.verbose ?? undefined,
+  })
 
+  if (eslintRageResult.isOk()) {
+    eslintResult = eslintRageResult.value
     const eslintRulesCount = Object.keys(eslintResult.rules).length
     const eslintMetaCount = Object.keys(eslintResult.rulesMeta).length
     logger.info(
       `Found ${eslintRulesCount} ESLint rules and ${eslintMetaCount} rule metadata entries`,
     )
-  } catch (error) {
+  } else {
     // Handle case where ESLint is not installed
-    logger.warn(
-      `ESLint not found or failed to run: ${error instanceof Error ? error.message : String(error)}`,
-    )
+    logger.warn(`ESLint not found or failed to run: ${eslintRageResult.error.message}`)
     logger.info('Continuing without ESLint rules...')
   }
 
@@ -61,20 +60,22 @@ export async function executeGenerate(options: GenerateOptions): Promise<void> {
     return
   }
 
-  try {
-    // Generate markdown with available results
-    logger.info(`Generating Markdown output to ${options.output}...`)
-    await generateMarkdown({
-      biomeResult,
-      eslintResult,
-      outputFile: options.output,
-    })
+  // Generate markdown with available results
+  logger.info(`Generating Markdown output to ${options.output}...`)
 
-    logger.info('Markdown generation complete!')
-  } catch (error) {
-    logger.error(
-      `Error generating lint rules: ${error instanceof Error ? error.message : String(error)}`,
-    )
-    throw error
-  }
+  await generateMarkdown({
+    biomeResult,
+    eslintResult,
+    outputFile: options.output,
+  }).match(
+    () => {
+      logger.info('Markdown generation complete!')
+    },
+    (error) => {
+      logger.error(
+        `Error generating lint rules: ${error instanceof Error ? error.message : String(error)}`,
+      )
+      throw error // Re-throw to maintain the same error behavior
+    },
+  )
 }

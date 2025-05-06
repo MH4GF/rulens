@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
+import { ResultAsync, err, ok } from 'neverthrow'
 import { parseBiomeRules } from '../parsers/biome-parser.ts'
 import { parseESLintRules } from '../parsers/eslint-parser.ts'
 import type { BiomeRageResult } from '../tools/biome-runner.ts'
@@ -86,24 +87,32 @@ function generateAIUsageGuide(): string {
 
 /**
  * Ensure directory exists before writing file
+ * Returns ResultAsync with void on success or Error on failure
  */
-async function ensureDirectoryExists(filePath: string): Promise<void> {
+function ensureDirectoryExists(filePath: string): ResultAsync<void, Error> {
   const directory = path.dirname(filePath)
-  try {
-    await fs.mkdir(directory, { recursive: true })
-  } catch (error) {
+
+  return ResultAsync.fromPromise(
+    fs.mkdir(directory, { recursive: true }).then(() => undefined),
+    (error): Error => (error instanceof Error ? error : new Error(String(error))),
+  ).orElse((error) => {
     // Ignore error if directory already exists
-    if ((error as NodeJS.ErrnoException).code !== 'EEXIST') {
-      throw error
+    if ((error as NodeJS.ErrnoException).code === 'EEXIST') {
+      return ok(undefined)
     }
-  }
+    return err(error)
+  })
 }
 
-export async function generateMarkdown(options: MarkdownGeneratorOptions): Promise<string> {
-  const { biomeResult, eslintResult, outputFile } = options
-  const logger = new Logger()
-
-  logger.info(`Generating markdown for ${outputFile}...`)
+/**
+ * 純粋な関数：マークダウン文字列を生成する
+ * テスト可能性を高めるために副作用を含まない
+ */
+export function generateMarkdownContent(options: {
+  biomeResult: BiomeRageResult | null
+  eslintResult: ESLintConfigResult | null
+}): string {
+  const { biomeResult, eslintResult } = options
 
   // Generate each part of the document
   let markdown = generateHeader()
@@ -131,10 +140,33 @@ export async function generateMarkdown(options: MarkdownGeneratorOptions): Promi
     markdown += lintRulesToMarkdown(eslintLinter, true)
   }
 
-  await ensureDirectoryExists(outputFile)
-
-  // Write to file
-  await fs.writeFile(outputFile, markdown, 'utf-8')
-
   return markdown
+}
+
+/**
+ * ファイルシステム操作を行う関数：マークダウンをファイルに書き込む
+ */
+export function writeMarkdownToFile(outputFile: string, content: string): ResultAsync<void, Error> {
+  return ensureDirectoryExists(outputFile).andThen(() => {
+    return ResultAsync.fromPromise(
+      fs.writeFile(outputFile, content, 'utf-8'),
+      (error): Error => (error instanceof Error ? error : new Error(String(error))),
+    )
+  })
+}
+
+/**
+ * 既存の関数：マークダウンを生成してファイルに書き込む
+ */
+export function generateMarkdown(options: MarkdownGeneratorOptions): ResultAsync<string, Error> {
+  const { biomeResult, eslintResult, outputFile } = options
+  const logger = new Logger()
+
+  logger.info(`Generating markdown for ${outputFile}...`)
+
+  // マークダウン内容を生成
+  const markdown = generateMarkdownContent({ biomeResult, eslintResult })
+
+  // ファイルに書き込み
+  return writeMarkdownToFile(outputFile, markdown).map(() => markdown)
 }

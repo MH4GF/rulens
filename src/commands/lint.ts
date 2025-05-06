@@ -33,31 +33,23 @@ function fetchBiomeConfig(
 /**
  * Fetch ESLint configuration
  */
-async function fetchESLintConfig(
+function fetchESLintConfig(
   options: Pick<LintOptions, 'eslintConfig' | 'verbose'>,
   logger: Logger,
-): Promise<ESLintConfigResult | null> {
-  try {
-    logger.info('Fetching ESLint configuration using bundle-require...')
-    const result = await runESLintConfig({
-      configPath: options.eslintConfig,
-      verbose: options.verbose ?? undefined,
-    })
+): ResultAsync<ESLintConfigResult, Error> {
+  logger.info('Fetching ESLint configuration using bundle-require...')
 
+  return runESLintConfig({
+    configPath: options.eslintConfig,
+    verbose: options.verbose ?? undefined,
+  }).map((result) => {
     const eslintRulesCount = Object.keys(result.rules).length
     const eslintMetaCount = Object.keys(result.rulesMeta).length
     logger.info(
       `Found ${eslintRulesCount} ESLint rules and ${eslintMetaCount} rule metadata entries`,
     )
     return result
-  } catch (error) {
-    // Handle case where ESLint is not installed
-    logger.warn(
-      `ESLint not found or failed to run: ${error instanceof Error ? error.message : String(error)}`,
-    )
-    logger.info('Continuing without ESLint rules...')
-    return null
-  }
+  })
 }
 
 /**
@@ -110,18 +102,19 @@ export async function executeLint(options: LintOptions): Promise<boolean> {
     return false
   }
 
-  // Fetch configurations
-  const biomeResultAsync = await fetchBiomeConfig(options, logger)
-  let biomeResult: BiomeRageResult | null = null
-  if (biomeResultAsync.isOk()) {
-    biomeResult = biomeResultAsync.value
-  } else {
-    // Handle case where Biome is not installed or failed
-    logger.warn(`Biome not found or failed to run: ${biomeResultAsync.error.message}`)
-    logger.info('Continuing without Biome rules...')
-  }
+  const biomeResult = await fetchBiomeConfig(options, logger)
+    .mapErr((error) => {
+      logger.warn(`Biome not found or failed to run: ${error.message}`)
+      logger.info('Continuing without Biome rules...')
+    })
+    .unwrapOr(null)
 
   const eslintResult = await fetchESLintConfig(options, logger)
+    .mapErr((error) => {
+      logger.warn(`ESLint not found or failed to run: ${error.message}`)
+      logger.info('Continuing without ESLint rules...')
+    })
+    .unwrapOr(null)
 
   // Check if we have any results to generate
   if (!(biomeResult || eslintResult)) {
@@ -139,11 +132,16 @@ export async function executeLint(options: LintOptions): Promise<boolean> {
     logger.info(`Generating temporary Markdown to ${tempFile}...`)
 
     // Generate markdown with available results
-    await generateMarkdown({
+    const generateResult = await generateMarkdown({
       biomeResult,
       eslintResult,
       outputFile: tempFile,
     })
+
+    if (generateResult.isErr()) {
+      logger.error(`Error generating markdown: ${generateResult.error.message}`)
+      return false
+    }
 
     // Compare the generated file with existing file
     logger.info(`Comparing with existing file ${options.output}...`)

@@ -12,7 +12,13 @@ describe('eslint-runner', () => {
       const configPath = 'eslint.config.js' // Default config file name
 
       // Actually load the configuration
-      const result = await runESLintConfig({ configPath })
+      const resultAsync = await runESLintConfig({ configPath })
+
+      // Verify the result is OK
+      expect(resultAsync.isOk()).toBe(true)
+
+      // Extract the result value
+      const result = resultAsync._unsafeUnwrap()
 
       // Verify the expected result structure (using specific checks instead of snapshots)
       expect(result).toHaveProperty('raw')
@@ -42,20 +48,30 @@ describe('eslint-runner', () => {
     })
 
     // Error test when specifying a non-existent configuration file
-    it('should throw an error if the specified config file does not exist', async () => {
+    it('should return an error result if the specified config file does not exist', async () => {
       const nonExistentConfigPath = 'non-existent-config.js'
 
-      await expect(runESLintConfig({ configPath: nonExistentConfigPath })).rejects.toThrow(
-        CONFIG_FILE_NOT_FOUND_REGEX,
-      )
+      const result = await runESLintConfig({ configPath: nonExistentConfigPath })
+
+      expect(result.isErr()).toBe(true)
+
+      if (result.isErr()) {
+        expect(result.error.message).toMatch(CONFIG_FILE_NOT_FOUND_REGEX)
+      }
     })
   })
 
   describe('findESLintConfig', () => {
-    it('should throw an error when config not found', () => {
+    it('should return an error result when config not found', () => {
       // Use a non-existent file path to force the error
       const nonExistentPath = path.resolve('./non-existent-dir', 'non-existent-config.js')
-      expect(() => findESLintConfig(nonExistentPath)).toThrow(CONFIG_FILE_NOT_FOUND_REGEX)
+      const result = findESLintConfig(nonExistentPath)
+
+      expect(result.isErr()).toBe(true)
+
+      if (result.isErr()) {
+        expect(result.error.message).toMatch(CONFIG_FILE_NOT_FOUND_REGEX)
+      }
     })
   })
 
@@ -92,7 +108,13 @@ describe('eslint-runner', () => {
       ]
 
       // Extract rules and metadata
-      const { rules, rulesMeta } = extractRulesAndMeta(mockConfig)
+      const result = extractRulesAndMeta(mockConfig)
+
+      // Verify the result is OK
+      expect(result.isOk()).toBe(true)
+
+      // Safely unwrap the result
+      const { rules, rulesMeta } = result._unsafeUnwrap()
 
       // Verify that rules are correctly extracted
       expect(rules).toHaveProperty('no-console', 'error')
@@ -111,7 +133,11 @@ describe('eslint-runner', () => {
     // Verify that an empty config object can be processed
     it('should handle empty config objects', () => {
       const emptyConfig = {}
-      const { rules, rulesMeta } = extractRulesAndMeta(emptyConfig)
+      const result = extractRulesAndMeta(emptyConfig)
+
+      expect(result.isOk()).toBe(true)
+
+      const { rules, rulesMeta } = result._unsafeUnwrap()
 
       expect(rules).toEqual({})
       expect(rulesMeta).toEqual({})
@@ -147,7 +173,10 @@ describe('eslint-runner', () => {
         },
       ]
 
-      const { rulesMeta } = extractRulesAndMeta(nestedConfig)
+      const result = extractRulesAndMeta(nestedConfig)
+      expect(result.isOk()).toBe(true)
+
+      const { rulesMeta } = result._unsafeUnwrap()
 
       expect(rulesMeta).toHaveProperty('nested-plugin/nested-rule')
       expect(rulesMeta['nested-plugin/nested-rule']?.description).toBe('A nested rule description')
@@ -161,7 +190,10 @@ describe('eslint-runner', () => {
         },
       }
 
-      const { rules } = extractRulesAndMeta(arrayConfig)
+      const result = extractRulesAndMeta(arrayConfig)
+      expect(result.isOk()).toBe(true)
+
+      const { rules } = result._unsafeUnwrap()
       expect(rules).toHaveProperty('array-rule')
       expect(rules['array-rule']).toEqual(['error', { option1: true }])
     })
@@ -188,7 +220,10 @@ describe('eslint-runner', () => {
         },
       }
 
-      const { rulesMeta, pluginsMetadata } = extractRulesAndMeta(pluginsConfig)
+      const result = extractRulesAndMeta(pluginsConfig)
+      expect(result.isOk()).toBe(true)
+
+      const { rulesMeta, pluginsMetadata } = result._unsafeUnwrap()
 
       // Check plugins metadata
       expect(pluginsMetadata).toHaveProperty('test-plugin')

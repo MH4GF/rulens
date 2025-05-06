@@ -2,6 +2,8 @@ import { existsSync } from 'node:fs'
 import path from 'node:path'
 import { safeStringify } from '@/utils/safeStringify.ts'
 import { bundleRequire } from 'bundle-require'
+import type { Result } from 'neverthrow'
+import { ResultAsync, err, ok } from 'neverthrow'
 import { object, optional, record, safeParse, string, unknown } from 'valibot'
 import { Logger } from '../utils/logger.ts'
 
@@ -85,14 +87,6 @@ function getConfigNotFoundErrorMessage(): string {
 }
 
 /**
- * Checks if a file exists at the given path
- * This function is a wrapper around existsSync to allow for easier testing
- */
-function fileExists(filePath: string): boolean {
-  return existsSync(filePath)
-}
-
-/**
  * Gets the full path for a config file
  */
 function getFullConfigPath(basePath: string, configName: string): string {
@@ -103,18 +97,18 @@ function getFullConfigPath(basePath: string, configName: string): string {
  * Find ESLint configuration file in the project
  * Checks for both new (eslint.config.js) and legacy (.eslintrc.*) formats
  */
-export function findESLintConfig(userConfigPath?: string): string {
+export function findESLintConfig(userConfigPath?: string): Result<string, Error> {
   const localLogger = new Logger()
   const basePath = process.cwd()
 
   // If user specified a config path, use it
   if (userConfigPath) {
     const fullPath = getFullConfigPath(basePath, userConfigPath)
-    if (fileExists(fullPath)) {
+    if (existsSync(fullPath)) {
       localLogger.debug(`Using user-specified ESLint config: ${fullPath}`)
-      return fullPath
+      return ok(fullPath)
     }
-    throw new Error(`ESLint config file not found at specified path: ${fullPath}`)
+    return err(new Error(`ESLint config file not found at specified path: ${fullPath}`))
   }
 
   // Check for all configuration formats in priority order
@@ -122,59 +116,65 @@ export function findESLintConfig(userConfigPath?: string): string {
   // First check new JavaScript formats
   for (const format of CONFIG_FILE_FORMATS.newJS) {
     const configPath = getFullConfigPath(basePath, format)
-    if (fileExists(configPath)) {
+    if (existsSync(configPath)) {
       localLogger.debug(`Found new JS format ESLint config: ${configPath}`)
-      return configPath
+      return ok(configPath)
     }
   }
 
   // Then check TypeScript config formats
   for (const format of CONFIG_FILE_FORMATS.newTS) {
     const configPath = getFullConfigPath(basePath, format)
-    if (fileExists(configPath)) {
+    if (existsSync(configPath)) {
       localLogger.debug(`Found new TS format ESLint config: ${configPath}`)
-      return configPath
+      return ok(configPath)
     }
   }
 
   // Finally check legacy formats
   for (const format of CONFIG_FILE_FORMATS.legacy) {
     const configPath = getFullConfigPath(basePath, format)
-    if (fileExists(configPath)) {
+    if (existsSync(configPath)) {
       localLogger.debug(`Found legacy format ESLint config: ${configPath}`)
-      return configPath
+      return ok(configPath)
     }
   }
 
   // No config found
-  throw new Error(getConfigNotFoundErrorMessage())
+  return err(new Error(getConfigNotFoundErrorMessage()))
 }
 
 /**
  * Load and parse the ESLint config using bundle-require
  */
-async function loadESLintConfig(configPath: string, logger: Logger): Promise<unknown> {
-  const bundleResult = await bundleRequire({
-    filepath: configPath,
+function loadESLintConfig(configPath: string, logger: Logger): ResultAsync<unknown, Error> {
+  return ResultAsync.fromPromise(
+    bundleRequire({
+      filepath: configPath,
+    }),
+    (error) =>
+      new Error(
+        `Failed to bundle ESLint config: ${error instanceof Error ? error.message : String(error)}`,
+      ),
+  ).andThen((bundleResult) => {
+    logger.dump('ESLint bundle-require result', bundleResult)
+
+    const parseResult = safeParse(bundleResultSchema, bundleResult)
+    if (!parseResult.success) {
+      return err(new Error(`Invalid bundle result format: ${parseResult.issues[0]?.message}`))
+    }
+
+    const validatedResult = parseResult.output
+
+    const config =
+      validatedResult.default || (validatedResult.mod ? validatedResult.mod['default'] : undefined)
+
+    if (!config) {
+      return err(new Error('No default export found in ESLint config'))
+    }
+
+    return ok(config)
   })
-
-  logger.dump('ESLint bundle-require result', bundleResult)
-
-  const parseResult = safeParse(bundleResultSchema, bundleResult)
-  if (!parseResult.success) {
-    throw new Error(`Invalid bundle result format: ${parseResult.issues[0]?.message}`)
-  }
-
-  const validatedResult = parseResult.output
-
-  const config =
-    validatedResult.default || (validatedResult.mod ? validatedResult.mod['default'] : undefined)
-
-  if (!config) {
-    throw new Error('No default export found in ESLint config')
-  }
-
-  return config
 }
 
 /**
@@ -185,78 +185,65 @@ function createESLintResult(
   rules: Record<string, unknown>,
   rulesMeta: Record<string, ESLintRuleMeta>,
   pluginsMetadata: Record<string, { name: string; description?: string }>,
-): ESLintConfigResult {
+): Result<ESLintConfigResult, Error> {
   const stringifyResult = safeStringify(config)
   if (!stringifyResult.isOk()) {
-    throw stringifyResult.error
+    return err(stringifyResult.error)
   }
 
-  return {
+  return ok({
     raw: stringifyResult.value,
     rules,
     rulesMeta,
     pluginsMetadata,
-  }
+  })
 }
 
 /**
  * Create empty ESLint result with only raw config
  */
-function createEmptyESLintResult(config: unknown): ESLintConfigResult {
+function createEmptyESLintResult(config: unknown): Result<ESLintConfigResult, Error> {
   const stringifyResult = safeStringify(config)
   if (!stringifyResult.isOk()) {
-    throw stringifyResult.error
+    return err(stringifyResult.error)
   }
 
-  return {
+  return ok({
     raw: stringifyResult.value,
     rules: {},
     rulesMeta: {},
     pluginsMetadata: {},
-  }
+  })
 }
 
 /**
  * Load ESLint configuration using bundle-require
  */
-export async function runESLintConfig(
+export function runESLintConfig(
   options: ESLintRunnerOptions = {},
-): Promise<ESLintConfigResult> {
+): ResultAsync<ESLintConfigResult, Error> {
   const { configPath, verbose } = options
   const logger = new Logger({ verbose: verbose ?? undefined })
 
-  // Find the config file (will throw if not found)
-  let fullConfigPath: string
-  try {
-    fullConfigPath = findESLintConfig(configPath)
-    logger.info(`Using ESLint config file: ${fullConfigPath}`)
-  } catch (error) {
-    logger.error(
-      `ESLint config file error: ${error instanceof Error ? error.message : String(error)}`,
-    )
-    throw error
-  }
+  // Find the config file
+  return findESLintConfig(configPath)
+    .asyncAndThen((fullConfigPath) => {
+      logger.info(`Using ESLint config file: ${fullConfigPath}`)
 
-  try {
-    // Load and parse the ESLint config
-    const config = await loadESLintConfig(fullConfigPath, logger)
-
-    try {
+      // Load and parse the ESLint config
+      return loadESLintConfig(fullConfigPath, logger)
+    })
+    .andThen((config) => {
       // Extract rules and metadata from the config
-      const { rules, rulesMeta, pluginsMetadata } = extractRulesAndMeta(config)
-      return createESLintResult(config, rules, rulesMeta, pluginsMetadata)
-    } catch (extractError) {
-      logger.error(
-        `Failed to extract rules from ESLint config: ${extractError instanceof Error ? extractError.message : String(extractError)}`,
-      )
-      return createEmptyESLintResult(config)
-    }
-  } catch (error) {
-    logger.error(
-      `Failed to load ESLint config: ${error instanceof Error ? error.message : String(error)}`,
-    )
-    throw error
-  }
+      return extractRulesAndMeta(config)
+        .andThen(({ rules, rulesMeta, pluginsMetadata }) =>
+          createESLintResult(config, rules, rulesMeta, pluginsMetadata),
+        )
+        .orElse((extractError) => {
+          logger.error(`Failed to extract rules from ESLint config: ${extractError.message}`)
+          return createEmptyESLintResult(config)
+        })
+    })
 }
 
 /**
@@ -320,34 +307,43 @@ function processConfigItem(
   extractPluginsFromObject(configItem, rulesMeta)
 }
 
-/**
- * Extract rules and metadata from configuration
- */
-export function extractRulesAndMeta(config: unknown): {
+type ExtractRulesAndMetaResult = {
   rules: Record<string, unknown>
   rulesMeta: Record<string, ESLintRuleMeta>
   pluginsMetadata: Record<string, { name: string; description?: string }>
-} {
-  const rules: Record<string, unknown> = {}
-  const rulesMeta: Record<string, ESLintRuleMeta> = {}
-  // Store metadata for categories (plugins)
-  const pluginsMetadata: Record<string, { name: string; description?: string }> = {
-    // Default category description for ESLint Core
-    'ESLint Core': {
-      name: 'ESLint Core',
-      description: 'Core ESLint rules that apply to JavaScript code.',
-    },
-  }
+}
 
-  // Process array-format configuration
-  if (Array.isArray(config)) {
-    processArrayConfig(config, rules, rulesMeta, pluginsMetadata)
-  } else if (config && typeof config === 'object') {
-    // Process object-format configuration
-    processConfigItem(config as Record<string, unknown>, rules, rulesMeta, pluginsMetadata)
-  }
+/**
+ * Extract rules and metadata from configuration
+ * Returns a Result with the extracted rules and metadata or an Error
+ */
+export function extractRulesAndMeta(config: unknown): Result<ExtractRulesAndMetaResult, Error> {
+  try {
+    const rules: Record<string, unknown> = {}
+    const rulesMeta: Record<string, ESLintRuleMeta> = {}
+    // Store metadata for categories (plugins)
+    const pluginsMetadata: Record<string, { name: string; description?: string }> = {
+      // Default category description for ESLint Core
+      'ESLint Core': {
+        name: 'ESLint Core',
+        description: 'Core ESLint rules that apply to JavaScript code.',
+      },
+    }
 
-  return { rules, rulesMeta, pluginsMetadata }
+    // Process array-format configuration
+    if (Array.isArray(config)) {
+      processArrayConfig(config, rules, rulesMeta, pluginsMetadata)
+    } else if (config && typeof config === 'object') {
+      // Process object-format configuration
+      processConfigItem(config as Record<string, unknown>, rules, rulesMeta, pluginsMetadata)
+    }
+
+    return ok({ rules, rulesMeta, pluginsMetadata })
+  } catch (error) {
+    return err(
+      error instanceof Error ? error : new Error(`Failed to extract rules: ${String(error)}`),
+    )
+  }
 }
 
 /**
