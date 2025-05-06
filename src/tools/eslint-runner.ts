@@ -2,8 +2,7 @@ import { existsSync } from 'node:fs'
 import path from 'node:path'
 import { safeStringify } from '@/utils/safeStringify.ts'
 import { bundleRequire } from 'bundle-require'
-import type { Result } from 'neverthrow'
-import { ResultAsync, err, ok } from 'neverthrow'
+import { Result, ResultAsync, err, ok } from 'neverthrow'
 import { object, optional, record, safeParse, string, unknown } from 'valibot'
 import { Logger } from '../utils/logger.ts'
 
@@ -318,32 +317,34 @@ type ExtractRulesAndMetaResult = {
  * Returns a Result with the extracted rules and metadata or an Error
  */
 export function extractRulesAndMeta(config: unknown): Result<ExtractRulesAndMetaResult, Error> {
-  try {
-    const rules: Record<string, unknown> = {}
-    const rulesMeta: Record<string, ESLintRuleMeta> = {}
-    // Store metadata for categories (plugins)
-    const pluginsMetadata: Record<string, { name: string; description?: string }> = {
-      // Default category description for ESLint Core
-      'ESLint Core': {
-        name: 'ESLint Core',
-        description: 'Core ESLint rules that apply to JavaScript code.',
-      },
-    }
+  const extractRules = Result.fromThrowable(
+    (inputConfig: unknown) => {
+      const rules: Record<string, unknown> = {}
+      const rulesMeta: Record<string, ESLintRuleMeta> = {}
+      // Store metadata for categories (plugins)
+      const pluginsMetadata: Record<string, { name: string; description?: string }> = {
+        // Default category description for ESLint Core
+        'ESLint Core': {
+          name: 'ESLint Core',
+          description: 'Core ESLint rules that apply to JavaScript code.',
+        },
+      }
 
-    // Process array-format configuration
-    if (Array.isArray(config)) {
-      processArrayConfig(config, rules, rulesMeta, pluginsMetadata)
-    } else if (config && typeof config === 'object') {
-      // Process object-format configuration
-      processConfigItem(config as Record<string, unknown>, rules, rulesMeta, pluginsMetadata)
-    }
+      // Process array-format configuration
+      if (Array.isArray(inputConfig)) {
+        processArrayConfig(inputConfig, rules, rulesMeta, pluginsMetadata)
+      } else if (inputConfig && typeof inputConfig === 'object') {
+        // Process object-format configuration
+        processConfigItem(inputConfig as Record<string, unknown>, rules, rulesMeta, pluginsMetadata)
+      }
 
-    return ok({ rules, rulesMeta, pluginsMetadata })
-  } catch (error) {
-    return err(
+      return { rules, rulesMeta, pluginsMetadata }
+    },
+    (error) =>
       error instanceof Error ? error : new Error(`Failed to extract rules: ${String(error)}`),
-    )
-  }
+  )
+
+  return extractRules(config)
 }
 
 /**

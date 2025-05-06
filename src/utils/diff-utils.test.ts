@@ -65,21 +65,59 @@ describe('diff-utils', () => {
 
   describe('compareWithFile', () => {
     // biome-ignore lint/suspicious/noSkippedTests: Integration test requiring real environment
-    it.skip('should compare file content with generated content', async () => {
+    it.skip('should return ResultAsync with CompareResult', async () => {
       // This would require:
       // - A test file with known content
       // - File system access
       // - Would test the actual compareWithFile function
+      // Example test implementation
+      // const result = await compareWithFile('/tmp/test-file.txt', 'expected content')
+      // expect(result.isOk()).toBe(true)
+      // if (result.isOk()) {
+      //   expect(result.value.identical).toBe(true/false)
+      // }
+    })
+
+    // biome-ignore lint/suspicious/noSkippedTests: Integration test requiring real environment
+    it.skip('should handle non-existent files', async () => {
+      // const result = await compareWithFile('/non-existent-path', 'content')
+      // expect(result.isOk()).toBe(true)
+      // if (result.isOk()) {
+      //   expect(result.value.identical).toBe(false)
+      //   expect(result.value.message).toContain("doesn't exist")
+      // }
     })
   })
 
   describe('updateFile', () => {
     // biome-ignore lint/suspicious/noSkippedTests: Integration test requiring real environment
-    it.skip('should update file if content differs', async () => {
+    it.skip('should return ResultAsync with boolean', async () => {
       // This would require:
       // - A test file with known content
       // - File system write access
       // - Would test the actual updateFile function
+      // Example test implementation
+      // const result = await updateFile('/tmp/test-output.txt', 'new content')
+      // expect(result.isOk()).toBe(true)
+      // if (result.isOk()) {
+      //   expect(result.value).toBe(true) // File was updated
+      // }
+    })
+
+    // biome-ignore lint/suspicious/noSkippedTests: Integration test requiring real environment
+    it.skip('should handle file creation and directory creation', async () => {
+      // const result = await updateFile('/tmp/new-dir/new-file.txt', 'content')
+      // expect(result.isOk()).toBe(true)
+      // if (result.isOk()) {
+      //   expect(result.value).toBe(true) // File was created
+      // }
+    })
+
+    // biome-ignore lint/suspicious/noSkippedTests: Integration test requiring real environment
+    it.skip('should handle errors properly', async () => {
+      // Test with an inaccessible path
+      // const result = await updateFile('/root/test.txt', 'content')
+      // expect(result.isErr()).toBe(true)
     })
   })
 })

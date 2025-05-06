@@ -1,3 +1,4 @@
+import { Result, ok } from 'neverthrow'
 import type { RulensCategory, RulensLinter, RulensRule } from '../types/rulens.ts'
 
 /**
@@ -134,18 +135,17 @@ function categoryToMarkdown(
 /**
  * Format options as a string for display
  */
-function formatOptions(options: unknown): string {
+function formatOptions(options: unknown): Result<string, Error> {
   if (!options) {
-    return ''
+    return ok('')
   }
 
-  try {
-    // Always use JSON.stringify for all types to avoid stringification issues
-    return JSON.stringify(options)
-  } catch {
-    // Fallback if JSON conversion fails
-    return 'Complex options'
-  }
+  const stringify = Result.fromThrowable(
+    (value: unknown) => JSON.stringify(value),
+    (error) => (error instanceof Error ? error : new Error(String(error))),
+  )
+
+  return stringify(options)
 }
 
 /**
@@ -170,7 +170,8 @@ function ruleToMarkdownTableRow(rule: RulensRule, linterName = ''): string {
   }
 
   // Format options
-  const optionsText = formatOptions(rule.options)
+  const optionsResult = formatOptions(rule.options)
+  const optionsText = optionsResult.isOk() ? optionsResult.value : 'Complex options'
 
   return `| ${ruleName} | ${description} | ${optionsText} |\n`
 }
@@ -197,7 +198,8 @@ function ruleToMarkdownListItem(rule: RulensRule, linterName = ''): string {
 
   // Add options if they exist
   if (rule.options) {
-    const optionsText = formatOptions(rule.options)
+    const optionsResult = formatOptions(rule.options)
+    const optionsText = optionsResult.isOk() ? optionsResult.value : 'Complex options'
     line += ` Options: ${optionsText}`
   }
 

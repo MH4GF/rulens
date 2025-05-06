@@ -4,7 +4,7 @@ import packageJson from '../package.json' with { type: 'json' }
 import { executeGenerate } from './commands/generate.ts'
 import { executeLint } from './commands/lint.ts'
 import { Logger } from './utils/logger.ts'
-import { generateOptionsSchema } from './utils/validators.ts'
+import type { GenerateOptions, LintOptions } from './utils/validators.ts'
 
 const logger = new Logger({
   verbose: process.env['VERBOSE'] === 'true',
@@ -24,33 +24,17 @@ program
   .option('--eslint-config <path>', 'Path to ESLint config file (default: eslint.config.js)')
   .option('--output <file>', 'Output file path', 'docs/lint-rules.md')
   .option('--verbose', 'Enable verbose logging with detailed information and object dumps')
-  .action(
-    async (options: {
-      biomeArgs?: string | undefined
-      eslintConfig?: string | undefined
-      output: string
-      verbose?: boolean | undefined
-    }) => {
-      try {
-        // Use schema to reference it and avoid unused import warning
-        // biome-ignore lint/complexity/noVoid: Just using to reference schema
-        void generateOptionsSchema
-        logger.info(`Generating documentation to ${options.output}`)
-
-        await executeGenerate({
-          biomeArgs: options.biomeArgs || '',
-          eslintConfig: options.eslintConfig,
-          output: options.output,
-          verbose: options.verbose,
-        })
-
+  .action(async (options: GenerateOptions) => {
+    await executeGenerate(options).match(
+      () => {
         logger.info(pc.green('Successfully generated Markdown from linting rules!'))
-      } catch (error) {
-        logger.error(pc.red(`Error: ${error instanceof Error ? error.message : String(error)}`))
+      },
+      (error) => {
+        logger.error(pc.red(`Error: ${error.message}`))
         process.exit(1)
-      }
-    },
-  )
+      },
+    )
+  })
 
 program
   .command('lint')
@@ -60,25 +44,9 @@ program
   .option('--output <file>', 'Output file path to verify', 'docs/lint-rules.md')
   .option('--update', "Update the output file if it's out of date")
   .option('--verbose', 'Enable verbose logging with detailed information and differences')
-  .action(
-    async (options: {
-      biomeArgs?: string | undefined
-      eslintConfig?: string | undefined
-      output: string
-      update?: boolean | undefined
-      verbose?: boolean | undefined
-    }) => {
-      try {
-        logger.info(`Verifying documentation at ${options.output}`)
-
-        const isValid = await executeLint({
-          biomeArgs: options.biomeArgs || '',
-          eslintConfig: options.eslintConfig,
-          output: options.output,
-          update: options.update,
-          verbose: options.verbose,
-        })
-
+  .action(async (options: LintOptions) => {
+    await executeLint(options).match(
+      (isValid) => {
         if (isValid) {
           logger.info(pc.green('Documentation is up-to-date!'))
           process.exit(0)
@@ -90,11 +58,12 @@ program
           }
           process.exit(1) // Exit with error for CI pipelines to detect
         }
-      } catch (error) {
-        logger.error(pc.red(`Error: ${error instanceof Error ? error.message : String(error)}`))
+      },
+      (error) => {
+        logger.error(pc.red(`Error: ${error.message}`))
         process.exit(1)
-      }
-    },
-  )
+      },
+    )
+  })
 
 program.parse()
