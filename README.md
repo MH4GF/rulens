@@ -1,5 +1,7 @@
 # Rulens
 
+<img src="./docs/image.png" width="300" alt="Rulens image" />
+
 > No more maintaining coding guidelines. Your linter rules to AI instructions, instantly.
 
 [![npm version](https://img.shields.io/npm/v/rulens.svg)](https://www.npmjs.com/package/rulens)
