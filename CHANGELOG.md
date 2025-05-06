@@ -1,5 +1,12 @@
 # rulens
 
+## 0.2.1
+
+### Patch Changes
+
+- b037117: Fix ESLint parser to correctly handle plugin rules with double namespaces like `@next/next/rule-name`. This ensures Next.js ESLint rules and other similar format rules are properly categorized and displayed in the generated Markdown documentation.
+- 4a64be7: Added lint command and implemented Markdown document validation
+
 ## 0.2.0
 
 ### Minor Changes
