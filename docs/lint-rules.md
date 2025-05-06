@@ -495,7 +495,7 @@ Rules that ensure effective testing practices when using Vitest.
 | [`no-commented-out-tests`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/no-commented-out-tests.md) | disallow commented out tests |  |
 | [`no-identical-title`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/no-identical-title.md) | disallow identical titles |  |
 | [`no-import-node-test`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/no-import-node-test.md) | disallow importing `node:test` |  |
-| [`no-restricted-vi-methods`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/no-restricted-vi-methods.md) | disallow specific `vi.` methods | {"mock":"Don't use vi.mock","spyOn":"Don't use vi.spyOn"} |
+| [`no-restricted-vi-methods`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/no-restricted-vi-methods.md) | disallow specific `vi.` methods | {"mock":"Don't use vi.mock","mocked":"Don't use vi.mocked","spyOn":"Don't use vi.spyOn"} |
 | [`require-local-test-context-for-concurrent-snapshots`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/require-local-test-context-for-concurrent-snapshots.md) | require local Test Context for concurrent snapshot tests |  |
 | [`valid-describe-callback`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/valid-describe-callback.md) | enforce valid describe callback |  |
 | [`valid-expect`](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/valid-expect.md) | enforce valid `expect()` usage |  |

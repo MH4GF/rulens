@@ -34,8 +34,8 @@ importers:
         specifier: 0.4.6
         version: 0.4.6(@tsconfig/strictest@2.0.5)
       '@mh4gf/eslint-config':
-        specifier: 0.6.10
-        version: 0.6.10(@typescript-eslint/eslint-plugin@8.31.1(@typescript-eslint/parser@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(@typescript-eslint/utils@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.26.0(jiti@2.4.2)))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3)(vitest@3.1.2(@types/node@22.15.3)(jiti@2.4.2)(tsx@4.19.4))
+        specifier: 0.6.11
+        version: 0.6.11(@typescript-eslint/eslint-plugin@8.31.1(@typescript-eslint/parser@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(@typescript-eslint/utils@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.26.0(jiti@2.4.2)))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3)(vitest@3.1.2(@types/node@22.15.3)(jiti@2.4.2)(tsx@4.19.4))
       '@tsconfig/strictest':
         specifier: 2.0.5
         version: 2.0.5
@@ -471,8 +471,8 @@ packages:
     peerDependencies:
       '@tsconfig/strictest': ^2
 
-  '@mh4gf/eslint-config@0.6.10':
-    resolution: {integrity: sha512-rSl9Yt85KfVzHLCiAJElyKLOwWw+ZgdYGzoh4khUEG2eDAmSlFnVdMAhdURd3LwK+RP/KToZLawEqXuycv42Zg==}
+  '@mh4gf/eslint-config@0.6.11':
+    resolution: {integrity: sha512-CarrSDEpos7DRfsQyy7V+cA4dNdRfZ+kb7O6IyXfkiVN3ByNwJMunGqztYZI8WhVIgIZe6C2MuoH7SPBpL2VOg==}
     peerDependencies:
       eslint: ^9.19.0
 
@@ -3233,7 +3233,7 @@ snapshots:
     dependencies:
       '@tsconfig/strictest': 2.0.5
 
-  '@mh4gf/eslint-config@0.6.10(@typescript-eslint/eslint-plugin@8.31.1(@typescript-eslint/parser@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(@typescript-eslint/utils@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.26.0(jiti@2.4.2)))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3)(vitest@3.1.2(@types/node@22.15.3)(jiti@2.4.2)(tsx@4.19.4))':
+  '@mh4gf/eslint-config@0.6.11(@typescript-eslint/eslint-plugin@8.31.1(@typescript-eslint/parser@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(@typescript-eslint/utils@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.26.0(jiti@2.4.2)))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3)(vitest@3.1.2(@types/node@22.15.3)(jiti@2.4.2)(tsx@4.19.4))':
     dependencies:
       '@eslint/js': 9.17.0
       '@vitest/eslint-plugin': 1.1.44(@typescript-eslint/utils@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3)(vitest@3.1.2(@types/node@22.15.3)(jiti@2.4.2)(tsx@4.19.4))
