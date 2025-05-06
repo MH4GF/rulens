@@ -20,7 +20,11 @@ export async function runBiomeRage(options: BiomeRunnerOptions = {}): Promise<Bi
   const { additionalArgs, verbose } = options
   const logger = new Logger({ verbose: verbose ?? undefined })
 
-  const biomeBinary = await resolveBinary('biome')
+  const binaryResult = await resolveBinary('biome')
+  if (!binaryResult.isOk()) {
+    throw new Error(`Failed to resolve biome binary: ${binaryResult.error.message}`)
+  }
+  const biomeBinary = binaryResult.value
 
   const args = ['rage', '--linter']
   if (additionalArgs) {
