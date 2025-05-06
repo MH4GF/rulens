@@ -33,19 +33,8 @@ Always run `pnpm lint` and `pnpm test` after implementing new features to verify
 
 ## Coding Guidelines
 
-- **Imports**: Use named imports, sort imports properly, avoid namespace imports
-- **Formatting**: Follow Biome formatter rules with @mh4gf/configs/biome
-- **Types**: Use explicit types, avoid `any`, prefer interfaces for API boundaries
-- **Naming**: Use camelCase for variables/functions, PascalCase for types/classes
-- **Error Handling**: 
-  - Use explicit error types, provide informative error messages
-  - Add try/catch blocks with specific error handling logic
-  - Design functions to fail gracefully when possible (e.g., detect tools independently)
-  - Use informative error messages that explain both what happened and how to fix it
+- **IMPORTANT**: Always follow @docs/lint-rules.md as coding guideline
 - **File Structure**: Place tests alongside implementation files (e.g., foo.ts, foo.test.ts)
-- **Exports**: Prefer named exports over default exports
-- **Testing**: Use Vitest, aim for 80%+ test coverage
-- **Lint Rules**: Always follow @docs/lint-rules.md as coding guideline
 - **Type Safety**: Avoid eslint-disable directives and type assertions (as keyword), use valibot for runtime type validation
 - **External Data**: Handle all external data (JSON, API responses) as untrusted and validate with valibot
 - **Logging**: Use the Logger class instead of console.log/error for consistent logging
@@ -63,13 +52,8 @@ Always run `pnpm lint` and `pnpm test` after implementing new features to verify
 - **Pure Function Testing**: Focus on testing pure functions without mocks or external dependencies
   - If a function has external dependencies (filesystem, network, etc.), consider refactoring to extract pure logic
   - When function purity is low, focus tests on the pure parts rather than using complex mocks
-- **Test Isolation Approach**: For functions with external dependencies:
-  - Mark tests with `it.skip` and document them as integration tests
-  - Use `// biome-ignore lint/suspicious/noSkippedTests: Integration test requiring real environment` comment
-  - Document what real environment setup would be needed to run the test
 - **Real Environment Testing**: Avoid using mocks. Test with real dependencies whenever possible to ensure tests validate actual behavior.
 - **Avoid Mocking Libraries**: Never use `vi.mock` or `vi.spyOn` - prioritize real implementation testing.
-- **Integration Testing**: Prioritize integration tests that exercise the full code path rather than isolated unit tests.
 - **Test Quality Priorities**: Focus on "correctly executing functionality" and "bug detection" rather than just "tests passing".
 - **TDD Approach**: Follow test-driven development when appropriate:
   - Write failing tests first with `it.skip` to clearly define expected behavior
