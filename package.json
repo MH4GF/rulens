@@ -75,6 +75,7 @@
     "release": "pnpm build && changeset publish",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
+    "test:coverage:badge": "pnpm test:coverage && tsx scripts/generate-coverage-badge.ts",
     "test:watch": "vitest",
     "version": "changeset version"
   },

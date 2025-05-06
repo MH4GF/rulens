@@ -1,4 +1,6 @@
 node_modules
 dist
+coverage
+.nyc_output
 
 **/.claude/settings.local.json

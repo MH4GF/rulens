@@ -21,7 +21,11 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       - uses: MH4GF/shared-config/.github/composite-actions/setup-pnpm@main
-      - run: pnpm test
+      - name: Run tests
+        run: pnpm test
+      - name: Run tests with coverage
+        run: pnpm test:coverage
+        continue-on-error: true # Allow CI to continue even if coverage thresholds are not met yet
 
   build:
     runs-on: ubuntu-latest

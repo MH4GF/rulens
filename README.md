@@ -7,6 +7,7 @@
 [![npm version](https://img.shields.io/npm/v/rulens.svg)](https://www.npmjs.com/package/rulens)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/node/v/rulens.svg)](https://nodejs.org)
+![Coverage](https://img.shields.io/badge/coverage-56%25-orange)
 
 Rulens is a CLI tool that extracts and formats linting rules into Markdown documentation. It analyzes your project's Biome and ESLint configurations and generates comprehensive documentation of all active linting rules with descriptions.
 
@@ -271,6 +272,12 @@ pnpm dev
 
 # Run tests
 pnpm test
+
+# Run tests with coverage
+pnpm test:coverage
+
+# Run tests with coverage and generate badge
+pnpm test:coverage:badge
 
 # Format code
 pnpm fmt

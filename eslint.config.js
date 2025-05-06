@@ -2,7 +2,7 @@ import mh4gf from '@mh4gf/eslint-config'
 
 // biome-ignore lint/style/noDefaultExport: ESLint requires default export for config
 export default [
-  { ignores: ['eslint.config.js', 'dist/**'] },
+  { ignores: ['eslint.config.js', 'dist/**', 'coverage'] },
   {
     languageOptions: {
       parserOptions: {
