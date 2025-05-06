@@ -20,6 +20,7 @@
 - CLI 実行環境：Node.js ≥20
 - 初期サポート：Biome, ESLint
 - 将来的拡張：Prettier, Stylelint 等へのプラグイン対応
+- CI/CD パイプライン統合：最新のルールドキュメントを保証
 
 ## 5. 機能要件
 
@@ -28,6 +29,7 @@
 | コマンド          | 概要                                             |
 | ----------------- | ------------------------------------------------ |
 | `rulens generate` | カレントディレクトリの設定を解析し Markdown 出力 |
+| `rulens lint`     | 生成されたマークダウンが最新かどうかを検証       |
 
 ### 5.2 入出力仕様
 
@@ -314,14 +316,48 @@ Rules in this category enforce TypeScript-specific best practices and type safet
 - **ESLint 設定ファイル解決の改善**
 
   - 複数の ESLint 設定ファイル形式をサポート
-    - 新形式: `eslint.config.js`
-    - 従来形式: `.eslintrc.js`, `.eslintrc.json`, `.eslintrc.yaml` など
+    - 新形式: 
+      - JavaScript: `eslint.config.js`, `eslint.config.mjs`, `eslint.config.cjs`
+      - TypeScript: `eslint.config.ts`, `eslint.config.mts`, `eslint.config.cts`
+    - 従来形式: `.eslintrc.js`, `.eslintrc.json`, `.eslintrc.yaml`, `.eslintrc.yml`, `.eslintrc`
   - 設定ファイルが見つからない場合は明確なエラーメッセージを表示
+  - 優先順位ベースの自動検出: 新形式を優先し、見つからない場合は従来形式を順番に探索
 
 - **出力ディレクトリの自動作成**
 
   - 出力先の `docs` ディレクトリが存在しない場合は自動的に作成
   - 親ディレクトリが存在することを確認し、必要に応じて再帰的に作成
+
+### 5.7 CI/CD 対応と検証コマンド
+
+- **lint コマンドの設計**
+
+  - 現在の設定から生成されるMarkdownと既存のMarkdownファイルを比較し不一致を検出
+  - 差分がある場合はエラーコード1を返し、CIの失敗として扱える
+  - CIパイプラインで実行することでドキュメントの最新性を自動的に保証
+
+- **lint コマンドのオプション**
+
+  ```
+  rulens lint [options]
+  ```
+
+  - `--biome-args <args>`：`biome rage` にそのまま渡す追加オプション
+  - `--eslint-config <path>`：ESLint 設定ファイルのパス指定（デフォルト: `eslint.config.js`）
+  - `--output <file.md>`：検証対象のマークダウンファイル（デフォルト: `docs/lint-rules.md`）
+  - `--update`：不一致が検出された場合に自動的にファイルを更新する（デフォルト: false）
+  - `--verbose`：詳細な比較結果と差分を表示
+
+- **実行フロー**
+
+  1. 入力オプションの解析と検証
+  2. 設定ファイル（Biome, ESLint）の検出と読み込み
+  3. 最新の設定からマークダウンを一時生成
+  4. 既存のマークダウンファイルとの比較
+  5. 不一致がある場合:
+     - `--update` オプションが指定されていれば自動更新
+     - それ以外はエラー出力と終了コード1で終了
+  6. 一致していれば成功メッセージと終了コード0で終了
 
 ## 6. 非機能要件
 
@@ -329,6 +365,7 @@ Rules in this category enforce TypeScript-specific best practices and type safet
 - エラーハンドリング：設定ファイル未検出時は明確なメッセージと非ゼロ終了コード
 - ロギング：`--verbose` で詳細ログ出力
 - テストカバレッジ：ユニットテスト 80%以上
+- CI統合：GitHub Actionsで自動実行できる設計
 
 ## 7. 拡張性
 
@@ -365,7 +402,9 @@ rulens/
 │ ├── index.test.ts # テストファイル（隣置き）
 │ ├── commands/
 │ │ ├── generate.ts # generate コマンド定義
-│ │ └── generate.test.ts
+│ │ ├── generate.test.ts
+│ │ ├── lint.ts # lint コマンド定義
+│ │ └── lint.test.ts
 │ ├── tools/
 │ │ ├── biome-runner.ts # Biome 実行ロジック
 │ │ ├── biome-runner.test.ts
@@ -391,6 +430,8 @@ rulens/
 │   ├── bin-resolver.test.ts
 │   ├── executor.ts # execa ラッパー
 │   ├── executor.test.ts
+│   ├── diff-utils.ts # ファイル比較ユーティリティ
+│   ├── diff-utils.test.ts
 │   ├── logger.ts # ロギングユーティリティ
 │   └── logger.test.ts
 └── dist/ # tsup ビルド成果物

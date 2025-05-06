@@ -1,4 +1,4 @@
-import { boolean, object, optional, string } from 'valibot'
+import { type InferOutput, boolean, object, optional, string } from 'valibot'
 
 export const generateOptionsSchema = object({
   biomeArgs: optional(string()),
@@ -7,9 +7,14 @@ export const generateOptionsSchema = object({
   verbose: optional(boolean()),
 })
 
-export type GenerateOptions = {
-  biomeArgs?: string | undefined
-  eslintConfig?: string | undefined
-  output: string
-  verbose?: boolean | undefined
-}
+export type GenerateOptions = InferOutput<typeof generateOptionsSchema>
+
+export const lintOptionsSchema = object({
+  biomeArgs: optional(string()),
+  eslintConfig: optional(string()),
+  output: string(),
+  update: optional(boolean()),
+  verbose: optional(boolean()),
+})
+
+export type LintOptions = InferOutput<typeof lintOptionsSchema>
