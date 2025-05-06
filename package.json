@@ -1,6 +1,6 @@
 {
   "name": "rulens",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "CLI to extract and format linting rules into Markdown for documentation and AI agents",
   "keywords": [
     "biome",
