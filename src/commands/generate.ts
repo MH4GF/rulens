@@ -16,18 +16,18 @@ export async function executeGenerate(options: GenerateOptions): Promise<void> {
   let eslintResult: ESLintConfigResult | null = null
 
   // Try to run Biome, but don't fail if it's not available
-  try {
-    logger.info('Fetching Biome configuration...')
-    biomeResult = await runBiomeRage({
-      additionalArgs: options.biomeArgs ?? undefined,
-      verbose: options.verbose ?? undefined,
-    })
-    logger.info(`Found ${Object.keys(biomeResult.rules).length} Biome rules`)
-  } catch (error) {
+  logger.info('Fetching Biome configuration...')
+  const biomeRageResult = await runBiomeRage({
+    additionalArgs: options.biomeArgs ?? undefined,
+    verbose: options.verbose ?? undefined,
+  })
+
+  if (biomeRageResult.isOk()) {
+    biomeResult = biomeRageResult.value
+    logger.info(`Found ${biomeResult.rules.length} Biome rules`)
+  } else {
     // Handle case where Biome is not installed
-    logger.warn(
-      `Biome not found or failed to run: ${error instanceof Error ? error.message : String(error)}`,
-    )
+    logger.warn(`Biome not found or failed to run: ${biomeRageResult.error.message}`)
     logger.info('Continuing without Biome rules...')
   }
 

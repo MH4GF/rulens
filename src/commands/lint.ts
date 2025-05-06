@@ -2,6 +2,7 @@ import { existsSync } from 'node:fs'
 import fs from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
+import type { ResultAsync } from 'neverthrow'
 import { generateMarkdown } from '../markdown/generator.ts'
 import type { BiomeRageResult } from '../tools/biome-runner.ts'
 import { runBiomeRage } from '../tools/biome-runner.ts'
@@ -14,26 +15,19 @@ import { type LintOptions, lintOptionsSchema } from '../utils/validators.ts'
 /**
  * Fetch Biome configuration
  */
-async function fetchBiomeConfig(
+function fetchBiomeConfig(
   options: Pick<LintOptions, 'biomeArgs' | 'verbose'>,
   logger: Logger,
-): Promise<BiomeRageResult | null> {
-  try {
-    logger.info('Fetching Biome configuration...')
-    const result = await runBiomeRage({
-      additionalArgs: options.biomeArgs ?? undefined,
-      verbose: options.verbose ?? undefined,
-    })
-    logger.info(`Found ${Object.keys(result.rules).length} Biome rules`)
+): ResultAsync<BiomeRageResult, Error> {
+  logger.info('Fetching Biome configuration...')
+
+  return runBiomeRage({
+    additionalArgs: options.biomeArgs ?? undefined,
+    verbose: options.verbose ?? undefined,
+  }).map((result) => {
+    logger.info(`Found ${result.rules.length} Biome rules`)
     return result
-  } catch (error) {
-    // Handle case where Biome is not installed
-    logger.warn(
-      `Biome not found or failed to run: ${error instanceof Error ? error.message : String(error)}`,
-    )
-    logger.info('Continuing without Biome rules...')
-    return null
-  }
+  })
 }
 
 /**
@@ -117,7 +111,16 @@ export async function executeLint(options: LintOptions): Promise<boolean> {
   }
 
   // Fetch configurations
-  const biomeResult = await fetchBiomeConfig(options, logger)
+  const biomeResultAsync = await fetchBiomeConfig(options, logger)
+  let biomeResult: BiomeRageResult | null = null
+  if (biomeResultAsync.isOk()) {
+    biomeResult = biomeResultAsync.value
+  } else {
+    // Handle case where Biome is not installed or failed
+    logger.warn(`Biome not found or failed to run: ${biomeResultAsync.error.message}`)
+    logger.info('Continuing without Biome rules...')
+  }
+
   const eslintResult = await fetchESLintConfig(options, logger)
 
   // Check if we have any results to generate

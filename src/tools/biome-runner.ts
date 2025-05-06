@@ -1,3 +1,4 @@
+import type { ResultAsync } from 'neverthrow'
 import { resolveBinary } from '../utils/bin-resolver.ts'
 import { executeCommand } from '../utils/executor.ts'
 import { Logger } from '../utils/logger.ts'
@@ -16,46 +17,25 @@ export interface BiomeRageResult {
  * Runs the biome rage command and returns the results
  * This command lists all available rules in the current Biome configuration
  */
-export async function runBiomeRage(options: BiomeRunnerOptions = {}): Promise<BiomeRageResult> {
+export function runBiomeRage(
+  options: BiomeRunnerOptions = {},
+): ResultAsync<BiomeRageResult, Error> {
   const { additionalArgs, verbose } = options
   const logger = new Logger({ verbose: verbose ?? undefined })
 
-  const binaryResult = await resolveBinary('biome')
-  if (!binaryResult.isOk()) {
-    throw new Error(`Failed to resolve biome binary: ${binaryResult.error.message}`)
-  }
-  const biomeBinary = binaryResult.value
-
+  // Create args array outside the chain
   const args = ['rage', '--linter']
   if (additionalArgs) {
     args.push(...additionalArgs.split(' ').filter(Boolean))
   }
 
-  const cmdResult = await executeCommand({
-    command: biomeBinary,
-    args,
-    cwd: process.cwd(),
-  })
-
-  if (!cmdResult.isOk()) {
-    throw new Error(`Failed to run biome rage command: ${cmdResult.error.message}`)
-  }
-
-  const result = cmdResult.value
-  if (result.exitCode !== 0) {
-    throw new Error(`Failed to run biome rage command: ${result.stderr || 'Unknown error'}`)
-  }
-
-  const rules = parseRules(result.stdout)
-
-  const biomeResult = {
-    raw: result.stdout,
-    rules,
-  }
-
-  logger.dump('Biome rage output', result.stdout)
-
-  return biomeResult
+  return resolveBinary('biome')
+    .andThen((binary) => executeCommand({ command: binary, args, cwd: process.cwd() }))
+    .map((stdout) => {
+      logger.dump('Biome rage output', stdout)
+      const rules = parseRules(stdout)
+      return { raw: stdout, rules }
+    })
 }
 
 /**

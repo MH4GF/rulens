@@ -3,13 +3,18 @@ import { runBiomeRage } from './biome-runner.ts'
 
 // Top-level regular expression constants
 const RULE_FORMAT_REGEX = /^[a-z0-9]+\/[a-zA-Z0-9-]+$/
-const ERROR_MESSAGE_REGEX = /Failed to run biome rage command/
+const ERROR_MESSAGE_REGEX = /Command failed with exit code/
 
 describe('biome-runner', () => {
   describe('runBiomeRage', () => {
     // Basic functionality test
     it('should resolve biome binary and return the expected result structure', async () => {
-      const result = await runBiomeRage()
+      const rageResult = await runBiomeRage()
+
+      expect(rageResult.isOk()).toBe(true)
+
+      // Since we've verified it's OK, we can safely use value
+      const result = rageResult._unsafeUnwrap()
 
       // Test only the necessary structure, not snapshot test
       // Because environment-dependent values can cause snapshot test failures
@@ -31,9 +36,14 @@ describe('biome-runner', () => {
     // Additional arguments test
     it('should correctly pass additional arguments to the biome command', async () => {
       // Use the option to display Biome's help
-      const result = await runBiomeRage({
+      const rageResult = await runBiomeRage({
         additionalArgs: '--help',
       })
+
+      expect(rageResult.isOk()).toBe(true)
+
+      // Since we've verified it's OK, we can safely use value
+      const result = rageResult._unsafeUnwrap()
 
       // When using the --help option, help message is included in the output
       expect(result.raw).toContain('Usage: biome rage')
@@ -42,7 +52,12 @@ describe('biome-runner', () => {
 
     // Output parsing test
     it('should correctly parse rules from biome rage output', async () => {
-      const result = await runBiomeRage()
+      const rageResult = await runBiomeRage()
+
+      expect(rageResult.isOk()).toBe(true)
+
+      // Since we've verified it's OK, we can safely use value
+      const result = rageResult._unsafeUnwrap()
 
       // Rules should exist in the actual Biome installation
       expect(result.rules.length).toBeGreaterThan(0)
@@ -61,11 +76,15 @@ describe('biome-runner', () => {
     })
 
     // Error handling test
-    it('should throw an error with helpful message when biome command fails', async () => {
+    it('should return an error result when biome command fails', async () => {
       // Run command with invalid arguments
-      await expect(runBiomeRage({ additionalArgs: '--non-existent-flag' })).rejects.toThrow(
-        ERROR_MESSAGE_REGEX,
-      )
+      const rageResult = await runBiomeRage({ additionalArgs: '--non-existent-flag' })
+
+      expect(rageResult.isErr()).toBe(true)
+
+      if (rageResult.isErr()) {
+        expect(rageResult.error.message).toMatch(ERROR_MESSAGE_REGEX)
+      }
     })
 
     // biome-ignore lint/suspicious/noSkippedTests: Intentionally skipped due to complex environment dependencies
