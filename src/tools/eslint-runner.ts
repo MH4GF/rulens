@@ -426,7 +426,7 @@ function extractPluginMetadata(
 ): void {
   // Limit recursion depth to prevent infinite loops
   if (depth >= 3) {
-    logger.warn('Plugin recursion depth exceeded, stopping further processing')
+    logger.debug('Plugin recursion depth exceeded, stopping further processing')
     return
   }
 
