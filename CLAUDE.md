@@ -66,6 +66,26 @@ Always run `pnpm lint` and `pnpm test` after implementing new features to verify
 - **Test Edge Cases**: Always include tests for error conditions and edge cases
 - **Independent Tests**: Ensure each test runs independently and doesn't depend on other tests
 
+## Error Handling
+
+- **Functional Error Handling**: Use `neverthrow` for functional error handling patterns
+  - Return `Result<T, E>` types rather than throwing exceptions
+  - Use `fromThrowable` to convert functions that might throw to Result-returning functions
+  - Handle `Result` types with `.match()`, `.map()`, or `isOk()`/`isErr()` checks
+  - When calling code that returns a Result, check for success with `.isOk()` before accessing `.value`
+- **Error Messages**: Use descriptive error messages that explain what went wrong
+- **Complex Functions**: Break complex functions into smaller ones to reduce cognitive complexity
+  - Extract separate helper functions for loading, parsing, and handling results
+  - Use dependency injection for improved testability
+  - Aim to keep cognitive complexity below 15 per function
+
+## TypeScript Best Practices
+
+- **Type Imports**: Use `import type` for type-only imports
+- **Avoid Type Assertions**: Instead of using `as any`, create proper type definitions
+- **Handle null/undefined**: Use explicit type annotations for null/undefined values
+- **Evolving Types**: Avoid type evolution by using explicit type annotations
+
 ## Knip Handling
 
 - **Unused Exports**: Run `pnpm fmt:knip` to automatically remove export keywords from unused types
@@ -82,6 +102,7 @@ Always run `pnpm lint` and `pnpm test` after implementing new features to verify
 - **Task Tracking**: Always update `docs/todos.md` when implementing new features or fixing bugs
   - Mark completed tasks with `[x]` 
   - Update related sub-tasks to maintain accurate project status
+  - Use TodoWrite/TodoRead tools in Claude Code for task management
   
 - **Version Management**: 
   - Use changesets for documenting changes (`pnpm changeset`)
@@ -91,3 +112,10 @@ Always run `pnpm lint` and `pnpm test` after implementing new features to verify
 - **Code Ownership**:
   - Let the user handle Git operations (commit, push) unless explicitly requested
   - When suggesting commit messages, focus on the content, not the mechanics of committing
+  
+- **Refactoring Strategy**:
+  - When refactoring, make focused changes to address one issue at a time
+  - Run tests after each change to ensure functionality is preserved
+  - Use structured commits that explain the purpose of the refactoring
+  - Break down large refactorings into manageable steps
+  - Update tests in parallel with implementation changes
