@@ -1,35 +1,28 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
+import type { RulensLinter } from '@/types/rulens.ts'
 import { ResultAsync, err, ok } from 'neverthrow'
-import { parseBiomeRules } from '../parsers/biome-parser.ts'
-import { parseESLintRules } from '../parsers/eslint-parser.ts'
-import type { BiomeRageResult } from '../tools/biome-runner.ts'
-import type { ESLintConfigResult } from '../tools/eslint-runner.ts'
 import { Logger } from '../utils/logger.ts'
 import { lintRulesToMarkdown } from './lint-to-markdown.ts'
 
 interface MarkdownGeneratorOptions {
-  biomeResult: BiomeRageResult | null
-  eslintResult: ESLintConfigResult | null
+  linters: RulensLinter[]
   outputFile: string
 }
 
 /**
  * Generate table of contents
  */
-function generateTableOfContents(hasBiome: boolean, hasEslint: boolean): string {
+function generateTableOfContents(linters: RulensLinter[]): string {
   let toc = '## 📑 Table of Contents\n\n'
 
   toc += '- [Introduction](#introduction)\n'
   toc += '- [AI Usage Guide](#ai-usage-guide)\n'
 
-  if (hasBiome) {
-    toc += '- [Biome Rules](#biome-rules)\n'
-    // It's possible to enumerate all categories, but keeping it simple
-  }
-
-  if (hasEslint) {
-    toc += '- [ESLint Rules](#eslint-rules)\n'
+  // 各Linterに対して目次エントリを追加
+  for (const linter of linters) {
+    const anchorName = `${linter.name.toLowerCase()}-rules`
+    toc += `- [${linter.name} Rules](#${anchorName})\n`
     // It's possible to enumerate all categories, but keeping it simple
   }
 
@@ -95,17 +88,16 @@ function ensureDirectoryExists(filePath: string): ResultAsync<void, Error> {
  * テスト可能性を高めるために副作用を含まない
  */
 export function generateMarkdownContent(options: {
-  biomeResult: BiomeRageResult | null
-  eslintResult: ESLintConfigResult | null
+  linters: RulensLinter[]
 }): string {
-  const { biomeResult, eslintResult } = options
+  const { linters } = options
 
   // Generate each part of the document
   let markdown = generateHeader()
   markdown += '---\n\n'
 
   // Add table of contents
-  markdown += generateTableOfContents(!!biomeResult, !!eslintResult)
+  markdown += generateTableOfContents(linters)
   markdown += '---\n\n'
 
   // Add introduction and AI usage guide
@@ -114,16 +106,18 @@ export function generateMarkdownContent(options: {
   markdown += generateAIUsageGuide()
   markdown += '---\n\n'
 
-  // 1. Convert Biome configuration to common intermediate representation
-  if (biomeResult) {
-    const biomeLinter = parseBiomeRules(biomeResult)
-    markdown += `${lintRulesToMarkdown(biomeLinter, true)}\n`
-  }
+  // 各Linterのルール情報をマークダウンに変換
+  for (let i = 0; i < linters.length; i++) {
+    const linter = linters[i]
+    // 型チェックを追加して確実にRulensLinterであることを確認
+    if (linter?.name && Array.isArray(linter.categories)) {
+      markdown += `${lintRulesToMarkdown(linter, true)}`
 
-  // 2. Convert ESLint configuration to common intermediate representation
-  if (eslintResult) {
-    const eslintLinter = parseESLintRules(eslintResult)
-    markdown += lintRulesToMarkdown(eslintLinter, true)
+      // 最後のlinter以外は改行を追加
+      if (i < linters.length - 1) {
+        markdown += '\n'
+      }
+    }
   }
 
   return markdown
@@ -145,13 +139,13 @@ export function writeMarkdownToFile(outputFile: string, content: string): Result
  * 既存の関数：マークダウンを生成してファイルに書き込む
  */
 export function generateMarkdown(options: MarkdownGeneratorOptions): ResultAsync<string, Error> {
-  const { biomeResult, eslintResult, outputFile } = options
+  const { linters, outputFile } = options
   const logger = new Logger()
 
   logger.info(`Generating markdown for ${outputFile}...`)
 
   // マークダウン内容を生成
-  const markdown = generateMarkdownContent({ biomeResult, eslintResult })
+  const markdown = generateMarkdownContent({ linters })
 
   // ファイルに書き込み
   return writeMarkdownToFile(outputFile, markdown).map(() => markdown)

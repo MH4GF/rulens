@@ -1,7 +1,10 @@
 import { ResultAsync, err } from 'neverthrow'
 import { generateMarkdown } from '../markdown/generator.ts'
+import { parseBiomeRules } from '../parsers/biome-parser.ts'
+import { parseESLintRules } from '../parsers/eslint-parser.ts'
 import { runBiomeRage } from '../tools/biome-runner.ts'
 import { runESLintConfig } from '../tools/eslint-runner.ts'
+import type { RulensLinter } from '../types/rulens.ts'
 import { Logger } from '../utils/logger.ts'
 import type { GenerateOptions } from '../utils/validators.ts'
 
@@ -13,12 +16,17 @@ export function executeGenerate(options: GenerateOptions): ResultAsync<void, Err
   // Use a ResultAsync to wrap the Promise chain
   return ResultAsync.fromPromise(
     Promise.resolve().then(async () => {
-      const biomeResult = await runBiomeRage({
+      const linters: RulensLinter[] = []
+
+      // Try to run Biome
+      await runBiomeRage({
         additionalArgs: options.biomeArgs ?? undefined,
         verbose: options.verbose ?? undefined,
       })
         .map((result) => {
           logger.info(`Found ${result.rules.length} Biome rules`)
+          const biomeLinter = parseBiomeRules(result)
+          linters.push(biomeLinter)
           return result
         })
         .mapErr((error) => {
@@ -30,7 +38,7 @@ export function executeGenerate(options: GenerateOptions): ResultAsync<void, Err
 
       // Try to run ESLint, but don't fail if it's not available
       logger.info('Fetching ESLint configuration...')
-      const eslintResult = await runESLintConfig({
+      await runESLintConfig({
         configPath: options.eslintConfig,
         verbose: options.verbose ?? undefined,
       })
@@ -40,6 +48,8 @@ export function executeGenerate(options: GenerateOptions): ResultAsync<void, Err
           logger.info(
             `Found ${eslintRulesCount} ESLint rules and ${eslintMetaCount} rule metadata entries`,
           )
+          const eslintLinter = parseESLintRules(result)
+          linters.push(eslintLinter)
           return result
         })
         .mapErr((error) => {
@@ -49,12 +59,11 @@ export function executeGenerate(options: GenerateOptions): ResultAsync<void, Err
         })
         .unwrapOr(null)
 
-      return { biomeResult, eslintResult }
+      return { linters }
     }),
     (error) => new Error(String(error)),
-  ).andThen(({ biomeResult, eslintResult }) => {
-    // Check if we have any results to generate
-    if (!(biomeResult || eslintResult)) {
+  ).andThen(({ linters }) => {
+    if (linters.length === 0) {
       return err(
         new Error(
           'No linter configurations found. Ensure at least one of Biome or ESLint is properly configured.',
@@ -66,8 +75,7 @@ export function executeGenerate(options: GenerateOptions): ResultAsync<void, Err
     logger.info(`Generating Markdown output to ${options.output}...`)
 
     return generateMarkdown({
-      biomeResult,
-      eslintResult,
+      linters,
       outputFile: options.output,
     }).map(() => {
       logger.info('Markdown generation complete!')

@@ -2,12 +2,15 @@ import { existsSync } from 'node:fs'
 import fs from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
-import { ResultAsync as RA, ResultAsync, err } from 'neverthrow'
+import { ResultAsync as RA, ResultAsync, err, errAsync } from 'neverthrow'
 import { generateMarkdown } from '../markdown/generator.ts'
+import { parseBiomeRules } from '../parsers/biome-parser.ts'
+import { parseESLintRules } from '../parsers/eslint-parser.ts'
 import type { BiomeRageResult } from '../tools/biome-runner.ts'
 import { runBiomeRage } from '../tools/biome-runner.ts'
 import type { ESLintConfigResult } from '../tools/eslint-runner.ts'
 import { runESLintConfig } from '../tools/eslint-runner.ts'
+import type { RulensLinter } from '../types/rulens.ts'
 import { compareWithFile, updateFile } from '../utils/diff-utils.ts'
 import { Logger } from '../utils/logger.ts'
 import type { LintOptions } from '../utils/validators.ts'
@@ -110,36 +113,47 @@ export function executeLint(options: LintOptions): ResultAsync<boolean, Error> {
 
   // Check if the output file exists
   if (!existsSync(options.output)) {
-    logger.error(`Output file ${options.output} does not exist. Run 'rulens generate' first.`)
-    return RA.fromPromise(Promise.resolve(false), () => new Error('Output file does not exist'))
+    return errAsync(
+      new Error(`Output file ${options.output} does not exist. Run 'rulens generate' first.`),
+    )
   }
 
   // Use a ResultAsync to wrap the Promise chain
   return ResultAsync.fromPromise(
     Promise.resolve().then(async () => {
-      const biomeResult = await fetchBiomeConfig(options, logger)
+      const linters: RulensLinter[] = []
+
+      // Biomeの設定を取得して変換
+      await fetchBiomeConfig(options, logger)
+        .map((result) => {
+          linters.push(parseBiomeRules(result))
+          return result
+        })
         .mapErr((error) => {
           logger.warn(`Biome not found or failed to run: ${error.message}`)
           logger.info('Continuing without Biome rules...')
           return error
         })
-        .unwrapOr(null)
 
-      const eslintResult = await fetchESLintConfig(options, logger)
+      // ESLintの設定を取得して変換
+      await fetchESLintConfig(options, logger)
+        .map((result) => {
+          linters.push(parseESLintRules(result))
+          return result
+        })
         .mapErr((error) => {
           logger.warn(`ESLint not found or failed to run: ${error.message}`)
           logger.info('Continuing without ESLint rules...')
           return error
         })
-        .unwrapOr(null)
 
-      return { biomeResult, eslintResult }
+      return { linters }
     }),
     (error) => new Error(`Failed to fetch linter configurations: ${String(error)}`),
   )
-    .andThen(({ biomeResult, eslintResult }) => {
-      // Check if we have any results to generate
-      if (!(biomeResult || eslintResult)) {
+    .andThen(({ linters }) => {
+      // 取得したLinterが1つもない場合はエラー
+      if (linters.length === 0) {
         logger.warn(
           'No linter configurations found. Ensure at least one of Biome or ESLint is properly configured.',
         )
@@ -155,10 +169,8 @@ export function executeLint(options: LintOptions): ResultAsync<boolean, Error> {
 
       logger.info(`Generating temporary Markdown to ${tempFile}...`)
 
-      // Generate markdown with available results
       return generateMarkdown({
-        biomeResult,
-        eslintResult,
+        linters,
         outputFile: tempFile,
       })
         .andThen(() => {
