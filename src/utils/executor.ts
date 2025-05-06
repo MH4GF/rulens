@@ -1,4 +1,5 @@
 import { execa } from 'execa'
+import { type Result, ResultAsync, ok } from 'neverthrow'
 
 interface ExecuteCommandOptions {
   command: string
@@ -13,37 +14,40 @@ interface ExecuteCommandResult {
   exitCode: number
 }
 
+/**
+ * Executes a command and returns the result wrapped in a Result type.
+ * The result is always OK, but the ExecuteCommandResult contains error information if the command fails.
+ */
 export async function executeCommand(
   options: ExecuteCommandOptions,
-): Promise<ExecuteCommandResult> {
+): Promise<Result<ExecuteCommandResult, Error>> {
   const { command, args = [], cwd = process.cwd(), timeout = 60000 } = options
 
-  try {
-    const result = await execa(command, args, {
+  // Create a ResultAsync to handle the execa command
+  const execaCommand = ResultAsync.fromPromise(
+    execa(command, args, {
       cwd,
       timeout,
       stdio: 'pipe',
       reject: false,
-    })
+    }),
+  )
 
-    return {
-      stdout: result.stdout,
-      stderr: result.stderr,
-      exitCode: result.exitCode || 0,
-    }
-  } catch (error) {
-    if (error instanceof Error) {
+  // Process the result
+  return execaCommand
+    .map((result) => {
       return {
-        stdout: '',
-        stderr: error.message,
-        exitCode: 1,
+        stdout: result.stdout,
+        stderr: result.stderr,
+        exitCode: result.exitCode || 0,
       }
-    }
-
-    return {
-      stdout: '',
-      stderr: 'Unknown error occurred',
-      exitCode: 1,
-    }
-  }
+    })
+    .orElse((error) => {
+      // Return a successful Result with error information in the ExecuteCommandResult
+      return ok({
+        stdout: '',
+        stderr: error instanceof Error ? error.message : String(error),
+        exitCode: 1,
+      })
+    })
 }

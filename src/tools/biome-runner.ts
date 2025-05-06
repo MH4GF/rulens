@@ -31,15 +31,21 @@ export async function runBiomeRage(options: BiomeRunnerOptions = {}): Promise<Bi
     args.push(...additionalArgs.split(' ').filter(Boolean))
   }
 
-  const result = await executeCommand({
+  const cmdResult = await executeCommand({
     command: biomeBinary,
     args,
     cwd: process.cwd(),
   })
 
+  if (!cmdResult.isOk()) {
+    throw new Error(`Failed to run biome rage command: ${cmdResult.error.message}`)
+  }
+
+  const result = cmdResult.value
   if (result.exitCode !== 0) {
     throw new Error(`Failed to run biome rage command: ${result.stderr || 'Unknown error'}`)
   }
+
   const rules = parseRules(result.stdout)
 
   const biomeResult = {
