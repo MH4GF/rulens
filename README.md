@@ -67,6 +67,8 @@ IMPORTANT: Read coding guidelines in docs/lint-rules.md before beginning code wo
 
 This simple instruction helps AI tools like GitHub Copilot, Cursor, Claude, and other assistants to follow your project's linting standards from the start.
 
+See also [docs/lint-rules.md](https://github.com/MH4GF/rulens/blob/main/docs/lint-rules.md) and [CLAUDE.md](https://github.com/MH4GF/rulens/blob/main/CLAUDE.md) in the rulens project.
+
 ## Usage
 
 ### Generate Command
@@ -119,13 +121,13 @@ If the documentation is out of date, the command exits with code 1, causing your
 
 ### Lint Command Options
 
-| Option                   | Description                                            | Default              |
-| ------------------------ | ------------------------------------------------------ | -------------------- |
-| `--biome-args <args>`    | Additional arguments to pass to `biome rage`           | -                    |
-| `--eslint-config <path>` | Path to ESLint config file                             | Auto-detected\*      |
-| `--output <file>`        | Output file path to verify                             | `docs/lint-rules.md` |
-| `--update`               | Update the output file if it's out of date             | `false`              |
-| `--verbose`              | Enable verbose logging with detailed info and diffs    | `false`              |
+| Option                   | Description                                         | Default              |
+| ------------------------ | --------------------------------------------------- | -------------------- |
+| `--biome-args <args>`    | Additional arguments to pass to `biome rage`        | -                    |
+| `--eslint-config <path>` | Path to ESLint config file                          | Auto-detected\*      |
+| `--output <file>`        | Output file path to verify                          | `docs/lint-rules.md` |
+| `--update`               | Update the output file if it's out of date          | `false`              |
+| `--verbose`              | Enable verbose logging with detailed info and diffs | `false`              |
 
 _\* ESLint config is auto-detected in the following order:_
 
@@ -146,35 +148,35 @@ name: Verify Lint Rules Documentation
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     paths:
-      - '.eslintrc*'
-      - 'eslint.config.*'
-      - 'biome.json'
-      - 'package.json'
+      - ".eslintrc*"
+      - "eslint.config.*"
+      - "biome.json"
+      - "package.json"
   pull_request:
-    branches: [ main ]
+    branches: [main]
     paths:
-      - '.eslintrc*'
-      - 'eslint.config.*'
-      - 'biome.json'
-      - 'package.json'
+      - ".eslintrc*"
+      - "eslint.config.*"
+      - "biome.json"
+      - "package.json"
 
 jobs:
   verify-docs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
-          cache: 'npm'
-      
+          node-version: "20"
+          cache: "npm"
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Verify lint rules documentation
         run: npx rulens lint
 ```
