@@ -72,15 +72,22 @@ export class Logger {
       console.log(pc.cyan(`\n[VERBOSE] ${label}`))
 
       if (typeof obj === 'object' && obj !== null) {
-        try {
-          // biome-ignore lint/suspicious/noConsole: Logger implementation
-          // biome-ignore lint/suspicious/noConsoleLog: Logger implementation
-          console.log(safeStringify(obj))
-        } catch {
-          // biome-ignore lint/suspicious/noConsole: Logger implementation
-          // biome-ignore lint/suspicious/noConsoleLog: Logger implementation
-          console.log(pc.yellow('Unable to stringify object (circular references)'))
-        }
+        const stringifyResult = safeStringify(obj)
+
+        stringifyResult.match(
+          // Success case
+          (value) => {
+            // biome-ignore lint/suspicious/noConsole: Logger implementation
+            // biome-ignore lint/suspicious/noConsoleLog: Logger implementation
+            console.log(value)
+          },
+          // Error case
+          () => {
+            // biome-ignore lint/suspicious/noConsole: Logger implementation
+            // biome-ignore lint/suspicious/noConsoleLog: Logger implementation
+            console.log(pc.yellow('Unable to stringify object (circular references)'))
+          },
+        )
       } else {
         // biome-ignore lint/suspicious/noConsole: Logger implementation
         // biome-ignore lint/suspicious/noConsoleLog: Logger implementation

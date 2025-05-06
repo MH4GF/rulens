@@ -34,6 +34,7 @@
     "bundle-require": "5.1.0",
     "commander": "13.1.0",
     "execa": "9.5.2",
+    "neverthrow": "8.2.0",
     "picocolors": "1.1.1",
     "valibot": "1.0.0"
   },

@@ -151,6 +151,72 @@ export function findESLintConfig(userConfigPath?: string): string {
 }
 
 /**
+ * Load and parse the ESLint config using bundle-require
+ */
+async function loadESLintConfig(configPath: string, logger: Logger): Promise<unknown> {
+  const bundleResult = await bundleRequire({
+    filepath: configPath,
+  })
+
+  logger.dump('ESLint bundle-require result', bundleResult)
+
+  const parseResult = safeParse(bundleResultSchema, bundleResult)
+  if (!parseResult.success) {
+    throw new Error(`Invalid bundle result format: ${parseResult.issues[0]?.message}`)
+  }
+
+  const validatedResult = parseResult.output
+
+  const config =
+    validatedResult.default || (validatedResult.mod ? validatedResult.mod['default'] : undefined)
+
+  if (!config) {
+    throw new Error('No default export found in ESLint config')
+  }
+
+  return config
+}
+
+/**
+ * Create ESLint result object from config
+ */
+function createESLintResult(
+  config: unknown,
+  rules: Record<string, unknown>,
+  rulesMeta: Record<string, ESLintRuleMeta>,
+  pluginsMetadata: Record<string, { name: string; description?: string }>,
+): ESLintConfigResult {
+  const stringifyResult = safeStringify(config)
+  if (!stringifyResult.isOk()) {
+    throw stringifyResult.error
+  }
+
+  return {
+    raw: stringifyResult.value,
+    rules,
+    rulesMeta,
+    pluginsMetadata,
+  }
+}
+
+/**
+ * Create empty ESLint result with only raw config
+ */
+function createEmptyESLintResult(config: unknown): ESLintConfigResult {
+  const stringifyResult = safeStringify(config)
+  if (!stringifyResult.isOk()) {
+    throw stringifyResult.error
+  }
+
+  return {
+    raw: stringifyResult.value,
+    rules: {},
+    rulesMeta: {},
+    pluginsMetadata: {},
+  }
+}
+
+/**
  * Load ESLint configuration using bundle-require
  */
 export async function runESLintConfig(
@@ -172,48 +238,18 @@ export async function runESLintConfig(
   }
 
   try {
-    const bundleResult = await bundleRequire({
-      filepath: fullConfigPath,
-    })
-
-    logger.dump('ESLint bundle-require result', bundleResult)
-
-    const parseResult = safeParse(bundleResultSchema, bundleResult)
-    if (!parseResult.success) {
-      throw new Error(`Invalid bundle result format: ${parseResult.issues[0]?.message}`)
-    }
-
-    const validatedResult = parseResult.output
-
-    const config =
-      validatedResult.default || (validatedResult.mod ? validatedResult.mod['default'] : undefined)
-
-    if (!config) {
-      throw new Error('No default export found in ESLint config')
-    }
+    // Load and parse the ESLint config
+    const config = await loadESLintConfig(fullConfigPath, logger)
 
     try {
+      // Extract rules and metadata from the config
       const { rules, rulesMeta, pluginsMetadata } = extractRulesAndMeta(config)
-
-      const eslintResult = {
-        raw: safeStringify(config), // String conversion that handles circular references
-        rules,
-        rulesMeta,
-        pluginsMetadata,
-      }
-
-      return eslintResult
+      return createESLintResult(config, rules, rulesMeta, pluginsMetadata)
     } catch (extractError) {
       logger.error(
         `Failed to extract rules from ESLint config: ${extractError instanceof Error ? extractError.message : String(extractError)}`,
       )
-
-      return {
-        raw: safeStringify(config),
-        rules: {},
-        rulesMeta: {},
-        pluginsMetadata: {},
-      }
+      return createEmptyESLintResult(config)
     }
   } catch (error) {
     logger.error(
