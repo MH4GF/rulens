@@ -138,7 +138,7 @@ describe('parseBiomeRules', () => {
       const firstRule = firstCategory.rules[0]
       expect(firstRule).toBeDefined()
       if (firstRule) {
-        expect(firstRule.description).toBe('Disallow reassigning exceptions in catch clauses.')
+        expect(firstRule.description).toBe('Disallow reassigning exceptions in catch clauses\\.')
         expect(firstRule.url).toBe('https://biomejs.dev/linter/rules/no-catch-assign')
       }
     }
