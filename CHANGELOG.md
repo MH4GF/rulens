@@ -1,5 +1,11 @@
 # rulens
 
+## 0.2.2
+
+### Patch Changes
+
+- ac587c1: Added special character escaping to correct markdown rendering
+
 ## 0.2.1
 
 ### Patch Changes
