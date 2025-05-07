@@ -67,7 +67,7 @@
     "fmt:rulens": "node dist/index.js generate",
     "fmt:syncpack-fix": "syncpack fix-mismatches",
     "fmt:syncpack-format": "syncpack format",
-    "lint": "pnpm run lint:biome && pnpm run lint:tsc && pnpm run lint:syncpack && pnpm run lint:eslint && pnpm run lint:knip",
+    "lint": "pnpm run lint:biome && pnpm run lint:tsc && pnpm run lint:syncpack && pnpm run lint:eslint && pnpm run lint:knip && pnpm run lint:rulens",
     "lint:biome": "biome check . --log-level=warn",
     "lint:eslint": "eslint .",
     "lint:knip": "knip",
