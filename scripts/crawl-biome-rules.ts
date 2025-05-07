@@ -88,6 +88,8 @@ function extractRulesFromTable(
     // Parse rule information
     const ruleInfo = extractRuleInfo($, cells, categoryName)
     if (ruleInfo) {
+      // Escape special characters in description to prevent breaking Markdown rendering
+      ruleInfo.description = escapeMarkdownSpecialChars(ruleInfo.description)
       result.push(ruleInfo)
     }
   }
@@ -157,6 +159,28 @@ async function extractRuleInformation(): Promise<BiomeRuleDescription> {
   }
 
   return descriptions
+}
+
+/**
+ * Escape special Markdown characters in a string to prevent rendering issues
+ */
+function escapeMarkdownSpecialChars(str: string): string {
+  return str
+    .replace(/</g, '\\<')
+    .replace(/>/g, '\\>')
+    .replace(/\|/g, '\\|')
+    .replace(/\*/g, '\\*')
+    .replace(/_/g, '\\_')
+    .replace(/`/g, '\\`')
+    .replace(/\[/g, '\\[')
+    .replace(/\]/g, '\\]')
+    .replace(/\(/g, '\\(')
+    .replace(/\)/g, '\\)')
+    .replace(/#/g, '\\#')
+    .replace(/\+/g, '\\+')
+    .replace(/-/g, '\\-')
+    .replace(/\./g, '\\.')
+    .replace(/!/g, '\\!')
 }
 
 /**

@@ -50,8 +50,8 @@ describe('biome-to-markdown', () => {
         "### style
 
         - [\`noImplicitBoolean\`](https://biomejs.dev/linter/rules/no-implicit-boolean): Disallow implicit true values on JSX boolean attributes
-        - [\`useBlockStatements\`](https://biomejs.dev/linter/rules/use-block-statements): Requires following curly brace conventions.
-        - [\`useTemplate\`](https://biomejs.dev/linter/rules/use-template): Prefer template literals over string concatenation.
+        - [\`useBlockStatements\`](https://biomejs.dev/linter/rules/use-block-statements): Requires following curly brace conventions\\.
+        - [\`useTemplate\`](https://biomejs.dev/linter/rules/use-template): Prefer template literals over string concatenation\\.
         "
       `)
     })
@@ -90,18 +90,18 @@ describe('biome-to-markdown', () => {
 
         ### accessibility
 
-        - [\`noAutofocus\`](https://biomejs.dev/linter/rules/no-autofocus): Enforce that autoFocus prop is not used on elements.
-        - [\`useAltText\`](https://biomejs.dev/linter/rules/use-alt-text): Enforce that all elements that require alternative text have meaningful information to relay back to the end user.
+        - [\`noAutofocus\`](https://biomejs.dev/linter/rules/no-autofocus): Enforce that autoFocus prop is not used on elements\\.
+        - [\`useAltText\`](https://biomejs.dev/linter/rules/use-alt-text): Enforce that all elements that require alternative text have meaningful information to relay back to the end user\\.
 
         ### style
 
         - [\`noImplicitBoolean\`](https://biomejs.dev/linter/rules/no-implicit-boolean): Disallow implicit true values on JSX boolean attributes
-        - [\`useTemplate\`](https://biomejs.dev/linter/rules/use-template): Prefer template literals over string concatenation.
+        - [\`useTemplate\`](https://biomejs.dev/linter/rules/use-template): Prefer template literals over string concatenation\\.
 
         ### suspicious
 
-        - [\`noCatchAssign\`](https://biomejs.dev/linter/rules/no-catch-assign): Disallow reassigning exceptions in catch clauses.
-        - [\`noExplicitAny\`](https://biomejs.dev/linter/rules/no-explicit-any): Disallow the any type usage.
+        - [\`noCatchAssign\`](https://biomejs.dev/linter/rules/no-catch-assign): Disallow reassigning exceptions in catch clauses\\.
+        - [\`noExplicitAny\`](https://biomejs.dev/linter/rules/no-explicit-any): Disallow the any type usage\\.
         "
       `)
     })
