@@ -48,40 +48,40 @@ Rules in this category ensure that code is accessible to all users, including th
 
 | Rule | Description | Options |
 | ---- | ----------- | ------- |
-| [`noAccessKey`](https://biomejs.dev/linter/rules/no-access-key) | Enforce that the accessKey attribute is not used on any HTML element. |  |
-| [`noAriaHiddenOnFocusable`](https://biomejs.dev/linter/rules/no-aria-hidden-on-focusable) | Enforce that aria-hidden=“true” is not set on focusable elements. |  |
-| [`noAriaUnsupportedElements`](https://biomejs.dev/linter/rules/no-aria-unsupported-elements) | Enforce that elements that do not support ARIA roles, states, and properties do not have those attributes. |  |
-| [`noAutofocus`](https://biomejs.dev/linter/rules/no-autofocus) | Enforce that autoFocus prop is not used on elements. |  |
-| [`noBlankTarget`](https://biomejs.dev/linter/rules/no-blank-target) | Disallow target="_blank" attribute without rel="noreferrer" |  |
-| [`noDistractingElements`](https://biomejs.dev/linter/rules/no-distracting-elements) | Enforces that no distracting elements are used. |  |
-| [`noHeaderScope`](https://biomejs.dev/linter/rules/no-header-scope) | The scope prop should be used only on <th> elements. |  |
-| [`noInteractiveElementToNoninteractiveRole`](https://biomejs.dev/linter/rules/no-interactive-element-to-noninteractive-role) | Enforce that non-interactive ARIA roles are not assigned to interactive HTML elements. |  |
-| [`noLabelWithoutControl`](https://biomejs.dev/linter/rules/no-label-without-control) | Enforce that a label element or component has a text label and an associated input. |  |
-| [`noNoninteractiveElementToInteractiveRole`](https://biomejs.dev/linter/rules/no-noninteractive-element-to-interactive-role) | Enforce that interactive ARIA roles are not assigned to non-interactive HTML elements. |  |
-| [`noNoninteractiveTabindex`](https://biomejs.dev/linter/rules/no-noninteractive-tabindex) | Enforce that tabIndex is not assigned to non-interactive HTML elements. |  |
+| [`noAccessKey`](https://biomejs.dev/linter/rules/no-access-key) | Enforce that the accessKey attribute is not used on any HTML element\. |  |
+| [`noAriaHiddenOnFocusable`](https://biomejs.dev/linter/rules/no-aria-hidden-on-focusable) | Enforce that aria\-hidden=“true” is not set on focusable elements\. |  |
+| [`noAriaUnsupportedElements`](https://biomejs.dev/linter/rules/no-aria-unsupported-elements) | Enforce that elements that do not support ARIA roles, states, and properties do not have those attributes\. |  |
+| [`noAutofocus`](https://biomejs.dev/linter/rules/no-autofocus) | Enforce that autoFocus prop is not used on elements\. |  |
+| [`noBlankTarget`](https://biomejs.dev/linter/rules/no-blank-target) | Disallow target="\_blank" attribute without rel="noreferrer" |  |
+| [`noDistractingElements`](https://biomejs.dev/linter/rules/no-distracting-elements) | Enforces that no distracting elements are used\. |  |
+| [`noHeaderScope`](https://biomejs.dev/linter/rules/no-header-scope) | The scope prop should be used only on \<th\> elements\. |  |
+| [`noInteractiveElementToNoninteractiveRole`](https://biomejs.dev/linter/rules/no-interactive-element-to-noninteractive-role) | Enforce that non\-interactive ARIA roles are not assigned to interactive HTML elements\. |  |
+| [`noLabelWithoutControl`](https://biomejs.dev/linter/rules/no-label-without-control) | Enforce that a label element or component has a text label and an associated input\. |  |
+| [`noNoninteractiveElementToInteractiveRole`](https://biomejs.dev/linter/rules/no-noninteractive-element-to-interactive-role) | Enforce that interactive ARIA roles are not assigned to non\-interactive HTML elements\. |  |
+| [`noNoninteractiveTabindex`](https://biomejs.dev/linter/rules/no-noninteractive-tabindex) | Enforce that tabIndex is not assigned to non\-interactive HTML elements\. |  |
 | [`noPositiveTabindex`](https://biomejs.dev/linter/rules/no-positive-tabindex) | Prevent the usage of positive integers on tabIndex property |  |
-| [`noRedundantAlt`](https://biomejs.dev/linter/rules/no-redundant-alt) | Enforce img alt prop does not contain the word “image”, “picture”, or “photo”. |  |
-| [`noRedundantRoles`](https://biomejs.dev/linter/rules/no-redundant-roles) | Enforce explicit role property is not the same as implicit/default role property on an element. |  |
-| [`noSvgWithoutTitle`](https://biomejs.dev/linter/rules/no-svg-without-title) | Enforces the usage of the title element for the svg element. |  |
-| [`useAltText`](https://biomejs.dev/linter/rules/use-alt-text) | Enforce that all elements that require alternative text have meaningful information to relay back to the end user. |  |
-| [`useAnchorContent`](https://biomejs.dev/linter/rules/use-anchor-content) | Enforce that anchors have content and that the content is accessible to screen readers. |  |
-| [`useAriaActivedescendantWithTabindex`](https://biomejs.dev/linter/rules/use-aria-activedescendant-with-tabindex) | Enforce that tabIndex is assigned to non-interactive HTML elements with aria-activedescendant. |  |
-| [`useAriaPropsForRole`](https://biomejs.dev/linter/rules/use-aria-props-for-role) | Enforce that elements with ARIA roles must have all required ARIA attributes for that role. |  |
+| [`noRedundantAlt`](https://biomejs.dev/linter/rules/no-redundant-alt) | Enforce img alt prop does not contain the word “image”, “picture”, or “photo”\. |  |
+| [`noRedundantRoles`](https://biomejs.dev/linter/rules/no-redundant-roles) | Enforce explicit role property is not the same as implicit/default role property on an element\. |  |
+| [`noSvgWithoutTitle`](https://biomejs.dev/linter/rules/no-svg-without-title) | Enforces the usage of the title element for the svg element\. |  |
+| [`useAltText`](https://biomejs.dev/linter/rules/use-alt-text) | Enforce that all elements that require alternative text have meaningful information to relay back to the end user\. |  |
+| [`useAnchorContent`](https://biomejs.dev/linter/rules/use-anchor-content) | Enforce that anchors have content and that the content is accessible to screen readers\. |  |
+| [`useAriaActivedescendantWithTabindex`](https://biomejs.dev/linter/rules/use-aria-activedescendant-with-tabindex) | Enforce that tabIndex is assigned to non\-interactive HTML elements with aria\-activedescendant\. |  |
+| [`useAriaPropsForRole`](https://biomejs.dev/linter/rules/use-aria-props-for-role) | Enforce that elements with ARIA roles must have all required ARIA attributes for that role\. |  |
 | [`useButtonType`](https://biomejs.dev/linter/rules/use-button-type) | Enforces the usage of the attribute type for the element button |  |
-| [`useFocusableInteractive`](https://biomejs.dev/linter/rules/use-focusable-interactive) | Elements with an interactive role and interaction handlers must be focusable. |  |
-| [`useGenericFontNames`](https://biomejs.dev/linter/rules/use-generic-font-names) | Disallow a missing generic family keyword within font families. |  |
-| [`useHeadingContent`](https://biomejs.dev/linter/rules/use-heading-content) | Enforce that heading elements (h1, h2, etc.) have content and that the content is accessible to screen readers. Accessible means that it is not hidden using the aria-hidden prop. |  |
-| [`useHtmlLang`](https://biomejs.dev/linter/rules/use-html-lang) | Enforce that html element has lang attribute. |  |
-| [`useIframeTitle`](https://biomejs.dev/linter/rules/use-iframe-title) | Enforces the usage of the attribute title for the element iframe. |  |
-| [`useKeyWithClickEvents`](https://biomejs.dev/linter/rules/use-key-with-click-events) | Enforce onClick is accompanied by at least one of the following: onKeyUp, onKeyDown, onKeyPress. |  |
-| [`useKeyWithMouseEvents`](https://biomejs.dev/linter/rules/use-key-with-mouse-events) | Enforce onMouseOver / onMouseOut are accompanied by onFocus / onBlur. |  |
-| [`useMediaCaption`](https://biomejs.dev/linter/rules/use-media-caption) | Enforces that audio and video elements must have a track for captions. |  |
-| [`useSemanticElements`](https://biomejs.dev/linter/rules/use-semantic-elements) | It detects the use of role attributes in JSX elements and suggests using semantic elements instead. |  |
-| [`useValidAnchor`](https://biomejs.dev/linter/rules/use-valid-anchor) | Enforce that all anchors are valid, and they are navigable elements. |  |
-| [`useValidAriaProps`](https://biomejs.dev/linter/rules/use-valid-aria-props) | Ensures that ARIA properties aria-* are all valid. |  |
-| [`useValidAriaRole`](https://biomejs.dev/linter/rules/use-valid-aria-role) | Elements with ARIA roles must use a valid, non-abstract ARIA role. |  |
-| [`useValidAriaValues`](https://biomejs.dev/linter/rules/use-valid-aria-values) | Enforce that ARIA state and property values are valid. |  |
-| [`useValidLang`](https://biomejs.dev/linter/rules/use-valid-lang) | Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country. |  |
+| [`useFocusableInteractive`](https://biomejs.dev/linter/rules/use-focusable-interactive) | Elements with an interactive role and interaction handlers must be focusable\. |  |
+| [`useGenericFontNames`](https://biomejs.dev/linter/rules/use-generic-font-names) | Disallow a missing generic family keyword within font families\. |  |
+| [`useHeadingContent`](https://biomejs.dev/linter/rules/use-heading-content) | Enforce that heading elements \(h1, h2, etc\.\) have content and that the content is accessible to screen readers\. Accessible means that it is not hidden using the aria\-hidden prop\. |  |
+| [`useHtmlLang`](https://biomejs.dev/linter/rules/use-html-lang) | Enforce that html element has lang attribute\. |  |
+| [`useIframeTitle`](https://biomejs.dev/linter/rules/use-iframe-title) | Enforces the usage of the attribute title for the element iframe\. |  |
+| [`useKeyWithClickEvents`](https://biomejs.dev/linter/rules/use-key-with-click-events) | Enforce onClick is accompanied by at least one of the following: onKeyUp, onKeyDown, onKeyPress\. |  |
+| [`useKeyWithMouseEvents`](https://biomejs.dev/linter/rules/use-key-with-mouse-events) | Enforce onMouseOver / onMouseOut are accompanied by onFocus / onBlur\. |  |
+| [`useMediaCaption`](https://biomejs.dev/linter/rules/use-media-caption) | Enforces that audio and video elements must have a track for captions\. |  |
+| [`useSemanticElements`](https://biomejs.dev/linter/rules/use-semantic-elements) | It detects the use of role attributes in JSX elements and suggests using semantic elements instead\. |  |
+| [`useValidAnchor`](https://biomejs.dev/linter/rules/use-valid-anchor) | Enforce that all anchors are valid, and they are navigable elements\. |  |
+| [`useValidAriaProps`](https://biomejs.dev/linter/rules/use-valid-aria-props) | Ensures that ARIA properties aria\-\* are all valid\. |  |
+| [`useValidAriaRole`](https://biomejs.dev/linter/rules/use-valid-aria-role) | Elements with ARIA roles must use a valid, non\-abstract ARIA role\. |  |
+| [`useValidAriaValues`](https://biomejs.dev/linter/rules/use-valid-aria-values) | Enforce that ARIA state and property values are valid\. |  |
+| [`useValidLang`](https://biomejs.dev/linter/rules/use-valid-lang) | Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country\. |  |
 
 ---
 
@@ -91,37 +91,37 @@ Rules in this category help maintain code that is easy to understand, modify, an
 
 | Rule | Description | Options |
 | ---- | ----------- | ------- |
-| [`noBannedTypes`](https://biomejs.dev/linter/rules/no-banned-types) | Disallow primitive type aliases and misleading types. |  |
-| [`noEmptyTypeParameters`](https://biomejs.dev/linter/rules/no-empty-type-parameters) | Disallow empty type parameters in type aliases and interfaces. |  |
-| [`noExcessiveCognitiveComplexity`](https://biomejs.dev/linter/rules/no-excessive-cognitive-complexity) | Disallow functions that exceed a given Cognitive Complexity score. |  |
-| [`noExcessiveNestedTestSuites`](https://biomejs.dev/linter/rules/no-excessive-nested-test-suites) | This rule enforces a maximum depth to nested describe() in test files. |  |
+| [`noBannedTypes`](https://biomejs.dev/linter/rules/no-banned-types) | Disallow primitive type aliases and misleading types\. |  |
+| [`noEmptyTypeParameters`](https://biomejs.dev/linter/rules/no-empty-type-parameters) | Disallow empty type parameters in type aliases and interfaces\. |  |
+| [`noExcessiveCognitiveComplexity`](https://biomejs.dev/linter/rules/no-excessive-cognitive-complexity) | Disallow functions that exceed a given Cognitive Complexity score\. |  |
+| [`noExcessiveNestedTestSuites`](https://biomejs.dev/linter/rules/no-excessive-nested-test-suites) | This rule enforces a maximum depth to nested describe\(\) in test files\. |  |
 | [`noExtraBooleanCast`](https://biomejs.dev/linter/rules/no-extra-boolean-cast) | Disallow unnecessary boolean casts |  |
-| [`noForEach`](https://biomejs.dev/linter/rules/no-for-each) | Prefer for...of statement instead of Array.forEach. |  |
+| [`noForEach`](https://biomejs.dev/linter/rules/no-for-each) | Prefer for\.\.\.of statement instead of Array\.forEach\. |  |
 | [`noMultipleSpacesInRegularExpressionLiterals`](https://biomejs.dev/linter/rules/no-multiple-spaces-in-regular-expression-literals) | Disallow unclear usage of consecutive space characters in regular expression literals |  |
-| [`noStaticOnlyClass`](https://biomejs.dev/linter/rules/no-static-only-class) | This rule reports when a class has no non-static members, such as for a class used exclusively as a static namespace. |  |
-| [`noThisInStatic`](https://biomejs.dev/linter/rules/no-this-in-static) | Disallow this and super in static contexts. |  |
-| [`noUselessCatch`](https://biomejs.dev/linter/rules/no-useless-catch) | Disallow unnecessary catch clauses. |  |
-| [`noUselessConstructor`](https://biomejs.dev/linter/rules/no-useless-constructor) | Disallow unnecessary constructors. |  |
-| [`noUselessEmptyExport`](https://biomejs.dev/linter/rules/no-useless-empty-export) | Disallow empty exports that don’t change anything in a module file. |  |
+| [`noStaticOnlyClass`](https://biomejs.dev/linter/rules/no-static-only-class) | This rule reports when a class has no non\-static members, such as for a class used exclusively as a static namespace\. |  |
+| [`noThisInStatic`](https://biomejs.dev/linter/rules/no-this-in-static) | Disallow this and super in static contexts\. |  |
+| [`noUselessCatch`](https://biomejs.dev/linter/rules/no-useless-catch) | Disallow unnecessary catch clauses\. |  |
+| [`noUselessConstructor`](https://biomejs.dev/linter/rules/no-useless-constructor) | Disallow unnecessary constructors\. |  |
+| [`noUselessEmptyExport`](https://biomejs.dev/linter/rules/no-useless-empty-export) | Disallow empty exports that don’t change anything in a module file\. |  |
 | [`noUselessFragments`](https://biomejs.dev/linter/rules/no-useless-fragments) | Disallow unnecessary fragments |  |
-| [`noUselessLabel`](https://biomejs.dev/linter/rules/no-useless-label) | Disallow unnecessary labels. |  |
-| [`noUselessLoneBlockStatements`](https://biomejs.dev/linter/rules/no-useless-lone-block-statements) | Disallow unnecessary nested block statements. |  |
-| [`noUselessRename`](https://biomejs.dev/linter/rules/no-useless-rename) | Disallow renaming import, export, and destructured assignments to the same name. |  |
-| [`noUselessStringConcat`](https://biomejs.dev/linter/rules/no-useless-string-concat) | Disallow unnecessary concatenation of string or template literals. |  |
-| [`noUselessSwitchCase`](https://biomejs.dev/linter/rules/no-useless-switch-case) | Disallow useless case in switch statements. |  |
-| [`noUselessTernary`](https://biomejs.dev/linter/rules/no-useless-ternary) | Disallow ternary operators when simpler alternatives exist. |  |
-| [`noUselessThisAlias`](https://biomejs.dev/linter/rules/no-useless-this-alias) | Disallow useless this aliasing. |  |
-| [`noUselessTypeConstraint`](https://biomejs.dev/linter/rules/no-useless-type-constraint) | Disallow using any or unknown as type constraint. |  |
-| [`noUselessUndefinedInitialization`](https://biomejs.dev/linter/rules/no-useless-undefined-initialization) | Disallow initializing variables to undefined. |  |
-| [`noVoid`](https://biomejs.dev/linter/rules/no-void) | Disallow the use of void operators, which is not a familiar operator. |  |
-| [`noWith`](https://biomejs.dev/linter/rules/no-with) | Disallow with statements in non-strict contexts. |  |
-| [`useArrowFunction`](https://biomejs.dev/linter/rules/use-arrow-function) | Use arrow functions over function expressions. |  |
-| [`useDateNow`](https://biomejs.dev/linter/rules/use-date-now) | Use Date.now() to get the number of milliseconds since the Unix Epoch. |  |
-| [`useFlatMap`](https://biomejs.dev/linter/rules/use-flat-map) | Promotes the use of .flatMap() when map().flat() are used together. |  |
-| [`useOptionalChain`](https://biomejs.dev/linter/rules/use-optional-chain) | Enforce using concise optional chain instead of chained logical expressions. |  |
-| [`useRegexLiterals`](https://biomejs.dev/linter/rules/use-regex-literals) | Enforce the use of the regular expression literals instead of the RegExp constructor if possible. |  |
+| [`noUselessLabel`](https://biomejs.dev/linter/rules/no-useless-label) | Disallow unnecessary labels\. |  |
+| [`noUselessLoneBlockStatements`](https://biomejs.dev/linter/rules/no-useless-lone-block-statements) | Disallow unnecessary nested block statements\. |  |
+| [`noUselessRename`](https://biomejs.dev/linter/rules/no-useless-rename) | Disallow renaming import, export, and destructured assignments to the same name\. |  |
+| [`noUselessStringConcat`](https://biomejs.dev/linter/rules/no-useless-string-concat) | Disallow unnecessary concatenation of string or template literals\. |  |
+| [`noUselessSwitchCase`](https://biomejs.dev/linter/rules/no-useless-switch-case) | Disallow useless case in switch statements\. |  |
+| [`noUselessTernary`](https://biomejs.dev/linter/rules/no-useless-ternary) | Disallow ternary operators when simpler alternatives exist\. |  |
+| [`noUselessThisAlias`](https://biomejs.dev/linter/rules/no-useless-this-alias) | Disallow useless this aliasing\. |  |
+| [`noUselessTypeConstraint`](https://biomejs.dev/linter/rules/no-useless-type-constraint) | Disallow using any or unknown as type constraint\. |  |
+| [`noUselessUndefinedInitialization`](https://biomejs.dev/linter/rules/no-useless-undefined-initialization) | Disallow initializing variables to undefined\. |  |
+| [`noVoid`](https://biomejs.dev/linter/rules/no-void) | Disallow the use of void operators, which is not a familiar operator\. |  |
+| [`noWith`](https://biomejs.dev/linter/rules/no-with) | Disallow with statements in non\-strict contexts\. |  |
+| [`useArrowFunction`](https://biomejs.dev/linter/rules/use-arrow-function) | Use arrow functions over function expressions\. |  |
+| [`useDateNow`](https://biomejs.dev/linter/rules/use-date-now) | Use Date\.now\(\) to get the number of milliseconds since the Unix Epoch\. |  |
+| [`useFlatMap`](https://biomejs.dev/linter/rules/use-flat-map) | Promotes the use of \.flatMap\(\) when map\(\)\.flat\(\) are used together\. |  |
+| [`useOptionalChain`](https://biomejs.dev/linter/rules/use-optional-chain) | Enforce using concise optional chain instead of chained logical expressions\. |  |
+| [`useRegexLiterals`](https://biomejs.dev/linter/rules/use-regex-literals) | Enforce the use of the regular expression literals instead of the RegExp constructor if possible\. |  |
 | [`useSimpleNumberKeys`](https://biomejs.dev/linter/rules/use-simple-number-keys) | Disallow number literal object member names which are not base10 or uses underscore as separator |  |
-| [`useSimplifiedLogicExpression`](https://biomejs.dev/linter/rules/use-simplified-logic-expression) | Discard redundant terms from logical expressions. |  |
+| [`useSimplifiedLogicExpression`](https://biomejs.dev/linter/rules/use-simplified-logic-expression) | Discard redundant terms from logical expressions\. |  |
 
 ---
 
@@ -131,58 +131,58 @@ Rules in this category identify code that is likely to be incorrect or lead to b
 
 | Rule | Description | Options |
 | ---- | ----------- | ------- |
-| [`noChildrenProp`](https://biomejs.dev/linter/rules/no-children-prop) | Prevent passing of children as props. |  |
+| [`noChildrenProp`](https://biomejs.dev/linter/rules/no-children-prop) | Prevent passing of children as props\. |  |
 | [`noConstantCondition`](https://biomejs.dev/linter/rules/no-constant-condition) | Disallow constant expressions in conditions |  |
-| [`noConstantMathMinMaxClamp`](https://biomejs.dev/linter/rules/no-constant-math-min-max-clamp) | Disallow the use of Math.min and Math.max to clamp a value where the result itself is constant. |  |
-| [`noConstAssign`](https://biomejs.dev/linter/rules/no-const-assign) | Prevents from having const variables being re-assigned. |  |
-| [`noConstructorReturn`](https://biomejs.dev/linter/rules/no-constructor-return) | Disallow returning a value from a constructor. |  |
-| [`noEmptyCharacterClassInRegex`](https://biomejs.dev/linter/rules/no-empty-character-class-in-regex) | Disallow empty character classes in regular expression literals. |  |
-| [`noEmptyPattern`](https://biomejs.dev/linter/rules/no-empty-pattern) | Disallows empty destructuring patterns. |  |
-| [`noFlatMapIdentity`](https://biomejs.dev/linter/rules/no-flat-map-identity) | Disallow to use unnecessary callback on flatMap. |  |
+| [`noConstantMathMinMaxClamp`](https://biomejs.dev/linter/rules/no-constant-math-min-max-clamp) | Disallow the use of Math\.min and Math\.max to clamp a value where the result itself is constant\. |  |
+| [`noConstAssign`](https://biomejs.dev/linter/rules/no-const-assign) | Prevents from having const variables being re\-assigned\. |  |
+| [`noConstructorReturn`](https://biomejs.dev/linter/rules/no-constructor-return) | Disallow returning a value from a constructor\. |  |
+| [`noEmptyCharacterClassInRegex`](https://biomejs.dev/linter/rules/no-empty-character-class-in-regex) | Disallow empty character classes in regular expression literals\. |  |
+| [`noEmptyPattern`](https://biomejs.dev/linter/rules/no-empty-pattern) | Disallows empty destructuring patterns\. |  |
+| [`noFlatMapIdentity`](https://biomejs.dev/linter/rules/no-flat-map-identity) | Disallow to use unnecessary callback on flatMap\. |  |
 | [`noGlobalObjectCalls`](https://biomejs.dev/linter/rules/no-global-object-calls) | Disallow calling global object properties as functions |  |
-| [`noInnerDeclarations`](https://biomejs.dev/linter/rules/no-inner-declarations) | Disallow function and var declarations that are accessible outside their block. |  |
-| [`noInvalidBuiltinInstantiation`](https://biomejs.dev/linter/rules/no-invalid-builtin-instantiation) | Ensure that builtins are correctly instantiated. |  |
-| [`noInvalidConstructorSuper`](https://biomejs.dev/linter/rules/no-invalid-constructor-super) | Prevents the incorrect use of super() inside classes. It also checks whether a call super() is missing from classes that extends other constructors. |  |
-| [`noInvalidDirectionInLinearGradient`](https://biomejs.dev/linter/rules/no-invalid-direction-in-linear-gradient) | Disallow non-standard direction values for linear gradient functions. |  |
-| [`noInvalidGridAreas`](https://biomejs.dev/linter/rules/no-invalid-grid-areas) | Disallows invalid named grid areas in CSS Grid Layouts. |  |
-| [`noInvalidNewBuiltin`](https://biomejs.dev/linter/rules/no-invalid-new-builtin) | Disallow new operators with global non-constructor functions. |  |
-| [`noInvalidPositionAtImportRule`](https://biomejs.dev/linter/rules/no-invalid-position-at-import-rule) | Disallow the use of @import at-rules in invalid positions. |  |
+| [`noInnerDeclarations`](https://biomejs.dev/linter/rules/no-inner-declarations) | Disallow function and var declarations that are accessible outside their block\. |  |
+| [`noInvalidBuiltinInstantiation`](https://biomejs.dev/linter/rules/no-invalid-builtin-instantiation) | Ensure that builtins are correctly instantiated\. |  |
+| [`noInvalidConstructorSuper`](https://biomejs.dev/linter/rules/no-invalid-constructor-super) | Prevents the incorrect use of super\(\) inside classes\. It also checks whether a call super\(\) is missing from classes that extends other constructors\. |  |
+| [`noInvalidDirectionInLinearGradient`](https://biomejs.dev/linter/rules/no-invalid-direction-in-linear-gradient) | Disallow non\-standard direction values for linear gradient functions\. |  |
+| [`noInvalidGridAreas`](https://biomejs.dev/linter/rules/no-invalid-grid-areas) | Disallows invalid named grid areas in CSS Grid Layouts\. |  |
+| [`noInvalidNewBuiltin`](https://biomejs.dev/linter/rules/no-invalid-new-builtin) | Disallow new operators with global non\-constructor functions\. |  |
+| [`noInvalidPositionAtImportRule`](https://biomejs.dev/linter/rules/no-invalid-position-at-import-rule) | Disallow the use of @import at\-rules in invalid positions\. |  |
 | [`noInvalidUseBeforeDeclaration`](https://biomejs.dev/linter/rules/no-invalid-use-before-declaration) | Disallow the use of variables and function parameters before their declaration |  |
-| [`noNewSymbol`](https://biomejs.dev/linter/rules/no-new-symbol) | Disallow new operators with the Symbol object. |  |
-| [`noNonoctalDecimalEscape`](https://biomejs.dev/linter/rules/no-nonoctal-decimal-escape) | Disallow \8 and \9 escape sequences in string literals. |  |
+| [`noNewSymbol`](https://biomejs.dev/linter/rules/no-new-symbol) | Disallow new operators with the Symbol object\. |  |
+| [`noNonoctalDecimalEscape`](https://biomejs.dev/linter/rules/no-nonoctal-decimal-escape) | Disallow \8 and \9 escape sequences in string literals\. |  |
 | [`noPrecisionLoss`](https://biomejs.dev/linter/rules/no-precision-loss) | Disallow literal numbers that lose precision |  |
-| [`noRenderReturnValue`](https://biomejs.dev/linter/rules/no-render-return-value) | Prevent the usage of the return value of React.render. |  |
-| [`noSelfAssign`](https://biomejs.dev/linter/rules/no-self-assign) | Disallow assignments where both sides are exactly the same. |  |
+| [`noRenderReturnValue`](https://biomejs.dev/linter/rules/no-render-return-value) | Prevent the usage of the return value of React\.render\. |  |
+| [`noSelfAssign`](https://biomejs.dev/linter/rules/no-self-assign) | Disallow assignments where both sides are exactly the same\. |  |
 | [`noSetterReturn`](https://biomejs.dev/linter/rules/no-setter-return) | Disallow returning a value from a setter |  |
-| [`noStringCaseMismatch`](https://biomejs.dev/linter/rules/no-string-case-mismatch) | Disallow comparison of expressions modifying the string case with non-compliant value. |  |
-| [`noSwitchDeclarations`](https://biomejs.dev/linter/rules/no-switch-declarations) | Disallow lexical declarations in switch clauses. |  |
-| [`noUndeclaredDependencies`](https://biomejs.dev/linter/rules/no-undeclared-dependencies) | Disallow the use of dependencies that aren’t specified in the package.json. |  |
-| [`noUndeclaredVariables`](https://biomejs.dev/linter/rules/no-undeclared-variables) | Prevents the usage of variables that haven’t been declared inside the document. |  |
-| [`noUnknownFunction`](https://biomejs.dev/linter/rules/no-unknown-function) | Disallow unknown CSS value functions. |  |
-| [`noUnknownMediaFeatureName`](https://biomejs.dev/linter/rules/no-unknown-media-feature-name) | Disallow unknown media feature names. |  |
-| [`noUnknownProperty`](https://biomejs.dev/linter/rules/no-unknown-property) | Disallow unknown properties. |  |
-| [`noUnknownUnit`](https://biomejs.dev/linter/rules/no-unknown-unit) | Disallow unknown CSS units. |  |
-| [`noUnmatchableAnbSelector`](https://biomejs.dev/linter/rules/no-unmatchable-anb-selector) | Disallow unmatchable An+B selectors. |  |
-| [`noUnnecessaryContinue`](https://biomejs.dev/linter/rules/no-unnecessary-continue) | Avoid using unnecessary continue. |  |
+| [`noStringCaseMismatch`](https://biomejs.dev/linter/rules/no-string-case-mismatch) | Disallow comparison of expressions modifying the string case with non\-compliant value\. |  |
+| [`noSwitchDeclarations`](https://biomejs.dev/linter/rules/no-switch-declarations) | Disallow lexical declarations in switch clauses\. |  |
+| [`noUndeclaredDependencies`](https://biomejs.dev/linter/rules/no-undeclared-dependencies) | Disallow the use of dependencies that aren’t specified in the package\.json\. |  |
+| [`noUndeclaredVariables`](https://biomejs.dev/linter/rules/no-undeclared-variables) | Prevents the usage of variables that haven’t been declared inside the document\. |  |
+| [`noUnknownFunction`](https://biomejs.dev/linter/rules/no-unknown-function) | Disallow unknown CSS value functions\. |  |
+| [`noUnknownMediaFeatureName`](https://biomejs.dev/linter/rules/no-unknown-media-feature-name) | Disallow unknown media feature names\. |  |
+| [`noUnknownProperty`](https://biomejs.dev/linter/rules/no-unknown-property) | Disallow unknown properties\. |  |
+| [`noUnknownUnit`](https://biomejs.dev/linter/rules/no-unknown-unit) | Disallow unknown CSS units\. |  |
+| [`noUnmatchableAnbSelector`](https://biomejs.dev/linter/rules/no-unmatchable-anb-selector) | Disallow unmatchable An\+B selectors\. |  |
+| [`noUnnecessaryContinue`](https://biomejs.dev/linter/rules/no-unnecessary-continue) | Avoid using unnecessary continue\. |  |
 | [`noUnreachable`](https://biomejs.dev/linter/rules/no-unreachable) | Disallow unreachable code |  |
-| [`noUnreachableSuper`](https://biomejs.dev/linter/rules/no-unreachable-super) | Ensures the super() constructor is called exactly once on every code  path in a class constructor before this is accessed if the class has a superclass |  |
-| [`noUnsafeFinally`](https://biomejs.dev/linter/rules/no-unsafe-finally) | Disallow control flow statements in finally blocks. |  |
-| [`noUnsafeOptionalChaining`](https://biomejs.dev/linter/rules/no-unsafe-optional-chaining) | Disallow the use of optional chaining in contexts where the undefined value is not allowed. |  |
-| [`noUnusedFunctionParameters`](https://biomejs.dev/linter/rules/no-unused-function-parameters) | Disallow unused function parameters. |  |
-| [`noUnusedImports`](https://biomejs.dev/linter/rules/no-unused-imports) | Disallow unused imports. |  |
-| [`noUnusedLabels`](https://biomejs.dev/linter/rules/no-unused-labels) | Disallow unused labels. |  |
+| [`noUnreachableSuper`](https://biomejs.dev/linter/rules/no-unreachable-super) | Ensures the super\(\) constructor is called exactly once on every code  path in a class constructor before this is accessed if the class has a superclass |  |
+| [`noUnsafeFinally`](https://biomejs.dev/linter/rules/no-unsafe-finally) | Disallow control flow statements in finally blocks\. |  |
+| [`noUnsafeOptionalChaining`](https://biomejs.dev/linter/rules/no-unsafe-optional-chaining) | Disallow the use of optional chaining in contexts where the undefined value is not allowed\. |  |
+| [`noUnusedFunctionParameters`](https://biomejs.dev/linter/rules/no-unused-function-parameters) | Disallow unused function parameters\. |  |
+| [`noUnusedImports`](https://biomejs.dev/linter/rules/no-unused-imports) | Disallow unused imports\. |  |
+| [`noUnusedLabels`](https://biomejs.dev/linter/rules/no-unused-labels) | Disallow unused labels\. |  |
 | [`noUnusedPrivateClassMembers`](https://biomejs.dev/linter/rules/no-unused-private-class-members) | Disallow unused private class members |  |
-| [`noUnusedVariables`](https://biomejs.dev/linter/rules/no-unused-variables) | Disallow unused variables. |  |
-| [`noVoidElementsWithChildren`](https://biomejs.dev/linter/rules/no-void-elements-with-children) | This rules prevents void elements (AKA self-closing elements) from having children. |  |
+| [`noUnusedVariables`](https://biomejs.dev/linter/rules/no-unused-variables) | Disallow unused variables\. |  |
+| [`noVoidElementsWithChildren`](https://biomejs.dev/linter/rules/no-void-elements-with-children) | This rules prevents void elements \(AKA self\-closing elements\) from having children\. |  |
 | [`noVoidTypeReturn`](https://biomejs.dev/linter/rules/no-void-type-return) | Disallow returning a value from a function with the return type ‘void’ |  |
-| [`useArrayLiterals`](https://biomejs.dev/linter/rules/use-array-literals) | Disallow Array constructors. |  |
-| [`useExhaustiveDependencies`](https://biomejs.dev/linter/rules/use-exhaustive-dependencies) | Enforce all dependencies are correctly specified in a React hook. |  |
-| [`useHookAtTopLevel`](https://biomejs.dev/linter/rules/use-hook-at-top-level) | Enforce that all React hooks are being called from the Top Level component functions. |  |
-| [`useImportExtensions`](https://biomejs.dev/linter/rules/use-import-extensions) | Enforce file extensions for relative imports. |  |
-| [`useIsNan`](https://biomejs.dev/linter/rules/use-is-nan) | Require calls to isNaN() when checking for NaN. |  |
-| [`useJsxKeyInIterable`](https://biomejs.dev/linter/rules/use-jsx-key-in-iterable) | Disallow missing key props in iterators/collection literals. |  |
-| [`useValidForDirection`](https://biomejs.dev/linter/rules/use-valid-for-direction) | Enforce “for” loop update clause moving the counter in the right direction. |  |
-| [`useYield`](https://biomejs.dev/linter/rules/use-yield) | Require generator functions to contain yield. |  |
+| [`useArrayLiterals`](https://biomejs.dev/linter/rules/use-array-literals) | Disallow Array constructors\. |  |
+| [`useExhaustiveDependencies`](https://biomejs.dev/linter/rules/use-exhaustive-dependencies) | Enforce all dependencies are correctly specified in a React hook\. |  |
+| [`useHookAtTopLevel`](https://biomejs.dev/linter/rules/use-hook-at-top-level) | Enforce that all React hooks are being called from the Top Level component functions\. |  |
+| [`useImportExtensions`](https://biomejs.dev/linter/rules/use-import-extensions) | Enforce file extensions for relative imports\. |  |
+| [`useIsNan`](https://biomejs.dev/linter/rules/use-is-nan) | Require calls to isNaN\(\) when checking for NaN\. |  |
+| [`useJsxKeyInIterable`](https://biomejs.dev/linter/rules/use-jsx-key-in-iterable) | Disallow missing key props in iterators/collection literals\. |  |
+| [`useValidForDirection`](https://biomejs.dev/linter/rules/use-valid-for-direction) | Enforce “for” loop update clause moving the counter in the right direction\. |  |
+| [`useYield`](https://biomejs.dev/linter/rules/use-yield) | Require generator functions to contain yield\. |  |
 
 ---
 
@@ -192,7 +192,7 @@ Newer rules that are still being refined based on community feedback.
 
 | Rule | Description | Options |
 | ---- | ----------- | ------- |
-| [`useExplicitType`](https://biomejs.dev/linter/rules/use-explicit-type) | Require explicit return types on functions and class methods. |  |
+| [`useExplicitType`](https://biomejs.dev/linter/rules/use-explicit-type) | Require explicit return types on functions and class methods\. |  |
 
 ---
 
@@ -202,11 +202,11 @@ Rules in this category help improve application and runtime performance.
 
 | Rule | Description | Options |
 | ---- | ----------- | ------- |
-| [`noAccumulatingSpread`](https://biomejs.dev/linter/rules/no-accumulating-spread) | Disallow the use of spread (...) syntax on accumulators. |  |
-| [`noBarrelFile`](https://biomejs.dev/linter/rules/no-barrel-file) | Disallow the use of barrel file. |  |
-| [`noDelete`](https://biomejs.dev/linter/rules/no-delete) | Disallow the use of the delete operator. |  |
-| [`noReExportAll`](https://biomejs.dev/linter/rules/no-re-export-all) | Avoid re-export all. |  |
-| [`useTopLevelRegex`](https://biomejs.dev/linter/rules/use-top-level-regex) | Require regex literals to be declared at the top level. |  |
+| [`noAccumulatingSpread`](https://biomejs.dev/linter/rules/no-accumulating-spread) | Disallow the use of spread \(\.\.\.\) syntax on accumulators\. |  |
+| [`noBarrelFile`](https://biomejs.dev/linter/rules/no-barrel-file) | Disallow the use of barrel file\. |  |
+| [`noDelete`](https://biomejs.dev/linter/rules/no-delete) | Disallow the use of the delete operator\. |  |
+| [`noReExportAll`](https://biomejs.dev/linter/rules/no-re-export-all) | Avoid re\-export all\. |  |
+| [`useTopLevelRegex`](https://biomejs.dev/linter/rules/use-top-level-regex) | Require regex literals to be declared at the top level\. |  |
 
 ---
 
@@ -217,8 +217,8 @@ Rules in this category identify security vulnerabilities that could be exploited
 | Rule | Description | Options |
 | ---- | ----------- | ------- |
 | [`noDangerouslySetInnerHtml`](https://biomejs.dev/linter/rules/no-dangerously-set-inner-html/) | Prevent the usage of dangerous JSX props |  |
-| [`noDangerouslySetInnerHtmlWithChildren`](https://biomejs.dev/linter/rules/no-dangerously-set-inner-html-with-children) | Report when a DOM element or a component uses both children and dangerouslySetInnerHTML prop. |  |
-| [`noGlobalEval`](https://biomejs.dev/linter/rules/no-global-eval) | Disallow the use of global eval(). |  |
+| [`noDangerouslySetInnerHtmlWithChildren`](https://biomejs.dev/linter/rules/no-dangerously-set-inner-html-with-children) | Report when a DOM element or a component uses both children and dangerouslySetInnerHTML prop\. |  |
+| [`noGlobalEval`](https://biomejs.dev/linter/rules/no-global-eval) | Disallow the use of global eval\(\)\. |  |
 
 ---
 
@@ -228,54 +228,54 @@ Rules in this category enforce consistent code style and patterns.
 
 | Rule | Description | Options |
 | ---- | ----------- | ------- |
-| [`noArguments`](https://biomejs.dev/linter/rules/no-arguments) | Disallow the use of arguments. |  |
-| [`noCommaOperator`](https://biomejs.dev/linter/rules/no-comma-operator) | Disallow comma operator. |  |
-| [`noDefaultExport`](https://biomejs.dev/linter/rules/no-default-export) | Disallow default exports. |  |
-| [`noDoneCallback`](https://biomejs.dev/linter/rules/no-done-callback) | Disallow using a callback in asynchronous tests and hooks. |  |
-| [`noInferrableTypes`](https://biomejs.dev/linter/rules/no-inferrable-types) | Disallow type annotations for variables, parameters, and class properties initialized with a literal expression. |  |
-| [`noNamespace`](https://biomejs.dev/linter/rules/no-namespace) | Disallow the use of TypeScript’s namespaces. |  |
-| [`noNamespaceImport`](https://biomejs.dev/linter/rules/no-namespace-import) | Disallow the use of namespace imports. |  |
-| [`noNegationElse`](https://biomejs.dev/linter/rules/no-negation-else) | Disallow negation in the condition of an if statement if it has an else clause. |  |
-| [`noNonNullAssertion`](https://biomejs.dev/linter/rules/no-non-null-assertion) | Disallow non-null assertions using the ! postfix operator. |  |
-| [`noParameterAssign`](https://biomejs.dev/linter/rules/no-parameter-assign) | Disallow reassigning function parameters. |  |
-| [`noParameterProperties`](https://biomejs.dev/linter/rules/no-parameter-properties) | Disallow the use of parameter properties in class constructors. |  |
-| [`noRestrictedGlobals`](https://biomejs.dev/linter/rules/no-restricted-globals) | This rule allows you to specify global variable names that you don’t want to use in your application. |  |
-| [`noShoutyConstants`](https://biomejs.dev/linter/rules/no-shouty-constants) | Disallow the use of constants which its value is the upper-case version of its name. |  |
-| [`noUnusedTemplateLiteral`](https://biomejs.dev/linter/rules/no-unused-template-literal) | Disallow template literals if interpolation and special-character handling are not needed |  |
-| [`noUselessElse`](https://biomejs.dev/linter/rules/no-useless-else) | Disallow else block when the if block breaks early. |  |
+| [`noArguments`](https://biomejs.dev/linter/rules/no-arguments) | Disallow the use of arguments\. |  |
+| [`noCommaOperator`](https://biomejs.dev/linter/rules/no-comma-operator) | Disallow comma operator\. |  |
+| [`noDefaultExport`](https://biomejs.dev/linter/rules/no-default-export) | Disallow default exports\. |  |
+| [`noDoneCallback`](https://biomejs.dev/linter/rules/no-done-callback) | Disallow using a callback in asynchronous tests and hooks\. |  |
+| [`noInferrableTypes`](https://biomejs.dev/linter/rules/no-inferrable-types) | Disallow type annotations for variables, parameters, and class properties initialized with a literal expression\. |  |
+| [`noNamespace`](https://biomejs.dev/linter/rules/no-namespace) | Disallow the use of TypeScript’s namespaces\. |  |
+| [`noNamespaceImport`](https://biomejs.dev/linter/rules/no-namespace-import) | Disallow the use of namespace imports\. |  |
+| [`noNegationElse`](https://biomejs.dev/linter/rules/no-negation-else) | Disallow negation in the condition of an if statement if it has an else clause\. |  |
+| [`noNonNullAssertion`](https://biomejs.dev/linter/rules/no-non-null-assertion) | Disallow non\-null assertions using the \! postfix operator\. |  |
+| [`noParameterAssign`](https://biomejs.dev/linter/rules/no-parameter-assign) | Disallow reassigning function parameters\. |  |
+| [`noParameterProperties`](https://biomejs.dev/linter/rules/no-parameter-properties) | Disallow the use of parameter properties in class constructors\. |  |
+| [`noRestrictedGlobals`](https://biomejs.dev/linter/rules/no-restricted-globals) | This rule allows you to specify global variable names that you don’t want to use in your application\. |  |
+| [`noShoutyConstants`](https://biomejs.dev/linter/rules/no-shouty-constants) | Disallow the use of constants which its value is the upper\-case version of its name\. |  |
+| [`noUnusedTemplateLiteral`](https://biomejs.dev/linter/rules/no-unused-template-literal) | Disallow template literals if interpolation and special\-character handling are not needed |  |
+| [`noUselessElse`](https://biomejs.dev/linter/rules/no-useless-else) | Disallow else block when the if block breaks early\. |  |
 | [`noVar`](https://biomejs.dev/linter/rules/no-var) | Disallow the use of var |  |
-| [`noYodaExpression`](https://biomejs.dev/linter/rules/no-yoda-expression) | Disallow the use of yoda expressions. |  |
-| [`useAsConstAssertion`](https://biomejs.dev/linter/rules/use-as-const-assertion) | Enforce the use of as const over literal type and type annotation. |  |
-| [`useBlockStatements`](https://biomejs.dev/linter/rules/use-block-statements) | Requires following curly brace conventions. |  |
-| [`useCollapsedElseIf`](https://biomejs.dev/linter/rules/use-collapsed-else-if) | Enforce using else if instead of nested if in else clauses. |  |
-| [`useConsistentArrayType`](https://biomejs.dev/linter/rules/use-consistent-array-type) | Require consistently using either T[] or Array<T> |  |
-| [`useConsistentBuiltinInstantiation`](https://biomejs.dev/linter/rules/use-consistent-builtin-instantiation) | Enforce the use of new for all builtins, except String, Number and Boolean. |  |
-| [`useConst`](https://biomejs.dev/linter/rules/use-const) | Require const declarations for variables that are only assigned once. |  |
-| [`useDefaultParameterLast`](https://biomejs.dev/linter/rules/use-default-parameter-last) | Enforce default function parameters and optional function parameters to be last. |  |
-| [`useDefaultSwitchClause`](https://biomejs.dev/linter/rules/use-default-switch-clause) | Require the default clause in switch statements. |  |
-| [`useEnumInitializers`](https://biomejs.dev/linter/rules/use-enum-initializers) | Require that each enum member value be explicitly initialized. |  |
-| [`useExplicitLengthCheck`](https://biomejs.dev/linter/rules/use-explicit-length-check) | Enforce explicitly comparing the length, size, byteLength or byteOffset property of a value. |  |
-| [`useExponentiationOperator`](https://biomejs.dev/linter/rules/use-exponentiation-operator) | Disallow the use of Math.pow in favor of the ** operator. |  |
-| [`useExportType`](https://biomejs.dev/linter/rules/use-export-type) | Promotes the use of export type for types. |  |
-| [`useFilenamingConvention`](https://biomejs.dev/linter/rules/use-filenaming-convention) | Enforce naming conventions for JavaScript and TypeScript filenames. |  |
-| [`useForOf`](https://biomejs.dev/linter/rules/use-for-of) | This rule recommends a for-of loop when in a for loop, the index used to extract an item from the iterated array. |  |
-| [`useFragmentSyntax`](https://biomejs.dev/linter/rules/use-fragment-syntax) | This rule enforces the use of <>...</> over <Fragment>...</Fragment>. |  |
-| [`useImportType`](https://biomejs.dev/linter/rules/use-import-type) | Promotes the use of import type for types. |  |
-| [`useLiteralEnumMembers`](https://biomejs.dev/linter/rules/use-literal-enum-members) | Require all enum members to be literal values. |  |
-| [`useNodeAssertStrict`](https://biomejs.dev/linter/rules/use-node-assert-strict) | Promotes the usage of node:assert/strict over node:assert. |  |
-| [`useNodejsImportProtocol`](https://biomejs.dev/linter/rules/use-nodejs-import-protocol) | Enforces using the node: protocol for Node.js builtin modules. |  |
-| [`useNumberNamespace`](https://biomejs.dev/linter/rules/use-number-namespace) | Use the Number properties instead of global ones. |  |
-| [`useNumericLiterals`](https://biomejs.dev/linter/rules/use-numeric-literals) | Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals |  |
+| [`noYodaExpression`](https://biomejs.dev/linter/rules/no-yoda-expression) | Disallow the use of yoda expressions\. |  |
+| [`useAsConstAssertion`](https://biomejs.dev/linter/rules/use-as-const-assertion) | Enforce the use of as const over literal type and type annotation\. |  |
+| [`useBlockStatements`](https://biomejs.dev/linter/rules/use-block-statements) | Requires following curly brace conventions\. |  |
+| [`useCollapsedElseIf`](https://biomejs.dev/linter/rules/use-collapsed-else-if) | Enforce using else if instead of nested if in else clauses\. |  |
+| [`useConsistentArrayType`](https://biomejs.dev/linter/rules/use-consistent-array-type) | Require consistently using either T\[\] or Array\<T\> |  |
+| [`useConsistentBuiltinInstantiation`](https://biomejs.dev/linter/rules/use-consistent-builtin-instantiation) | Enforce the use of new for all builtins, except String, Number and Boolean\. |  |
+| [`useConst`](https://biomejs.dev/linter/rules/use-const) | Require const declarations for variables that are only assigned once\. |  |
+| [`useDefaultParameterLast`](https://biomejs.dev/linter/rules/use-default-parameter-last) | Enforce default function parameters and optional function parameters to be last\. |  |
+| [`useDefaultSwitchClause`](https://biomejs.dev/linter/rules/use-default-switch-clause) | Require the default clause in switch statements\. |  |
+| [`useEnumInitializers`](https://biomejs.dev/linter/rules/use-enum-initializers) | Require that each enum member value be explicitly initialized\. |  |
+| [`useExplicitLengthCheck`](https://biomejs.dev/linter/rules/use-explicit-length-check) | Enforce explicitly comparing the length, size, byteLength or byteOffset property of a value\. |  |
+| [`useExponentiationOperator`](https://biomejs.dev/linter/rules/use-exponentiation-operator) | Disallow the use of Math\.pow in favor of the \*\* operator\. |  |
+| [`useExportType`](https://biomejs.dev/linter/rules/use-export-type) | Promotes the use of export type for types\. |  |
+| [`useFilenamingConvention`](https://biomejs.dev/linter/rules/use-filenaming-convention) | Enforce naming conventions for JavaScript and TypeScript filenames\. |  |
+| [`useForOf`](https://biomejs.dev/linter/rules/use-for-of) | This rule recommends a for\-of loop when in a for loop, the index used to extract an item from the iterated array\. |  |
+| [`useFragmentSyntax`](https://biomejs.dev/linter/rules/use-fragment-syntax) | This rule enforces the use of \<\>\.\.\.\</\> over \<Fragment\>\.\.\.\</Fragment\>\. |  |
+| [`useImportType`](https://biomejs.dev/linter/rules/use-import-type) | Promotes the use of import type for types\. |  |
+| [`useLiteralEnumMembers`](https://biomejs.dev/linter/rules/use-literal-enum-members) | Require all enum members to be literal values\. |  |
+| [`useNodeAssertStrict`](https://biomejs.dev/linter/rules/use-node-assert-strict) | Promotes the usage of node:assert/strict over node:assert\. |  |
+| [`useNodejsImportProtocol`](https://biomejs.dev/linter/rules/use-nodejs-import-protocol) | Enforces using the node: protocol for Node\.js builtin modules\. |  |
+| [`useNumberNamespace`](https://biomejs.dev/linter/rules/use-number-namespace) | Use the Number properties instead of global ones\. |  |
+| [`useNumericLiterals`](https://biomejs.dev/linter/rules/use-numeric-literals) | Disallow parseInt\(\) and Number\.parseInt\(\) in favor of binary, octal, and hexadecimal literals |  |
 | [`useSelfClosingElements`](https://biomejs.dev/linter/rules/use-self-closing-elements) | Prevent extra closing tags for components without children |  |
-| [`useShorthandArrayType`](https://biomejs.dev/linter/rules/use-shorthand-array-type) | When expressing array types, this rule promotes the usage of T[] shorthand instead of Array<T>. |  |
-| [`useShorthandAssign`](https://biomejs.dev/linter/rules/use-shorthand-assign) | Require assignment operator shorthand where possible. |  |
-| [`useShorthandFunctionType`](https://biomejs.dev/linter/rules/use-shorthand-function-type) | Enforce using function types instead of object type with call signatures. |  |
-| [`useSingleCaseStatement`](https://biomejs.dev/linter/rules/use-single-case-statement) | Enforces switch clauses have a single statement, emits a quick fix wrapping the statements in a block. |  |
+| [`useShorthandArrayType`](https://biomejs.dev/linter/rules/use-shorthand-array-type) | When expressing array types, this rule promotes the usage of T\[\] shorthand instead of Array\<T\>\. |  |
+| [`useShorthandAssign`](https://biomejs.dev/linter/rules/use-shorthand-assign) | Require assignment operator shorthand where possible\. |  |
+| [`useShorthandFunctionType`](https://biomejs.dev/linter/rules/use-shorthand-function-type) | Enforce using function types instead of object type with call signatures\. |  |
+| [`useSingleCaseStatement`](https://biomejs.dev/linter/rules/use-single-case-statement) | Enforces switch clauses have a single statement, emits a quick fix wrapping the statements in a block\. |  |
 | [`useSingleVarDeclarator`](https://biomejs.dev/linter/rules/use-single-var-declarator) | Disallow multiple variable declarations in the same variable statement |  |
-| [`useTemplate`](https://biomejs.dev/linter/rules/use-template) | Prefer template literals over string concatenation. |  |
-| [`useThrowNewError`](https://biomejs.dev/linter/rules/use-throw-new-error) | Require new when throwing an error. |  |
-| [`useThrowOnlyError`](https://biomejs.dev/linter/rules/use-throw-only-error) | Disallow throwing non-Error values. |  |
-| [`useWhile`](https://biomejs.dev/linter/rules/use-while) | Enforce the use of while loops instead of for loops when the initializer and update expressions are not needed. |  |
+| [`useTemplate`](https://biomejs.dev/linter/rules/use-template) | Prefer template literals over string concatenation\. |  |
+| [`useThrowNewError`](https://biomejs.dev/linter/rules/use-throw-new-error) | Require new when throwing an error\. |  |
+| [`useThrowOnlyError`](https://biomejs.dev/linter/rules/use-throw-only-error) | Disallow throwing non\-Error values\. |  |
+| [`useWhile`](https://biomejs.dev/linter/rules/use-while) | Enforce the use of while loops instead of for loops when the initializer and update expressions are not needed\. |  |
 
 ---
 
@@ -285,72 +285,72 @@ Rules in this category identify potentially problematic code patterns.
 
 | Rule | Description | Options |
 | ---- | ----------- | ------- |
-| [`noApproximativeNumericConstant`](https://biomejs.dev/linter/rules/no-approximative-numeric-constant) | Use standard constants instead of approximated literals. |  |
-| [`noArrayIndexKey`](https://biomejs.dev/linter/rules/no-array-index-key) | Discourage the usage of Array index in keys. |  |
-| [`noAssignInExpressions`](https://biomejs.dev/linter/rules/no-assign-in-expressions) | Disallow assignments in expressions. |  |
-| [`noAsyncPromiseExecutor`](https://biomejs.dev/linter/rules/no-async-promise-executor) | Disallows using an async function as a Promise executor. |  |
-| [`noCatchAssign`](https://biomejs.dev/linter/rules/no-catch-assign) | Disallow reassigning exceptions in catch clauses. |  |
-| [`noClassAssign`](https://biomejs.dev/linter/rules/no-class-assign) | Disallow reassigning class members. |  |
+| [`noApproximativeNumericConstant`](https://biomejs.dev/linter/rules/no-approximative-numeric-constant) | Use standard constants instead of approximated literals\. |  |
+| [`noArrayIndexKey`](https://biomejs.dev/linter/rules/no-array-index-key) | Discourage the usage of Array index in keys\. |  |
+| [`noAssignInExpressions`](https://biomejs.dev/linter/rules/no-assign-in-expressions) | Disallow assignments in expressions\. |  |
+| [`noAsyncPromiseExecutor`](https://biomejs.dev/linter/rules/no-async-promise-executor) | Disallows using an async function as a Promise executor\. |  |
+| [`noCatchAssign`](https://biomejs.dev/linter/rules/no-catch-assign) | Disallow reassigning exceptions in catch clauses\. |  |
+| [`noClassAssign`](https://biomejs.dev/linter/rules/no-class-assign) | Disallow reassigning class members\. |  |
 | [`noCommentText`](https://biomejs.dev/linter/rules/no-comment-text) | Prevent comments from being inserted as text nodes |  |
-| [`noCompareNegZero`](https://biomejs.dev/linter/rules/no-compare-neg-zero) | Disallow comparing against -0 |  |
-| [`noConfusingLabels`](https://biomejs.dev/linter/rules/no-confusing-labels) | Disallow labeled statements that are not loops. |  |
-| [`noConfusingVoidType`](https://biomejs.dev/linter/rules/no-confusing-void-type) | Disallow void type outside of generic or return types. |  |
-| [`noConsole`](https://biomejs.dev/linter/rules/no-console) | Disallow the use of console. |  |
-| [`noConsoleLog`](https://biomejs.dev/linter/rules/no-console-log) | Disallow the use of console.log |  |
+| [`noCompareNegZero`](https://biomejs.dev/linter/rules/no-compare-neg-zero) | Disallow comparing against \-0 |  |
+| [`noConfusingLabels`](https://biomejs.dev/linter/rules/no-confusing-labels) | Disallow labeled statements that are not loops\. |  |
+| [`noConfusingVoidType`](https://biomejs.dev/linter/rules/no-confusing-void-type) | Disallow void type outside of generic or return types\. |  |
+| [`noConsole`](https://biomejs.dev/linter/rules/no-console) | Disallow the use of console\. |  |
+| [`noConsoleLog`](https://biomejs.dev/linter/rules/no-console-log) | Disallow the use of console\.log |  |
 | [`noConstEnum`](https://biomejs.dev/linter/rules/no-const-enum) | Disallow TypeScript const enum |  |
-| [`noControlCharactersInRegex`](https://biomejs.dev/linter/rules/no-control-characters-in-regex) | Prevents from having control characters and some escape sequences that match control characters in regular expressions. |  |
+| [`noControlCharactersInRegex`](https://biomejs.dev/linter/rules/no-control-characters-in-regex) | Prevents from having control characters and some escape sequences that match control characters in regular expressions\. |  |
 | [`noDebugger`](https://biomejs.dev/linter/rules/no-debugger) | Disallow the use of debugger |  |
-| [`noDoubleEquals`](https://biomejs.dev/linter/rules/no-double-equals) | Require the use of === and !==. |  |
-| [`noDuplicateAtImportRules`](https://biomejs.dev/linter/rules/no-duplicate-at-import-rules) | Disallow duplicate @import rules. |  |
-| [`noDuplicateCase`](https://biomejs.dev/linter/rules/no-duplicate-case) | Disallow duplicate case labels. |  |
-| [`noDuplicateClassMembers`](https://biomejs.dev/linter/rules/no-duplicate-class-members) | Disallow duplicate class members. |  |
-| [`noDuplicateFontNames`](https://biomejs.dev/linter/rules/no-duplicate-font-names) | Disallow duplicate names within font families. |  |
-| [`noDuplicateJsxProps`](https://biomejs.dev/linter/rules/no-duplicate-jsx-props) | Prevents JSX properties to be assigned multiple times. |  |
-| [`noDuplicateObjectKeys`](https://biomejs.dev/linter/rules/no-duplicate-object-keys) | Disallow two keys with the same name inside objects. |  |
-| [`noDuplicateParameters`](https://biomejs.dev/linter/rules/no-duplicate-parameters) | Disallow duplicate function parameter name. |  |
-| [`noDuplicateSelectorsKeyframeBlock`](https://biomejs.dev/linter/rules/no-duplicate-selectors-keyframe-block) | Disallow duplicate selectors within keyframe blocks. |  |
-| [`noDuplicateTestHooks`](https://biomejs.dev/linter/rules/no-duplicate-test-hooks) | A describe block should not contain duplicate hooks. |  |
-| [`noEmptyBlock`](https://biomejs.dev/linter/rules/no-empty-block) | Disallow CSS empty blocks. |  |
-| [`noEmptyBlockStatements`](https://biomejs.dev/linter/rules/no-empty-block-statements) | Disallow empty block statements and static blocks. |  |
-| [`noEmptyInterface`](https://biomejs.dev/linter/rules/no-empty-interface) | Disallow the declaration of empty interfaces. |  |
-| [`noEvolvingTypes`](https://biomejs.dev/linter/rules/no-evolving-types) | Disallow variables from evolving into any type through reassignments. |  |
-| [`noExplicitAny`](https://biomejs.dev/linter/rules/no-explicit-any) | Disallow the any type usage. |  |
-| [`noExportsInTest`](https://biomejs.dev/linter/rules/no-exports-in-test) | Disallow using export or module.exports in files containing tests |  |
-| [`noExtraNonNullAssertion`](https://biomejs.dev/linter/rules/no-extra-non-null-assertion) | Prevents the wrong usage of the non-null assertion operator (!) in TypeScript files. |  |
-| [`noFallthroughSwitchClause`](https://biomejs.dev/linter/rules/no-fallthrough-switch-clause) | Disallow fallthrough of switch clauses. |  |
-| [`noFocusedTests`](https://biomejs.dev/linter/rules/no-focused-tests) | Disallow focused tests. |  |
-| [`noFunctionAssign`](https://biomejs.dev/linter/rules/no-function-assign) | Disallow reassigning function declarations. |  |
-| [`noGlobalAssign`](https://biomejs.dev/linter/rules/no-global-assign) | Disallow assignments to native objects and read-only global variables. |  |
-| [`noGlobalIsFinite`](https://biomejs.dev/linter/rules/no-global-is-finite) | Use Number.isFinite instead of global isFinite. |  |
-| [`noGlobalIsNan`](https://biomejs.dev/linter/rules/no-global-is-nan) | Use Number.isNaN instead of global isNaN. |  |
-| [`noImplicitAnyLet`](https://biomejs.dev/linter/rules/no-implicit-any-let) | Disallow use of implicit any type on variable declarations. |  |
-| [`noImportantInKeyframe`](https://biomejs.dev/linter/rules/no-important-in-keyframe) | Disallow invalid !important within keyframe declarations |  |
+| [`noDoubleEquals`](https://biomejs.dev/linter/rules/no-double-equals) | Require the use of === and \!==\. |  |
+| [`noDuplicateAtImportRules`](https://biomejs.dev/linter/rules/no-duplicate-at-import-rules) | Disallow duplicate @import rules\. |  |
+| [`noDuplicateCase`](https://biomejs.dev/linter/rules/no-duplicate-case) | Disallow duplicate case labels\. |  |
+| [`noDuplicateClassMembers`](https://biomejs.dev/linter/rules/no-duplicate-class-members) | Disallow duplicate class members\. |  |
+| [`noDuplicateFontNames`](https://biomejs.dev/linter/rules/no-duplicate-font-names) | Disallow duplicate names within font families\. |  |
+| [`noDuplicateJsxProps`](https://biomejs.dev/linter/rules/no-duplicate-jsx-props) | Prevents JSX properties to be assigned multiple times\. |  |
+| [`noDuplicateObjectKeys`](https://biomejs.dev/linter/rules/no-duplicate-object-keys) | Disallow two keys with the same name inside objects\. |  |
+| [`noDuplicateParameters`](https://biomejs.dev/linter/rules/no-duplicate-parameters) | Disallow duplicate function parameter name\. |  |
+| [`noDuplicateSelectorsKeyframeBlock`](https://biomejs.dev/linter/rules/no-duplicate-selectors-keyframe-block) | Disallow duplicate selectors within keyframe blocks\. |  |
+| [`noDuplicateTestHooks`](https://biomejs.dev/linter/rules/no-duplicate-test-hooks) | A describe block should not contain duplicate hooks\. |  |
+| [`noEmptyBlock`](https://biomejs.dev/linter/rules/no-empty-block) | Disallow CSS empty blocks\. |  |
+| [`noEmptyBlockStatements`](https://biomejs.dev/linter/rules/no-empty-block-statements) | Disallow empty block statements and static blocks\. |  |
+| [`noEmptyInterface`](https://biomejs.dev/linter/rules/no-empty-interface) | Disallow the declaration of empty interfaces\. |  |
+| [`noEvolvingTypes`](https://biomejs.dev/linter/rules/no-evolving-types) | Disallow variables from evolving into any type through reassignments\. |  |
+| [`noExplicitAny`](https://biomejs.dev/linter/rules/no-explicit-any) | Disallow the any type usage\. |  |
+| [`noExportsInTest`](https://biomejs.dev/linter/rules/no-exports-in-test) | Disallow using export or module\.exports in files containing tests |  |
+| [`noExtraNonNullAssertion`](https://biomejs.dev/linter/rules/no-extra-non-null-assertion) | Prevents the wrong usage of the non\-null assertion operator \(\!\) in TypeScript files\. |  |
+| [`noFallthroughSwitchClause`](https://biomejs.dev/linter/rules/no-fallthrough-switch-clause) | Disallow fallthrough of switch clauses\. |  |
+| [`noFocusedTests`](https://biomejs.dev/linter/rules/no-focused-tests) | Disallow focused tests\. |  |
+| [`noFunctionAssign`](https://biomejs.dev/linter/rules/no-function-assign) | Disallow reassigning function declarations\. |  |
+| [`noGlobalAssign`](https://biomejs.dev/linter/rules/no-global-assign) | Disallow assignments to native objects and read\-only global variables\. |  |
+| [`noGlobalIsFinite`](https://biomejs.dev/linter/rules/no-global-is-finite) | Use Number\.isFinite instead of global isFinite\. |  |
+| [`noGlobalIsNan`](https://biomejs.dev/linter/rules/no-global-is-nan) | Use Number\.isNaN instead of global isNaN\. |  |
+| [`noImplicitAnyLet`](https://biomejs.dev/linter/rules/no-implicit-any-let) | Disallow use of implicit any type on variable declarations\. |  |
+| [`noImportantInKeyframe`](https://biomejs.dev/linter/rules/no-important-in-keyframe) | Disallow invalid \!important within keyframe declarations |  |
 | [`noImportAssign`](https://biomejs.dev/linter/rules/no-import-assign) | Disallow assigning to imported bindings |  |
 | [`noLabelVar`](https://biomejs.dev/linter/rules/no-label-var) | Disallow labels that share a name with a variable |  |
-| [`noMisleadingCharacterClass`](https://biomejs.dev/linter/rules/no-misleading-character-class) | Disallow characters made with multiple code points in character class syntax. |  |
-| [`noMisleadingInstantiator`](https://biomejs.dev/linter/rules/no-misleading-instantiator) | Enforce proper usage of new and constructor. |  |
-| [`noMisplacedAssertion`](https://biomejs.dev/linter/rules/no-misplaced-assertion) | Checks that the assertion function, for example expect, is placed inside an it() function call. |  |
-| [`noMisrefactoredShorthandAssign`](https://biomejs.dev/linter/rules/no-misrefactored-shorthand-assign) | Disallow shorthand assign when variable appears on both sides. |  |
-| [`noPrototypeBuiltins`](https://biomejs.dev/linter/rules/no-prototype-builtins) | Disallow direct use of Object.prototype builtins. |  |
-| [`noReactSpecificProps`](https://biomejs.dev/linter/rules/no-react-specific-props) | Prevents React-specific JSX properties from being used. |  |
-| [`noRedeclare`](https://biomejs.dev/linter/rules/no-redeclare) | Disallow variable, function, class, and type redeclarations in the same scope. |  |
-| [`noRedundantUseStrict`](https://biomejs.dev/linter/rules/no-redundant-use-strict) | Prevents from having redundant "use strict". |  |
-| [`noSelfCompare`](https://biomejs.dev/linter/rules/no-self-compare) | Disallow comparisons where both sides are exactly the same. |  |
-| [`noShadowRestrictedNames`](https://biomejs.dev/linter/rules/no-shadow-restricted-names) | Disallow identifiers from shadowing restricted names. |  |
-| [`noShorthandPropertyOverrides`](https://biomejs.dev/linter/rules/no-shorthand-property-overrides) | Disallow shorthand properties that override related longhand properties. |  |
-| [`noSkippedTests`](https://biomejs.dev/linter/rules/no-skipped-tests) | Disallow disabled tests. |  |
+| [`noMisleadingCharacterClass`](https://biomejs.dev/linter/rules/no-misleading-character-class) | Disallow characters made with multiple code points in character class syntax\. |  |
+| [`noMisleadingInstantiator`](https://biomejs.dev/linter/rules/no-misleading-instantiator) | Enforce proper usage of new and constructor\. |  |
+| [`noMisplacedAssertion`](https://biomejs.dev/linter/rules/no-misplaced-assertion) | Checks that the assertion function, for example expect, is placed inside an it\(\) function call\. |  |
+| [`noMisrefactoredShorthandAssign`](https://biomejs.dev/linter/rules/no-misrefactored-shorthand-assign) | Disallow shorthand assign when variable appears on both sides\. |  |
+| [`noPrototypeBuiltins`](https://biomejs.dev/linter/rules/no-prototype-builtins) | Disallow direct use of Object\.prototype builtins\. |  |
+| [`noReactSpecificProps`](https://biomejs.dev/linter/rules/no-react-specific-props) | Prevents React\-specific JSX properties from being used\. |  |
+| [`noRedeclare`](https://biomejs.dev/linter/rules/no-redeclare) | Disallow variable, function, class, and type redeclarations in the same scope\. |  |
+| [`noRedundantUseStrict`](https://biomejs.dev/linter/rules/no-redundant-use-strict) | Prevents from having redundant "use strict"\. |  |
+| [`noSelfCompare`](https://biomejs.dev/linter/rules/no-self-compare) | Disallow comparisons where both sides are exactly the same\. |  |
+| [`noShadowRestrictedNames`](https://biomejs.dev/linter/rules/no-shadow-restricted-names) | Disallow identifiers from shadowing restricted names\. |  |
+| [`noShorthandPropertyOverrides`](https://biomejs.dev/linter/rules/no-shorthand-property-overrides) | Disallow shorthand properties that override related longhand properties\. |  |
+| [`noSkippedTests`](https://biomejs.dev/linter/rules/no-skipped-tests) | Disallow disabled tests\. |  |
 | [`noSparseArray`](https://biomejs.dev/linter/rules/no-sparse-array) | Disallow sparse arrays |  |
-| [`noSuspiciousSemicolonInJsx`](https://biomejs.dev/linter/rules/no-suspicious-semicolon-in-jsx) | It detects possible “wrong” semicolons inside JSX elements. |  |
-| [`noThenProperty`](https://biomejs.dev/linter/rules/no-then-property) | Disallow then property. |  |
-| [`noUnsafeDeclarationMerging`](https://biomejs.dev/linter/rules/no-unsafe-declaration-merging) | Disallow unsafe declaration merging between interfaces and classes. |  |
-| [`noUnsafeNegation`](https://biomejs.dev/linter/rules/no-unsafe-negation) | Disallow using unsafe negation. |  |
-| [`useAwait`](https://biomejs.dev/linter/rules/use-await) | Ensure async functions utilize await. |  |
+| [`noSuspiciousSemicolonInJsx`](https://biomejs.dev/linter/rules/no-suspicious-semicolon-in-jsx) | It detects possible “wrong” semicolons inside JSX elements\. |  |
+| [`noThenProperty`](https://biomejs.dev/linter/rules/no-then-property) | Disallow then property\. |  |
+| [`noUnsafeDeclarationMerging`](https://biomejs.dev/linter/rules/no-unsafe-declaration-merging) | Disallow unsafe declaration merging between interfaces and classes\. |  |
+| [`noUnsafeNegation`](https://biomejs.dev/linter/rules/no-unsafe-negation) | Disallow using unsafe negation\. |  |
+| [`useAwait`](https://biomejs.dev/linter/rules/use-await) | Ensure async functions utilize await\. |  |
 | [`useDefaultSwitchClauseLast`](https://biomejs.dev/linter/rules/use-default-switch-clause-last) | Enforce default clauses in switch statements to be last |  |
-| [`useErrorMessage`](https://biomejs.dev/linter/rules/use-error-message) | Enforce passing a message value when creating a built-in error. |  |
-| [`useGetterReturn`](https://biomejs.dev/linter/rules/use-getter-return) | Enforce get methods to always return a value. |  |
-| [`useIsArray`](https://biomejs.dev/linter/rules/use-is-array) | Use Array.isArray() instead of instanceof Array. |  |
-| [`useNamespaceKeyword`](https://biomejs.dev/linter/rules/use-namespace-keyword) | Require using the namespace keyword over the module keyword to declare TypeScript namespaces. |  |
-| [`useNumberToFixedDigitsArgument`](https://biomejs.dev/linter/rules/use-number-to-fixed-digits-argument) | Enforce using the digits argument with Number#toFixed(). |  |
+| [`useErrorMessage`](https://biomejs.dev/linter/rules/use-error-message) | Enforce passing a message value when creating a built\-in error\. |  |
+| [`useGetterReturn`](https://biomejs.dev/linter/rules/use-getter-return) | Enforce get methods to always return a value\. |  |
+| [`useIsArray`](https://biomejs.dev/linter/rules/use-is-array) | Use Array\.isArray\(\) instead of instanceof Array\. |  |
+| [`useNamespaceKeyword`](https://biomejs.dev/linter/rules/use-namespace-keyword) | Require using the namespace keyword over the module keyword to declare TypeScript namespaces\. |  |
+| [`useNumberToFixedDigitsArgument`](https://biomejs.dev/linter/rules/use-number-to-fixed-digits-argument) | Enforce using the digits argument with Number\#toFixed\(\)\. |  |
 | [`useValidTypeof`](https://biomejs.dev/linter/rules/use-valid-typeof) | This rule verifies the result of typeof $expr unary expressions is being compared to valid values, either string literals containing valid type names or other typeof expressions |  |
 
 
