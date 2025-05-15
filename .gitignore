@@ -4,3 +4,5 @@ coverage
 .nyc_output
 
 **/.claude/settings.local.json
+architecture-graph.svg
+dependency-graph.svg
