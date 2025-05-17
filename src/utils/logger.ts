@@ -1,12 +1,14 @@
 import pc from 'picocolors'
 import { safeStringify } from './safeStringify.ts'
 
-enum LogLevel {
-  DEBUG = 0,
-  INFO = 1,
-  WARN = 2,
-  ERROR = 3,
-}
+const LogLevel = {
+  DEBUG: 0,
+  INFO: 1,
+  WARN: 2,
+  ERROR: 3,
+} as const
+
+type LogLevel = (typeof LogLevel)[keyof typeof LogLevel]
 
 interface LoggerOptions {
   verbose?: boolean | undefined
