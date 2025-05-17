@@ -262,6 +262,7 @@ Rules in this category enforce consistent code style and patterns.
 | [`useFragmentSyntax`](https://biomejs.dev/linter/rules/use-fragment-syntax) | This rule enforces the use of \<\>\.\.\.\</\> over \<Fragment\>\.\.\.\</Fragment\>\. |  |
 | [`useImportType`](https://biomejs.dev/linter/rules/use-import-type) | Promotes the use of import type for types\. |  |
 | [`useLiteralEnumMembers`](https://biomejs.dev/linter/rules/use-literal-enum-members) | Require all enum members to be literal values\. |  |
+| [`useNamingConvention`](https://biomejs.dev/linter/rules/use-naming-convention) | Enforce naming conventions for everything across a codebase\. |  |
 | [`useNodeAssertStrict`](https://biomejs.dev/linter/rules/use-node-assert-strict) | Promotes the usage of node:assert/strict over node:assert\. |  |
 | [`useNodejsImportProtocol`](https://biomejs.dev/linter/rules/use-nodejs-import-protocol) | Enforces using the node: protocol for Node\.js builtin modules\. |  |
 | [`useNumberNamespace`](https://biomejs.dev/linter/rules/use-number-namespace) | Use the Number properties instead of global ones\. |  |
@@ -367,7 +368,6 @@ Rules in this category enforce TypeScript-specific best practices and type safet
 | [`await-thenable`](https://typescript-eslint.io/rules/await-thenable) | Disallow awaiting a value that is not a Thenable |  |
 | [`ban-ts-comment`](https://typescript-eslint.io/rules/ban-ts-comment) | Disallow `@ts-<directive>` comments or require descriptions after directives | {"minimumDescriptionLength":10} |
 | [`consistent-type-imports`](https://typescript-eslint.io/rules/consistent-type-imports) | Enforce consistent usage of type imports | [] |
-| [`naming-convention`](https://typescript-eslint.io/rules/naming-convention) | Enforce naming conventions for everything across a codebase | [{"selector":"default","format":["camelCase","PascalCase","UPPER_CASE"],"leadingUnderscore":"allowSingleOrDouble"},{"selector":"parameter","format":["camelCase","PascalCase"],"leadingUnderscore":"allow"},{"selector":"typeLike","format":["PascalCase"]},{"selector":["classProperty","objectLiteralProperty","typeProperty","objectLiteralMethod"],"format":null}] |
 | [`no-array-constructor`](https://typescript-eslint.io/rules/no-array-constructor) | Disallow generic `Array` constructors |  |
 | [`no-array-delete`](https://typescript-eslint.io/rules/no-array-delete) | Disallow using the `delete` operator on array values |  |
 | [`no-base-to-string`](https://typescript-eslint.io/rules/no-base-to-string) | Require `.toString()` and `.toLocaleString()` to only be called on objects which provide useful information when stringified |  |

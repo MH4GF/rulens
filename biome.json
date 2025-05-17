@@ -6,16 +6,5 @@
   ],
   "formatter": {
     "ignore": ["package.json"]
-  },
-  "linter": {
-    "rules": {
-      "nursery": {
-        "useExplicitType": "error"
-      },
-      "complexity": {
-        "useLiteralKeys": "off",
-        "noExcessiveCognitiveComplexity": "error"
-      }
-    }
   }
 }

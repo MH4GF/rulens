@@ -34,11 +34,11 @@ importers:
         specifier: 2.29.2
         version: 2.29.2
       '@mh4gf/configs':
-        specifier: 0.4.6
-        version: 0.4.6(@tsconfig/strictest@2.0.5)
+        specifier: 0.4.7
+        version: 0.4.7(@tsconfig/strictest@2.0.5)
       '@mh4gf/eslint-config':
-        specifier: 0.6.11
-        version: 0.6.11(@typescript-eslint/eslint-plugin@8.31.1(@typescript-eslint/parser@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(@typescript-eslint/utils@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.26.0(jiti@2.4.2)))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3)(vitest@3.1.2)
+        specifier: 0.6.12
+        version: 0.6.12(@typescript-eslint/eslint-plugin@8.31.1(@typescript-eslint/parser@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(@typescript-eslint/utils@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.26.0(jiti@2.4.2)))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3)(vitest@3.1.2)
       '@tsconfig/strictest':
         specifier: 2.0.5
         version: 2.0.5
@@ -475,13 +475,13 @@ packages:
   '@manypkg/get-packages@1.1.3':
     resolution: {integrity: sha512-fo+QhuU3qE/2TQMQmbVMqaQ6EWbMhi4ABWP+O4AM1NqPBuy0OrApV5LO6BrrgnhtAHS2NH6RrVk9OL181tTi8A==}
 
-  '@mh4gf/configs@0.4.6':
-    resolution: {integrity: sha512-M0ENBtOO8RxpaDq7mW79TxYVwx5+dEvWurrVV7mqbUqBwJbw2JvbfU+FCsGyp25oiMkJTmKn3gH4q3UxSOfGgQ==}
+  '@mh4gf/configs@0.4.7':
+    resolution: {integrity: sha512-W6VAYNUH6MyqdhbffOKzIJyQbJ6Uz/cUAt3ykx15ekrpx6L9EOzdoOtt6m7+vwS5SGlkjGFqJfRYHcWMCW6Bvg==}
     peerDependencies:
       '@tsconfig/strictest': ^2
 
-  '@mh4gf/eslint-config@0.6.11':
-    resolution: {integrity: sha512-CarrSDEpos7DRfsQyy7V+cA4dNdRfZ+kb7O6IyXfkiVN3ByNwJMunGqztYZI8WhVIgIZe6C2MuoH7SPBpL2VOg==}
+  '@mh4gf/eslint-config@0.6.12':
+    resolution: {integrity: sha512-VkwtsvL+uvFYb5/1vFrYGRQPNXFNRgF7yDXI5UWwqWUy+O8+DKwlT101tQ0Sh4aUXNvDAEIRfYLVYpPI5hvtSw==}
     peerDependencies:
       eslint: ^9.19.0
 
@@ -3350,11 +3350,11 @@ snapshots:
       globby: 11.1.0
       read-yaml-file: 1.1.0
 
-  '@mh4gf/configs@0.4.6(@tsconfig/strictest@2.0.5)':
+  '@mh4gf/configs@0.4.7(@tsconfig/strictest@2.0.5)':
     dependencies:
       '@tsconfig/strictest': 2.0.5
 
-  '@mh4gf/eslint-config@0.6.11(@typescript-eslint/eslint-plugin@8.31.1(@typescript-eslint/parser@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(@typescript-eslint/utils@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.26.0(jiti@2.4.2)))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3)(vitest@3.1.2)':
+  '@mh4gf/eslint-config@0.6.12(@typescript-eslint/eslint-plugin@8.31.1(@typescript-eslint/parser@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(@typescript-eslint/utils@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.26.0(jiti@2.4.2)))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3)(vitest@3.1.2)':
     dependencies:
       '@eslint/js': 9.17.0
       '@vitest/eslint-plugin': 1.1.44(@typescript-eslint/utils@8.31.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3)(vitest@3.1.2)

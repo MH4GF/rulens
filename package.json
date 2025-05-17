@@ -41,8 +41,8 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@changesets/cli": "2.29.2",
-    "@mh4gf/configs": "0.4.6",
-    "@mh4gf/eslint-config": "0.6.11",
+    "@mh4gf/configs": "0.4.7",
+    "@mh4gf/eslint-config": "0.6.12",
     "@tsconfig/strictest": "2.0.5",
     "@types/node": "22.15.3",
     "@vitest/coverage-v8": "3.1.2",

@@ -129,6 +129,7 @@ async function extractRuleInformation(): Promise<BiomeRuleDescription> {
   }
 
   const html = await response.text()
+  // biome-ignore lint/style/useNamingConvention: Because of cheerio conventions
   const $ = load(html)
 
   // Get categories and tables
